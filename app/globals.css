@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MS Paint Hand-drawn Style */
+.handdrawn-text {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.handdrawn-heading {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.handdrawn-subtitle {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+.handdrawn-text-small {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-weight: normal;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.handdrawn-box {
+  background: white;
+  border-radius: 0;
+  position: relative;
+}
+
+.handdrawn-button {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+  font-weight: bold;
+  border-radius: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Color classes */
+.text-green {
+  color: #22C55E;
+}
+
+.text-red {
+  color: #EF4444;
+}
+
+.text-blue {
+  color: #4169E1;
+}
+
+.text-gray {
+  color: #666666;
+}
+
+.bg-green {
+  background-color: #22C55E;
+}
+
+.bg-red {
+  background-color: #EF4444;
+}
+
+.bg-blue {
+  background-color: #4169E1;
+}
+
+.bg-blue-dark {
+  background-color: #3056c7;
+}
+
+/* Border utilities for hand-drawn effect */
+.border-2 {
+  border-width: 2px;
+  border-style: solid;
+}
+
+.border-3 {
+  border-width: 3px;
+  border-style: solid;
+}
+
+.border-4 {
+  border-width: 4px;
+  border-style: solid;
+}
+
+.border-green {
+  border-color: #22C55E;
+}
+
+.border-red {
+  border-color: #EF4444;
+}
+
+.border-blue {
+  border-color: #4169E1;
+}
+
+.border-black {
+  border-color: #000000;
+}
+
+/* Prevent text selection on decorative elements */
+.pointer-events-none {
+  pointer-events: none;
+  user-select: none;
+}
