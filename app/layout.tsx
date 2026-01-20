@@ -155,16 +155,9 @@ export default function RootLayout({
               })(window, "https://calcom.tzhk.dev/embed/embed.js", "init");
 
               Cal("init", "обсуждение-тату-в-тг", {origin:"https://calcom.tzhk.dev"});
-              Cal.ns["обсуждение-тату-в-тг"]("floatingButton", {
-                "calLink":"chotamode/обсуждение-тату-в-тг",
-                "config":{"layout":"month_view","theme":"light"},
-                "buttonTextColor":"#000000",
-                "buttonColor":"#ffffff"
-              });
               Cal.ns["обсуждение-тату-в-тг"]("ui", {
-                "theme":"light",
-                "hideEventTypeDetails":false,
-                "layout":"month_view"
+                "hideEventTypeDetails": false,
+                "layout": "month_view"
               });
             `,
           }}
