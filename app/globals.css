@@ -117,3 +117,84 @@
   pointer-events: none;
   user-select: none;
 }
+
+/* Cal.com Custom Styling - Hand-drawn aesthetic */
+/* Hide the default Cal.com floating button since we have our own */
+[data-cal-namespace="обсуждение-тату-в-тг"] button[data-cal-floating] {
+  display: none !important;
+}
+
+/* Style Cal.com modal */
+.cal-modal-overlay {
+  z-index: 50 !important;
+}
+
+.cal-modal {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive !important;
+}
+
+.cal-modal button {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive !important;
+  font-weight: bold !important;
+  border-radius: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.cal-modal button:hover {
+  transform: scale(1.05) !important;
+}
+
+.cal-modal button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Style Cal.com primary buttons to match site theme */
+.cal-modal button[data-testid="confirm-button"],
+.cal-modal button[type="submit"] {
+  background-color: #EF4444 !important;
+  color: white !important;
+  border: 3px solid black !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.cal-modal button[data-testid="confirm-button"]:hover,
+.cal-modal button[type="submit"]:hover {
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Style Cal.com secondary buttons */
+.cal-modal button[data-testid="cancel-button"],
+.cal-modal button[type="button"]:not([data-testid="confirm-button"]) {
+  background-color: white !important;
+  color: black !important;
+  border: 3px solid black !important;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Style Cal.com headings */
+.cal-modal h1,
+.cal-modal h2,
+.cal-modal h3 {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive !important;
+  font-weight: bold !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Style Cal.com inputs */
+.cal-modal input,
+.cal-modal textarea,
+.cal-modal select {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive !important;
+  border: 2px solid black !important;
+  border-radius: 0 !important;
+}
+
+.cal-modal input:focus,
+.cal-modal textarea:focus,
+.cal-modal select:focus {
+  border-color: #EF4444 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}

@@ -1,15 +1,25 @@
-interface CTAButtonProps {
-  onClick: () => void;
-}
+'use client';
 
-export function CTAButton({ onClick }: CTAButtonProps) {
+export function CTAButton() {
+  const handleClick = () => {
+    // Trigger Cal.com modal
+    if (typeof window !== 'undefined' && (window as any).Cal) {
+      (window as any).Cal.ns["обсуждение-тату-в-тг"]("ui", {
+        "calLink": "chotamode/обсуждение-тату-в-тг",
+        "theme": "light",
+        "hideEventTypeDetails": false,
+        "layout": "month_view"
+      });
+    }
+  };
+
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
       <div className="relative">
         {/* Doodle arrow pointing to button */}
-        <div 
+        <div
           className="absolute -top-16 left-1/2 -translate-x-1/2 handdrawn-text-small text-black"
-          style={{ 
+          style={{
             fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)',
             transform: 'translate(-50%, 0) rotate(-5deg)'
           }}
@@ -18,7 +28,7 @@ export function CTAButton({ onClick }: CTAButtonProps) {
         </div>
 
         {/* Arrow doodle */}
-        <div 
+        <div
           className="absolute -top-6 left-1/2 -translate-x-1/2"
           style={{ transform: 'translate(-20%, 0) rotate(10deg)' }}
         >
@@ -36,7 +46,7 @@ export function CTAButton({ onClick }: CTAButtonProps) {
 
         {/* Main CTA button */}
         <button
-          onClick={onClick}
+          onClick={handleClick}
           className="handdrawn-button bg-red text-white border-4 border-black py-4 px-12 cursor-pointer hover:scale-105 active:scale-95 transition-transform shadow-lg"
           style={{
             fontSize: 'clamp(1.3rem, 4vw, 2.2rem)',

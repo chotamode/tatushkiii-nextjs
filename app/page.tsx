@@ -1,13 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import { HandDrawnStars } from '@/components/HandDrawnStars'
 import { PortfolioSection } from '@/components/PortfolioSection'
 import { AboutSection } from '@/components/AboutSection'
 import { CTAButton } from '@/components/CTAButton'
 
 export default function HomePage() {
-  const [showBooking, setShowBooking] = useState(false)
 
   return (
     <div className="min-h-screen bg-white relative overflow-x-hidden">
@@ -129,41 +127,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Sticky CTA Button */}
-      <CTAButton onClick={() => setShowBooking(!showBooking)} />
-
-      {/* Simple booking modal */}
-      {showBooking && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={() => setShowBooking(false)}>
-          <div className="handdrawn-box bg-white p-8 border-4 border-black max-w-md w-full" style={{ transform: 'rotate(-1deg)' }} onClick={(e) => e.stopPropagation()}>
-            <h3 className="handdrawn-heading text-red text-center mb-6" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-              <span style={{ display: 'inline-block', transform: 'rotate(1deg)' }}>
-                Записаться
-              </span>
-            </h3>
-            <div className="space-y-4">
-              <div className="handdrawn-text-small" style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)' }}>
-                📱 Telegram: @tattoo_master
-              </div>
-              <div className="handdrawn-text-small" style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)' }}>
-                📞 WhatsApp: +7 (XXX) XXX-XX-XX
-              </div>
-              <div className="handdrawn-text-small" style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)' }}>
-                📧 Email: tattoo@example.com
-              </div>
-              <div className="pt-4">
-                <button
-                  className="handdrawn-button w-full bg-blue text-white border-3 border-black py-3 px-6 cursor-pointer hover:bg-blue-dark transition-colors"
-                  onClick={() => setShowBooking(false)}
-                  style={{ fontSize: 'clamp(0.9rem, 2.5vw, 1.2rem)' }}
-                >
-                  Закрыть
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Sticky CTA Button - Opens Cal.com booking */}
+      <CTAButton />
     </div>
   )
 }
