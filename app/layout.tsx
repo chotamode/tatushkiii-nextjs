@@ -1,43 +1,43 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-// SEO Metadata - критично для поисковых систем
+// SEO Metadata for Sandu Tattoo Artist
 export const metadata: Metadata = {
-  metadataBase: new URL('http://128.140.45.14'), // Замените на ваш домен когда будет
+  metadataBase: new URL('https://doomp.ink'),
 
-  // Основные мета-теги
+  // Main meta tags
   title: {
-    default: 'Тату Мастер | Графический Дизайнер для Твоей Кожи ✨',
-    template: '%s | Тату Мастер',
+    default: 'SANDU | Tattoo Artist Prague - Ornamental & Abstract Tattoos',
+    template: '%s | SANDU Tattoo',
   },
-  description: 'Профессиональные татуировки в уютной атмосфере. Индивидуальные эскизы, стерильные инструменты, безопасность и качество. Записывайся на сеанс!',
-  keywords: ['татуировки', 'тату мастер', 'графический дизайнер', 'эскизы тату', 'татуировки на заказ', 'тату салон', 'безопасные татуировки'],
-  authors: [{ name: 'Тату Мастер' }],
-  creator: 'Тату Мастер',
-  publisher: 'Тату Мастер',
+  description: 'Custom tattoo designs in Prague. Specializing in ornamental, linework, abstract and cybersigilism styles. 4 years experience. Book your session now.',
+  keywords: ['tattoo artist prague', 'ornamental tattoo', 'linework tattoo', 'abstract tattoo', 'cybersigilism', 'custom tattoo design', 'prague tattoo'],
+  authors: [{ name: 'Sandu' }],
+  creator: 'Sandu',
+  publisher: 'Sandu Ink',
 
-  // Языковые настройки
+  // Language settings
   alternates: {
-    canonical: 'https://your-domain.com',
+    canonical: 'https://doomp.ink',
     languages: {
-      'ru-RU': 'https://your-domain.com',
+      'en': 'https://doomp.ink',
     },
   },
 
-  // Open Graph для социальных сетей (VK, Facebook, Telegram)
+  // Open Graph for social networks
   openGraph: {
     type: 'website',
-    locale: 'ru_RU',
-    url: 'https://your-domain.com',
-    siteName: 'Тату Мастер',
-    title: 'Тату Мастер | Графический Дизайнер для Твоей Кожи',
-    description: 'Профессиональные татуировки в уютной атмосфере. Индивидуальные эскизы, стерильные инструменты, безопасность и качество.',
+    locale: 'en_US',
+    url: 'https://doomp.ink',
+    siteName: 'SANDU Tattoo',
+    title: 'SANDU | Tattoo Artist Prague',
+    description: 'Custom tattoo designs. Ornamental, linework, abstract styles. Prague-based artist with 4 years experience.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Тату Мастер - Профессиональные татуировки',
+        alt: 'SANDU - Tattoo Artist Prague',
       },
     ],
   },
@@ -45,19 +45,19 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    title: 'Тату Мастер | Графический Дизайнер для Твоей Кожи',
-    description: 'Профессиональные татуировки в уютной атмосфере. Индивидуальные эскизы и безопасность.',
+    title: 'SANDU | Tattoo Artist Prague',
+    description: 'Custom tattoo designs. Ornamental, linework, abstract styles.',
     images: ['/og-image.jpg'],
   },
 
-  // Иконки и манифест
+  // Icons and manifest
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
 
-  // Настройки роботов
+  // Robot settings
   robots: {
     index: true,
     follow: true,
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     },
   },
 
-  // Verification для поисковых систем
+  // Verification for search engines
   verification: {
     google: 'your-google-site-verification',
     yandex: 'your-yandex-verification',
@@ -83,24 +83,27 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <head>
-        {/* Schema.org разметка для Google Rich Snippets */}
+        {/* Schema.org markup for Google Rich Snippets */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'TattooParlor',
-              name: 'Тату Мастер',
-              description: 'Профессиональные татуировки в уютной атмосфере',
-              url: 'https://your-domain.com',
-              telephone: '+7-XXX-XXX-XX-XX',
+              name: 'SANDU Tattoo',
+              description: 'Custom tattoo designs in Prague. Ornamental, linework, abstract styles.',
+              url: 'https://doomp.ink',
+              telephone: '+420774685187',
+              email: 'doompynooo@gmail.com',
               priceRange: '$$',
               address: {
                 '@type': 'PostalAddress',
-                addressLocality: 'Москва',
-                addressCountry: 'RU',
+                streetAddress: 'Korunni 859/18',
+                addressLocality: 'Prague',
+                postalCode: '120 00',
+                addressCountry: 'CZ',
               },
               openingHoursSpecification: {
                 '@type': 'OpeningHoursSpecification',
@@ -109,14 +112,13 @@ export default function RootLayout({
                 closes: '20:00',
               },
               sameAs: [
-                'https://t.me/tattoo_master',
-                'https://vk.com/tattoo_master',
-                'https://instagram.com/tattoo_master',
+                'https://t.me/doompink',
+                'https://www.instagram.com/doompink',
               ],
               aggregateRating: {
                 '@type': 'AggregateRating',
                 ratingValue: '5',
-                reviewCount: '50',
+                reviewCount: '300',
               },
             }),
           }}
@@ -154,8 +156,8 @@ export default function RootLayout({
                 };
               })(window, "https://calcom.tzhk.dev/embed/embed.js", "init");
 
-              Cal("init", "обсуждение-тату-в-тг", {origin:"https://calcom.tzhk.dev"});
-              Cal.ns["обсуждение-тату-в-тг"]("ui", {
+              Cal("init", "book-session", {origin:"https://calcom.tzhk.dev"});
+              Cal.ns["book-session"]("ui", {
                 "hideEventTypeDetails": false,
                 "layout": "month_view"
               });
