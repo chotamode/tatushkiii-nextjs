@@ -1,5 +1,28 @@
 import type { Metadata } from 'next'
+import { Bebas_Neue, Crimson_Text, Space_Mono } from 'next/font/google'
 import './globals.css'
+
+// Font configuration
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bebas',
+  display: 'swap',
+})
+
+const crimsonText = Crimson_Text({
+  weight: ['400', '600'],
+  subsets: ['latin'],
+  variable: '--font-crimson',
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-space',
+  display: 'swap',
+})
 
 // SEO Metadata for Sandu Tattoo Artist
 export const metadata: Metadata = {
@@ -83,7 +106,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${bebasNeue.variable} ${crimsonText.variable} ${spaceMono.variable}`}>
       <head>
         {/* Schema.org markup for Google Rich Snippets */}
         <script

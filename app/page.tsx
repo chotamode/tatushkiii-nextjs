@@ -15,6 +15,7 @@ declare global {
 export default function HomePage() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -171,19 +172,35 @@ export default function HomePage() {
 
       {/* Infinite Marquee Separator */}
       <div className="w-full bg-black text-white py-3 overflow-hidden border-y border-white/20">
-        <div className="flex whitespace-nowrap animate-marquee">
-          <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-            Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
-          </span>
-          <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-            Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
-          </span>
-          <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-            Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
-          </span>
-          <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-            Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
-          </span>
+        <div className="flex">
+          <div className="flex whitespace-nowrap animate-marquee">
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+          </div>
+          <div className="flex whitespace-nowrap animate-marquee" aria-hidden="true">
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+            <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
+              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -238,14 +255,14 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
 
             {/* Item 1 */}
-            <div className="group cursor-pointer relative">
+            <div className="group cursor-pointer relative" onClick={() => setLightboxImage('/images/spine-tattoo.webp')}>
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <img
-                  src="https://images.unsplash.com/photo-1639545622950-72bd485b0706?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnZW9tZXRyaWMlMjB0YXR0b28lMjBzcGluZXxlbnwxfHx8fDE3NjkwMjY4NzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/spine-tattoo.webp"
                   alt="Spine Tattoo"
                   className="w-full h-full object-cover"
                 />
@@ -273,14 +290,14 @@ export default function HomePage() {
             </div>
 
             {/* Item 2 */}
-            <div className="group cursor-pointer relative md:translate-y-12">
+            <div className="group cursor-pointer relative md:translate-y-12" onClick={() => setLightboxImage('/images/arm-tattoo.webp')}>
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <img
-                  src="https://images.unsplash.com/photo-1759346771288-ac905d1b1abf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwYXJtJTIwdGF0dG9vfGVufDF8fHx8MTc2OTAyNjg3NXww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/arm-tattoo.webp"
                   alt="Arm Tattoo"
                   className="w-full h-full object-cover"
                 />
@@ -305,14 +322,14 @@ export default function HomePage() {
             </div>
 
             {/* Item 3 */}
-            <div className="group cursor-pointer relative">
+            <div className="group cursor-pointer relative" onClick={() => setLightboxImage('/images/back-tattoo.webp')}>
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <img
-                  src="https://images.unsplash.com/photo-1612991977455-7bf9e67d899c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWNrJTIwdGF0dG9vJTIwZ2VvbWV0cmljfGVufDF8fHx8MTc2OTAyNjg3Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+                  src="/images/back-tattoo.webp"
                   alt="Back Tattoo"
                   className="w-full h-full object-cover"
                 />
@@ -401,7 +418,7 @@ export default function HomePage() {
                 <div className="absolute -bottom-3 -right-3 text-white text-2xl sigil-text">⌟</div>
 
                 <div className="w-full h-full bg-neutral-900 relative overflow-hidden grayscale contrast-150">
-                  <img src="https://images.unsplash.com/photo-1751891030605-e7dbf7692a39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0YXR0b28lMjBhcnRpc3QlMjB3b21hbiUyMHN0dWRpb3xlbnwxfHx8fDE3NjkwMjc3NjV8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="Sandu - Tattoo Artist" className="object-cover w-full h-full"/>
+                  <img src="/images/sandu.jpg" alt="Sandu - Tattoo Artist" className="object-cover w-full h-full"/>
                 </div>
 
                 {/* Floating Text */}
@@ -565,6 +582,50 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setLightboxImage(null)}
+        >
+          {/* Close Button */}
+          <button
+            className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-10 group"
+            onClick={() => setLightboxImage(null)}
+          >
+            <div className="relative">
+              <span className="text-5xl font-thin leading-none block group-hover:rotate-90 transition-transform duration-300">×</span>
+              <span className="absolute -bottom-6 right-0 font-mono text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                Close
+              </span>
+            </div>
+          </button>
+
+          {/* Image Container */}
+          <div
+            className="relative h-[90vh] w-auto mx-4 animate-scaleIn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={lightboxImage}
+              alt="Tattoo Detail"
+              className="h-full w-auto max-w-[90vw] object-contain mx-auto"
+            />
+
+            {/* Decorative corners */}
+            <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-white/30"></div>
+            <div className="absolute -top-4 -right-4 w-12 h-12 border-t-2 border-r-2 border-white/30"></div>
+            <div className="absolute -bottom-4 -left-4 w-12 h-12 border-b-2 border-l-2 border-white/30"></div>
+            <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-white/30"></div>
+          </div>
+
+          {/* Instructions */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-xs text-white/50 uppercase tracking-widest">
+            Click anywhere to close
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-white text-black py-12 border-t border-black">
