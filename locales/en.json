@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "portfolio": "Portfolio",
+    "artist": "Artist",
+    "process": "Process",
+    "book": "Book"
+  },
+  "hero": {
+    "location": "Prague // 2025",
+    "tagline": "Ornamental.Art",
+    "title": "TATTOOS",
+    "subtitle1": "CUSTOM DESIGNS. RAW AESTHETICS.",
+    "subtitle2": "PRECISE. STERILE. ETHEREAL.",
+    "cta": "Book Session"
+  },
+  "marquee": {
+    "avantGarde": "Avant-Garde",
+    "abstract": "Abstract",
+    "cybersigilism": "Cybersigilism",
+    "geometry": "Geometry"
+  },
+  "portfolio": {
+    "title": "Selected Works",
+    "subtitle": "Curves That Hold / Ink That Bleeds",
+    "categories": {
+      "ornamental": "[Ornamental]",
+      "lineWork": "[Line Work]",
+      "abstract": "[Abstract]",
+      "whipShading": "[Whip Shading]",
+      "freehand": "[Freehand]"
+    },
+    "items": {
+      "spine": "Spine",
+      "arm": "Arm",
+      "back": "Back"
+    },
+    "view": "View",
+    "fullArchive": "Full Archive",
+    "clickToClose": "Click anywhere to close",
+    "close": "Close"
+  },
+  "about": {
+    "title": "About The Artist",
+    "heading": "HI! I'M SANDU",
+    "paragraph1": "I'm a tattoo artist with 4 years of experience and a huge love for tattooing.",
+    "paragraph2": "I specialize in linework, ornamental designs, and black & red tones. But I'm a flexible artist, so don't worry, we'll make something stylish that suits you.",
+    "stats": {
+      "base": "PRAGUE BASE",
+      "exp": "4 YEARS EXP",
+      "clients": "300+ CLIENTS"
+    },
+    "established": "EST. 2021",
+    "brand": "SANDU INK"
+  },
+  "faq": {
+    "title": "FAQ",
+    "q1": {
+      "question": "Does it hurt to get a tattoo?",
+      "answer": "It depends on the placement! But I work gently and always take breaks. Many clients say it was much easier than they expected. Don't worry, I also have numbing cream if needed."
+    },
+    "q2": {
+      "question": "How much does a tattoo cost?",
+      "answer": "Prices start from 2,000 CZK and depend on the size and complexity. Message me with your idea and I'll calculate the price for free!"
+    },
+    "q3": {
+      "question": "How do I take care of it after the session?",
+      "answer": "I'll give you detailed aftercare instructions and stay in touch. In short: after the session I apply a healing film for free, you'll need to remove it after 3–5 days (I'll tell you exactly when). After that, just use the cream and don't scratch it!"
+    },
+    "q4": {
+      "question": "Can I come with my own design?",
+      "answer": "Of course! Bring a reference and we'll adapt it, or I can draw something similar in my style."
+    },
+    "q5": {
+      "question": "What if I change my mind at the last minute?",
+      "answer": "No worries! We can reschedule, just please let me know at least 12 hours in advance."
+    }
+  },
+  "testimonials": {
+    "t1": {
+      "text": "I was scared, but Sandu calmed me down. The result exceeded expectations.",
+      "author": "Anya",
+      "work": "Spine Piece"
+    },
+    "t2": {
+      "text": "Quality, atmosphere, professionalism - everything at the highest level.",
+      "author": "Marina",
+      "work": "Sleeve"
+    },
+    "t3": {
+      "text": "Jewelry-level precision. Healing went perfectly. Found my artist.",
+      "author": "Dasha",
+      "work": "Minimalist"
+    }
+  },
+  "contact": {
+    "title": "Book Now",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "YOUR NAME",
+      "contact": "Contact",
+      "contactPlaceholder": "EMAIL / IG",
+      "concept": "Concept",
+      "conceptPlaceholder": "DESCRIBE YOUR IDEA...",
+      "submit": "Send Request",
+      "sending": "Sending...",
+      "successMessage": "Request sent! I'll get back to you soon.",
+      "errorMessage": "Something went wrong. Your request was saved and will be retried automatically.",
+      "validation": {
+        "nameRequired": "Please enter your name",
+        "nameMinLength": "Name must be at least 2 characters",
+        "contactRequired": "Please enter your email or Instagram",
+        "contactInvalid": "Enter a valid email or Instagram handle",
+        "conceptRequired": "Please describe your tattoo idea",
+        "conceptMinLength": "Please write at least 10 characters"
+      }
+    },
+    "social": {
+      "instagram": "Instagram",
+      "telegram": "Telegram"
+    },
+    "address": "Korunni 859/18, Praha, 120 00"
+  },
+  "footer": {
+    "copyright": "© 2025 Sandu Ink. Prague.",
+    "tagline": "Designed for the bold."
+  }
+}

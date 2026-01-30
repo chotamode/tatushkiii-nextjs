@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslation, type Locale } from '../hooks/useTranslation'
+import BookingForm from '@/components/BookingForm'
 
 declare global {
   interface Window {
@@ -16,6 +18,7 @@ export default function HomePage() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const { t, locale, changeLocale } = useTranslation()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,14 +56,39 @@ export default function HomePage() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-12 items-center font-mono text-[10px] uppercase tracking-[0.2em]">
-            <a href="#portfolio" className="hover:line-through decoration-1 underline-offset-4 transition-all">Portfolio</a>
-            <a href="#about" className="hover:line-through decoration-1 underline-offset-4 transition-all">Artist</a>
-            <a href="#process" className="hover:line-through decoration-1 underline-offset-4 transition-all">Process</a>
+            <a href="#portfolio" className="hover:line-through decoration-1 underline-offset-4 transition-all">{t.nav.portfolio}</a>
+            <a href="#about" className="hover:line-through decoration-1 underline-offset-4 transition-all">{t.nav.artist}</a>
+            <a href="#process" className="hover:line-through decoration-1 underline-offset-4 transition-all">{t.nav.process}</a>
+
+            {/* Language Switcher */}
+            <div className="flex gap-2 items-center">
+              <button
+                onClick={() => changeLocale('en')}
+                className={`px-2 py-1 transition-all ${locale === 'en' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+              >
+                EN
+              </button>
+              <span className="opacity-30">/</span>
+              <button
+                onClick={() => changeLocale('cs')}
+                className={`px-2 py-1 transition-all ${locale === 'cs' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+              >
+                CS
+              </button>
+              <span className="opacity-30">/</span>
+              <button
+                onClick={() => changeLocale('ru')}
+                className={`px-2 py-1 transition-all ${locale === 'ru' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+              >
+                RU
+              </button>
+            </div>
+
             <button
               onClick={openCalPopup}
               className="border border-white/50 px-4 py-1 hover:bg-white hover:text-black transition-colors duration-300"
             >
-              <span className="mr-2">★</span>Book
+              <span className="mr-2">★</span>{t.nav.book}
             </button>
           </div>
 
@@ -83,14 +111,37 @@ export default function HomePage() {
         <div className="absolute top-10 w-full text-center opacity-30 sigil-text text-xl">
           ⫘⫘⫘⫘⫘⫘
         </div>
-        <a onClick={() => setMobileMenu(false)} href="#portfolio" className="font-display text-5xl hover:opacity-50 transition-opacity">Portfolio</a>
-        <a onClick={() => setMobileMenu(false)} href="#about" className="font-display text-5xl hover:opacity-50 transition-opacity">Artist</a>
-        <a onClick={() => setMobileMenu(false)} href="#process" className="font-display text-5xl hover:opacity-50 transition-opacity">Process</a>
+        <a onClick={() => setMobileMenu(false)} href="#portfolio" className="font-display text-5xl hover:opacity-50 transition-opacity">{t.nav.portfolio}</a>
+        <a onClick={() => setMobileMenu(false)} href="#about" className="font-display text-5xl hover:opacity-50 transition-opacity">{t.nav.artist}</a>
+        <a onClick={() => setMobileMenu(false)} href="#process" className="font-display text-5xl hover:opacity-50 transition-opacity">{t.nav.process}</a>
+
+        {/* Mobile Language Switcher */}
+        <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-widest">
+          <button
+            onClick={() => changeLocale('en')}
+            className={`px-3 py-2 transition-all ${locale === 'en' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+          >
+            EN
+          </button>
+          <button
+            onClick={() => changeLocale('cs')}
+            className={`px-3 py-2 transition-all ${locale === 'cs' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+          >
+            CS
+          </button>
+          <button
+            onClick={() => changeLocale('ru')}
+            className={`px-3 py-2 transition-all ${locale === 'ru' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+          >
+            RU
+          </button>
+        </div>
+
         <button
           onClick={() => { setMobileMenu(false); openCalPopup(); }}
           className="font-mono text-xl border border-white px-8 py-3 mt-4"
         >
-          [ BOOK SESSION ]
+          [ {t.nav.book.toUpperCase()} ]
         </button>
         <div className="absolute bottom-10 w-full text-center opacity-30 sigil-text text-xl">
           ⫘⫘⫘⫘⫘⫘
@@ -119,11 +170,11 @@ export default function HomePage() {
           <div className="flex justify-between items-center w-full mb-12 opacity-50 font-mono text-[10px] uppercase tracking-widest hidden md:flex">
             <span className="flex items-center gap-2">
               <span className="w-8 h-[1px] bg-black"></span>
-              Prague // 2025
+              {t.hero.location}
             </span>
             <span className="sigil-text text-lg">☠︎︎</span>
             <span className="flex items-center gap-2">
-              Ornamental.Art
+              {t.hero.tagline}
               <span className="w-8 h-[1px] bg-black"></span>
             </span>
           </div>
@@ -137,7 +188,7 @@ export default function HomePage() {
             <div className="absolute -right-4 bottom-1/4 w-1 h-16 bg-black opacity-10"></div>
 
             <h1 className="font-display font-black text-[18vw] md:text-[14vw] leading-[0.7] tracking-tighter mix-blend-darken select-none text-black relative">
-              TAT<br/>TOOS
+              {t.hero.title}
               {/* Accent marks */}
               <span className="absolute -top-6 right-0 text-[2vw] opacity-30 sigil-text">✦</span>
               <span className="absolute -bottom-4 left-0 text-[2vw] opacity-30 sigil-text">✧</span>
@@ -150,8 +201,8 @@ export default function HomePage() {
           <div className="mt-24 flex flex-col items-center">
             <p className="max-w-md text-center font-mono text-xs md:text-sm leading-relaxed mb-8 relative">
               <span className="absolute -left-12 top-0 text-gray-300 hidden md:block">✱</span>
-              CUSTOM DESIGNS. RAW AESTHETICS.<br/>
-              <span className="opacity-50">PRECISE. STERILE. ETHEREAL.</span>
+              {t.hero.subtitle1}<br/>
+              <span className="opacity-50">{t.hero.subtitle2}</span>
               <span className="absolute -right-12 bottom-0 text-gray-300 hidden md:block">✱</span>
             </p>
 
@@ -160,7 +211,7 @@ export default function HomePage() {
               className="group relative inline-flex items-center gap-4 px-8 py-4 bg-transparent hover:bg-black hover:text-white transition-colors duration-500 border-x border-black"
             >
               <span className="sigil-text">༺</span>
-              <span className="font-mono text-xs uppercase tracking-[0.2em]">Book Session</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em]">{t.hero.cta}</span>
               <span className="sigil-text">༻</span>
               {/* Hover corner accents */}
               <span className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-black opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -175,30 +226,30 @@ export default function HomePage() {
         <div className="flex">
           <div className="flex whitespace-nowrap animate-marquee">
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
           </div>
           <div className="flex whitespace-nowrap animate-marquee" aria-hidden="true">
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
-              Avant-Garde <span className="sigil-text text-lg">⛧</span> Abstract <span className="sigil-text text-lg">⫘</span> Cybersigilism <span className="sigil-text text-lg">⫘</span> Geometry <span className="sigil-text text-lg">★</span>
+              {t.marquee.avantGarde} <span className="sigil-text text-lg">⛧</span> {t.marquee.abstract} <span className="sigil-text text-lg">⫘</span> {t.marquee.cybersigilism} <span className="sigil-text text-lg">⫘</span> {t.marquee.geometry} <span className="sigil-text text-lg">★</span>
             </span>
           </div>
         </div>
@@ -215,14 +266,14 @@ export default function HomePage() {
           <div className="flex flex-col items-center mb-24 text-center relative">
             <div className="sigil-text text-2xl mb-4 opacity-50">✮⃝⛧</div>
             <h2 className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-4 relative">
-              Selected Works
+              {t.portfolio.title}
               {/* Decorative lines */}
               <span className="absolute -left-16 top-1/2 w-8 h-[1px] bg-black/20 hidden lg:block"></span>
               <span className="absolute -right-16 top-1/2 w-8 h-[1px] bg-black/20 hidden lg:block"></span>
             </h2>
             <div className="font-mono text-[10px] tracking-[0.5em] uppercase opacity-60 flex items-center gap-4">
               <span className="w-2 h-2 border border-black/30 rotate-45"></span>
-              Curves That Hold <span className="mx-2">/</span> Ink That Bleeds
+              {t.portfolio.subtitle}
               <span className="w-2 h-2 border border-black/30 rotate-45"></span>
             </div>
           </div>
@@ -230,23 +281,23 @@ export default function HomePage() {
           {/* Categories Minimal */}
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest">
             <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
-              [Ornamental]
+              {t.portfolio.categories.ornamental}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
             </button>
             <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
-              [Line Work]
+              {t.portfolio.categories.lineWork}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
             </button>
             <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
-              [Abstract]
+              {t.portfolio.categories.abstract}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
             </button>
             <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
-              [Whip Shading]
+              {t.portfolio.categories.whipShading}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
             </button>
             <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
-              [Freehand]
+              {t.portfolio.categories.freehand}
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
             </button>
           </div>
@@ -277,12 +328,12 @@ export default function HomePage() {
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
                   <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest rotate-90 md:rotate-0">
-                    View <span className="sigil-text ml-2">→</span>
+                    {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
-                <span className="font-display font-bold text-xl uppercase">Spine</span>
+                <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.spine}</span>
                 <span className="font-mono text-[10px] opacity-50">001</span>
                 {/* Small accent */}
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
@@ -310,12 +361,12 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-noise opacity-50 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
                   <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
-                    View <span className="sigil-text ml-2">→</span>
+                    {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
-                <span className="font-display font-bold text-xl uppercase">Arm</span>
+                <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.arm}</span>
                 <span className="font-mono text-[10px] opacity-50">002</span>
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
               </div>
@@ -341,12 +392,12 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-noise opacity-50 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
                   <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
-                    View <span className="sigil-text ml-2">→</span>
+                    {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
-                <span className="font-display font-bold text-xl uppercase">Back</span>
+                <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.back}</span>
                 <span className="font-mono text-[10px] opacity-50">003</span>
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
               </div>
@@ -360,7 +411,7 @@ export default function HomePage() {
             <a href="https://www.instagram.com/doompink" target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
               <span className="sigil-text text-2xl animate-bounce">⫘</span>
               <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-black transition-all pb-1">
-                Full Archive
+                {t.portfolio.fullArchive}
               </span>
               {/* Decorative dots */}
               <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -386,24 +437,26 @@ export default function HomePage() {
             {/* Text Content */}
             <div className="flex-1">
               <div className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-8 flex items-center gap-2">
-                <span className="sigil-text">⚔</span> About The Artist
+                <span className="sigil-text">⚔</span> {t.about.title}
               </div>
               <h2 className="font-display text-5xl md:text-8xl font-bold mb-12 leading-none">
-                HI! I&apos;M<br/>SANDU
+                {t.about.heading.split('\n').map((line, i) => (
+                  <span key={i}>{line}<br/></span>
+                ))}
               </h2>
               <div className="space-y-8 font-mono text-sm md:text-base text-gray-300 font-light leading-relaxed max-w-lg">
                 <p className="first-letter:text-4xl first-letter:font-display first-letter:mr-2 first-letter:float-left">
-                  I&apos;m a tattoo artist with 4 years of experience and a huge love for tattooing.
+                  {t.about.paragraph1}
                 </p>
                 <p>
-                  I specialize in linework, ornamental designs, and black & red tones. But I&apos;m a flexible artist, so don&apos;t worry, we&apos;ll make something stylish that suits you.
+                  {t.about.paragraph2}
                 </p>
                 <div className="flex items-center gap-4 text-xs text-gray-500 pt-4 border-t border-white/10">
-                  <span>PRAGUE BASE</span>
+                  <span>{t.about.stats.base}</span>
                   <span>•</span>
-                  <span>4 YEARS EXP</span>
+                  <span>{t.about.stats.exp}</span>
                   <span>•</span>
-                  <span>300+ CLIENTS</span>
+                  <span>{t.about.stats.clients}</span>
                 </div>
               </div>
             </div>
@@ -423,7 +476,7 @@ export default function HomePage() {
 
                 {/* Floating Text */}
                 <div className="absolute -right-8 bottom-10 rotate-90 origin-bottom-right text-xs font-mono tracking-widest text-gray-500 whitespace-nowrap">
-                  EST. 2021 <span className="mx-2">//</span> SANDU INK
+                  {t.about.established} <span className="mx-2">//</span> {t.about.brand}
                 </div>
               </div>
             </div>
@@ -436,48 +489,48 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="flex items-center justify-center gap-4 mb-24 opacity-50">
             <span className="sigil-text">⫘⫘⫘</span>
-            <h2 className="font-mono text-sm uppercase tracking-[0.5em]">FAQ</h2>
+            <h2 className="font-mono text-sm uppercase tracking-[0.5em]">{t.faq.title}</h2>
             <span className="sigil-text">⫘⫘⫘</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* FAQ 1 */}
             <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
-              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">Does it hurt to get a tattoo?</h3>
+              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q1.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
-                It depends on the placement! But I work gently and always take breaks. Many clients say it was much easier than they expected. Don&apos;t worry, I also have numbing cream if needed.
+                {t.faq.q1.answer}
               </p>
             </div>
 
             {/* FAQ 2 */}
             <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
-              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">How much does a tattoo cost?</h3>
+              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q2.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
-                Prices start from 2,000 CZK and depend on the size and complexity. Message me with your idea and I&apos;ll calculate the price for free!
+                {t.faq.q2.answer}
               </p>
             </div>
 
             {/* FAQ 3 */}
             <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
-              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">How do I take care of it after the session?</h3>
+              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q3.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
-                I&apos;ll give you detailed aftercare instructions and stay in touch. In short: after the session I apply a healing film for free, you&apos;ll need to remove it after 3–5 days (I&apos;ll tell you exactly when). After that, just use the cream and don&apos;t scratch it!
+                {t.faq.q3.answer}
               </p>
             </div>
 
             {/* FAQ 4 */}
             <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
-              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">Can I come with my own design?</h3>
+              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q4.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
-                Of course! Bring a reference and we&apos;ll adapt it, or I can draw something similar in my style.
+                {t.faq.q4.answer}
               </p>
             </div>
 
             {/* FAQ 5 */}
             <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500 md:col-span-2">
-              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">What if I change my mind at the last minute?</h3>
+              <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q5.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
-                No worries! We can reschedule, just please let me know at least 12 hours in advance.
+                {t.faq.q5.answer}
               </p>
             </div>
           </div>
@@ -498,10 +551,10 @@ export default function HomePage() {
             <div className="flex flex-col gap-4">
               <div className="sigil-text text-2xl opacity-50">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight">
-                I was scared, but Sandu calmed me down. The result exceeded expectations.
+                {t.testimonials.t1.text}
               </p>
               <div className="font-mono text-[10px] uppercase tracking-widest text-gray-500 mt-auto">
-                — Anya <span className="mx-2">/</span> Spine Piece
+                — {t.testimonials.t1.author} <span className="mx-2">/</span> {t.testimonials.t1.work}
               </div>
             </div>
 
@@ -509,10 +562,10 @@ export default function HomePage() {
             <div className="flex flex-col gap-4">
               <div className="sigil-text text-2xl opacity-50">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight text-gray-300">
-                Quality, atmosphere, professionalism - everything at the highest level.
+                {t.testimonials.t2.text}
               </p>
               <div className="font-mono text-[10px] uppercase tracking-widest text-gray-500 mt-auto">
-                — Marina <span className="mx-2">/</span> Sleeve
+                — {t.testimonials.t2.author} <span className="mx-2">/</span> {t.testimonials.t2.work}
               </div>
             </div>
 
@@ -520,10 +573,10 @@ export default function HomePage() {
             <div className="flex flex-col gap-4">
               <div className="sigil-text text-2xl opacity-50">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight">
-                Jewelry-level precision. Healing went perfectly. Found my artist.
+                {t.testimonials.t3.text}
               </p>
               <div className="font-mono text-[10px] uppercase tracking-widest text-gray-500 mt-auto">
-                — Dasha <span className="mx-2">/</span> Minimalist
+                — {t.testimonials.t3.author} <span className="mx-2">/</span> {t.testimonials.t3.work}
               </div>
             </div>
           </div>
@@ -537,39 +590,18 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
             <h2 className="font-display text-6xl md:text-9xl font-bold uppercase tracking-tighter leading-none">
-              Book<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">Now</span>
+              {t.contact.title.split(' ')[0]}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">{t.contact.title.split(' ')[1] || 'Now'}</span>
             </h2>
           </div>
 
-          <form className="space-y-0 border-t border-black">
-            <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="group border-b border-black border-r-0 md:border-r relative">
-                <label className="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest text-gray-500">Name</label>
-                <input type="text" className="w-full bg-transparent p-8 pt-10 focus:outline-none font-display text-2xl placeholder-gray-200 focus:bg-gray-50 transition-colors" placeholder="YOUR NAME"/>
-              </div>
-              <div className="group border-b border-black relative">
-                <label className="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest text-gray-500">Contact</label>
-                <input type="email" className="w-full bg-transparent p-8 pt-10 focus:outline-none font-display text-2xl placeholder-gray-200 focus:bg-gray-50 transition-colors" placeholder="EMAIL / IG"/>
-              </div>
-            </div>
-
-            <div className="relative border-b border-black">
-              <label className="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest text-gray-500">Concept</label>
-              <textarea className="w-full bg-transparent p-8 pt-10 focus:outline-none font-display text-2xl placeholder-gray-200 resize-none h-48 focus:bg-gray-50 transition-colors" placeholder="DESCRIBE YOUR IDEA..."></textarea>
-            </div>
-
-            <button type="submit" className="w-full bg-black text-white py-8 font-mono text-sm uppercase tracking-[0.3em] hover:bg-white hover:text-black hover:border-b hover:border-black transition-all flex justify-between px-8 group">
-              <span>Send Request</span>
-              <span className="group-hover:translate-x-2 transition-transform">→</span>
-            </button>
-          </form>
+          <BookingForm t={t} locale={locale} />
 
           <div className="mt-24 flex flex-col items-center gap-4 text-center">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>
             <div className="font-mono text-xs uppercase tracking-widest">
-              <a href="https://www.instagram.com/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">Instagram</a>
+              <a href="https://www.instagram.com/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.instagram}</a>
               <span className="opacity-30">/</span>
-              <a href="https://t.me/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">Telegram</a>
+              <a href="https://t.me/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.telegram}</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-2">
               <a href="tel:+420774685187" className="hover:line-through">+420 774 685 187</a>
@@ -577,7 +609,7 @@ export default function HomePage() {
               <a href="mailto:doompynooo@gmail.com" className="hover:line-through">doompynooo@gmail.com</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-1">
-              Korunni 859/18, Praha, 120 00
+              {t.contact.address}
             </div>
           </div>
         </div>
@@ -597,7 +629,7 @@ export default function HomePage() {
             <div className="relative">
               <span className="text-5xl font-thin leading-none block group-hover:rotate-90 transition-transform duration-300">×</span>
               <span className="absolute -bottom-6 right-0 font-mono text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                Close
+                {t.portfolio.close}
               </span>
             </div>
           </button>
@@ -622,7 +654,7 @@ export default function HomePage() {
 
           {/* Instructions */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 font-mono text-xs text-white/50 uppercase tracking-widest">
-            Click anywhere to close
+            {t.portfolio.clickToClose}
           </div>
         </div>
       )}
@@ -636,9 +668,9 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col items-center gap-2 font-mono text-[10px] uppercase text-gray-500 tracking-widest">
-            <span>&copy; 2025 Sandu Ink. Prague.</span>
+            <span>{t.footer.copyright}</span>
             <span className="sigil-text text-lg">⫘</span>
-            <span>Designed for the bold.</span>
+            <span>{t.footer.tagline}</span>
           </div>
 
           <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]">

@@ -1,0 +1,127 @@
+{
+  "nav": {
+    "portfolio": "Portfolio",
+    "artist": "Umělec",
+    "process": "Proces",
+    "book": "Rezervovat"
+  },
+  "hero": {
+    "location": "Praha // 2025",
+    "tagline": "Ornamentální.Umění",
+    "title": "TETOVÁNÍ",
+    "subtitle1": "VLASTNÍ NÁVRHY. SUROVÁ ESTETIKA.",
+    "subtitle2": "PŘESNÉ. STERILNÍ. ÉTERICKÉ.",
+    "cta": "Rezervovat termín"
+  },
+  "marquee": {
+    "avantGarde": "Avantgarda",
+    "abstract": "Abstraktní",
+    "cybersigilism": "Kybersigilismus",
+    "geometry": "Geometrie"
+  },
+  "portfolio": {
+    "title": "Vybraná díla",
+    "subtitle": "Křivky které drží / Inkoust který teče",
+    "categories": {
+      "ornamental": "[Ornamentální]",
+      "lineWork": "[Linky]",
+      "abstract": "[Abstraktní]",
+      "whipShading": "[Whip stínování]",
+      "freehand": "[Freehand]"
+    },
+    "items": {
+      "spine": "Páteř",
+      "arm": "Ruka",
+      "back": "Záda"
+    },
+    "view": "Zobrazit",
+    "fullArchive": "Celý archiv",
+    "clickToClose": "Klikněte kamkoli pro zavření",
+    "close": "Zavřít"
+  },
+  "about": {
+    "title": "O umělci",
+    "heading": "AHOJ! JSEM SANDU",
+    "paragraph1": "Jsem tetovací umělkyně se 4 lety zkušeností a obrovskou láskou k tetování.",
+    "paragraph2": "Specializuji se na linky, ornamentální vzory a černočervené tóny. Jsem ale flexibilní umělkyně, takže se neboj, vytvoříme něco stylovýho, co ti bude sedět.",
+    "stats": {
+      "base": "SÍDLO PRAHA",
+      "exp": "4 ROKY ZKUŠENOSTÍ",
+      "clients": "300+ KLIENTŮ"
+    },
+    "established": "ZALOŽENO 2021",
+    "brand": "SANDU INK"
+  },
+  "faq": {
+    "title": "FAQ",
+    "q1": {
+      "question": "Bolí tetování?",
+      "answer": "Záleží na místě! Ale pracuju jemně a vždycky děláme přestávky. Spousta klientů říká, že to bylo mnohem jednodušší, než čekali. Neboj, mám taky anestetický krém, když je potřeba."
+    },
+    "q2": {
+      "question": "Kolik stojí tetování?",
+      "answer": "Ceny začínají od 2 000 Kč a záleží na velikosti a složitosti. Napiš mi svůj nápad a spočítám ti cenu zdarma!"
+    },
+    "q3": {
+      "question": "Jak se o něj mám starat po sezení?",
+      "answer": "Dám ti podrobné instrukce k péči a budu v kontaktu. Zkráceně: po sezení ti aplikuju hojivý film zdarma, budeš ho muset odstranit za 3–5 dní (řeknu ti přesně kdy). Pak stačí používat krém a neškrábat!"
+    },
+    "q4": {
+      "question": "Můžu přijít s vlastním návrhem?",
+      "answer": "Samozřejmě! Přines si reference a přizpůsobíme to, nebo ti můžu nakreslit něco podobného v mém stylu."
+    },
+    "q5": {
+      "question": "Co když si to rozmyslím na poslední chvíli?",
+      "answer": "Žádný problém! Můžeme přeložit termín, jen mi prosím dej vědět alespoň 12 hodin předem."
+    }
+  },
+  "testimonials": {
+    "t1": {
+      "text": "Měla jsem strach, ale Sandu mě uklidnila. Výsledek překonal očekávání.",
+      "author": "Anya",
+      "work": "Páteř"
+    },
+    "t2": {
+      "text": "Kvalita, atmosféra, profesionalita - všechno na nejvyšší úrovni.",
+      "author": "Marina",
+      "work": "Rukáv"
+    },
+    "t3": {
+      "text": "Přesnost jako šperky. Hojení proběhlo perfektně. Našla jsem svou umělkyni.",
+      "author": "Dasha",
+      "work": "Minimalismus"
+    }
+  },
+  "contact": {
+    "title": "Rezervovat",
+    "form": {
+      "name": "Jméno",
+      "namePlaceholder": "TVOJE JMÉNO",
+      "contact": "Kontakt",
+      "contactPlaceholder": "EMAIL / IG",
+      "concept": "Koncept",
+      "conceptPlaceholder": "POPIŠ SVŮJ NÁPAD...",
+      "submit": "Odeslat žádost",
+      "sending": "Odesílám...",
+      "successMessage": "Žádost odeslána! Brzy se ozvu.",
+      "errorMessage": "Něco se pokazilo. Žádost byla uložena a bude odeslána znovu automaticky.",
+      "validation": {
+        "nameRequired": "Zadej prosím své jméno",
+        "nameMinLength": "Jméno musí mít alespoň 2 znaky",
+        "contactRequired": "Zadej svůj email nebo Instagram",
+        "contactInvalid": "Zadej platný email nebo Instagram",
+        "conceptRequired": "Popiš prosím svůj nápad na tetování",
+        "conceptMinLength": "Napiš prosím alespoň 10 znaků"
+      }
+    },
+    "social": {
+      "instagram": "Instagram",
+      "telegram": "Telegram"
+    },
+    "address": "Korunni 859/18, Praha, 120 00"
+  },
+  "footer": {
+    "copyright": "© 2025 Sandu Ink. Praha.",
+    "tagline": "Navrženo pro odvážné."
+  }
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Crimson_Text, Space_Mono } from 'next/font/google'
+import { Toaster } from 'sonner'
 import './globals.css'
 
 // Font configuration
@@ -188,7 +189,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Toaster position="bottom-right" richColors />
+      </body>
     </html>
   )
 }
