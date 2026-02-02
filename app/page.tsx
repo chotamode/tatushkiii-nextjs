@@ -210,7 +210,7 @@ export default function HomePage() {
             </span>
           </div>
 
-          <div className="relative w-[50vw] mx-auto">
+          <div className="relative w-full md:w-[50vw] mx-auto">
             <span className="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-400 whitespace-nowrap">
               ⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺
             </span>
@@ -220,7 +220,7 @@ export default function HomePage() {
 
             <h1
               ref={heroTitleRef}
-              className="hero-title font-display font-black leading-[0.75] tracking-tighter mix-blend-darken select-none text-black relative text-center"
+              className="hero-title font-display font-black leading-[0.75] tracking-tight mix-blend-darken select-none text-black relative text-center"
             >
               {t.hero.title}
               {/* Accent marks */}
@@ -623,7 +623,7 @@ export default function HomePage() {
 
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
-            <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tighter leading-none">
+            <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tight leading-none pr-2">
               {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">{t.contact.titleAccent}</span>
             </h2>
           </div>
