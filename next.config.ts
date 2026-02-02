@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
   // Enable compression
   compress: true,
 
+  // Increase body size limit for photo uploads (Base64)
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '20mb',
+    },
+  },
+
   // Generate standalone build for better performance
   output: 'standalone',
 }

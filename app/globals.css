@@ -11,9 +11,12 @@
   --color-paper: #f8f8f8;
 }
 
-/* Smooth scrolling */
-html {
+/* Smooth scrolling + prevent horizontal overflow on mobile */
+html,
+body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Base body styles */

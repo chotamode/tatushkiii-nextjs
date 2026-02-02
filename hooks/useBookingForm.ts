@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'sonner';
-import type { BookingFormData, PendingSubmission } from '@/lib/booking';
+import type { BookingFormData, BookingSubmissionData, PendingSubmission } from '@/lib/booking';
 import { PENDING_SUBMISSIONS_KEY, MAX_RETRIES } from '@/lib/booking';
 
 interface FormTranslations {
   successMessage: string;
   errorMessage: string;
+  errorPhotoLost: string;
 }
 
 function getPendingSubmissions(): PendingSubmission[] {
@@ -24,7 +25,7 @@ function savePendingSubmissions(pending: PendingSubmission[]) {
   }
 }
 
-async function submitToApi(data: BookingFormData & { language: string }): Promise<boolean> {
+async function submitToApi(data: BookingSubmissionData): Promise<boolean> {
   const res = await fetch('/api/booking', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,7 +47,6 @@ export function useBookingForm(translations: FormTranslations) {
 
       for (const item of pending) {
         if (item.retryCount >= MAX_RETRIES) {
-          // Keep it — user can see it was attempted but failed
           stillPending.push(item);
           continue;
         }
@@ -67,9 +67,14 @@ export function useBookingForm(translations: FormTranslations) {
     retryPending();
   }, []);
 
-  const submitForm = useCallback(async (data: BookingFormData, language: string): Promise<boolean> => {
+  const submitForm = useCallback(async (
+    data: BookingFormData,
+    language: string,
+    photo?: string,
+    photoName?: string,
+  ): Promise<boolean> => {
     setIsSubmitting(true);
-    const payload = { ...data, language };
+    const payload: BookingSubmissionData = { ...data, language, photo, photoName };
 
     try {
       const ok = await submitToApi(payload);
@@ -79,17 +84,22 @@ export function useBookingForm(translations: FormTranslations) {
       }
       throw new Error('API error');
     } catch {
-      // Save to localStorage so request is never lost
+      // Save to localStorage — but WITHOUT photo (too large for localStorage)
+      const { photo: _p, photoName: _pn, ...dataWithoutPhoto } = payload;
+      const hadPhoto = !!photo;
       const pending = getPendingSubmissions();
-      pending.push({ data: payload, timestamp: Date.now(), retryCount: 0 });
+      pending.push({ data: dataWithoutPhoto, timestamp: Date.now(), retryCount: 0, hadPhoto });
       savePendingSubmissions(pending);
 
       toast.error(translations.errorMessage);
+      if (hadPhoto) {
+        toast.warning(translations.errorPhotoLost, { duration: 8000 });
+      }
       return false;
     } finally {
       setIsSubmitting(false);
     }
-  }, [translations.successMessage, translations.errorMessage]);
+  }, [translations.successMessage, translations.errorMessage, translations.errorPhotoLost]);
 
   return { submitForm, isSubmitting };
 }

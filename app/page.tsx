@@ -187,7 +187,7 @@ export default function HomePage() {
             <div className="absolute -left-4 top-1/4 w-1 h-12 bg-black opacity-10"></div>
             <div className="absolute -right-4 bottom-1/4 w-1 h-16 bg-black opacity-10"></div>
 
-            <h1 className="font-display font-black text-[18vw] md:text-[14vw] leading-[0.7] tracking-tighter mix-blend-darken select-none text-black relative">
+            <h1 className="font-display font-black leading-[0.7] tracking-tighter mix-blend-darken select-none text-black relative w-full" style={{ fontSize: 'clamp(3rem, 14vw, 12rem)' }}>
               {t.hero.title}
               {/* Accent marks */}
               <span className="absolute -top-6 right-0 text-[2vw] opacity-30 sigil-text">✦</span>
@@ -589,8 +589,8 @@ export default function HomePage() {
 
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
-            <h2 className="font-display text-6xl md:text-9xl font-bold uppercase tracking-tighter leading-none">
-              {t.contact.title.split(' ')[0]}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">{t.contact.title.split(' ')[1] || 'Now'}</span>
+            <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tighter leading-none">
+              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">{t.contact.titleAccent}</span>
             </h2>
           </div>
 
