@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '../hooks/useTranslation'
 import BookingForm from '@/components/BookingForm'
 
@@ -19,6 +19,37 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
   const { t, locale, changeLocale } = useTranslation()
+  const heroTitleRef = useRef<HTMLHeadingElement>(null)
+
+  // Auto-fit hero title to container width
+  const fitHeroTitle = useCallback(() => {
+    const el = heroTitleRef.current
+    if (!el || !el.parentElement) return
+    const containerWidth = el.parentElement.clientWidth * 0.92 // 92% of container
+    const maxSize = 180 // px max
+    const minSize = 40  // px min
+    let size = maxSize
+    el.style.fontSize = `${size}px`
+    // Binary search for the right size
+    let lo = minSize, hi = maxSize
+    while (hi - lo > 1) {
+      size = Math.floor((lo + hi) / 2)
+      el.style.fontSize = `${size}px`
+      if (el.scrollWidth > containerWidth) {
+        hi = size
+      } else {
+        lo = size
+      }
+    }
+    el.style.fontSize = `${lo}px`
+    el.classList.add('sized')
+  }, [])
+
+  useEffect(() => {
+    fitHeroTitle()
+    window.addEventListener('resize', fitHeroTitle)
+    return () => window.removeEventListener('resize', fitHeroTitle)
+  }, [fitHeroTitle, locale])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,7 +210,7 @@ export default function HomePage() {
             </span>
           </div>
 
-          <div className="relative inline-block">
+          <div className="relative w-[50vw] mx-auto">
             <span className="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-400 whitespace-nowrap">
               ⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺
             </span>
@@ -187,7 +218,10 @@ export default function HomePage() {
             <div className="absolute -left-4 top-1/4 w-1 h-12 bg-black opacity-10"></div>
             <div className="absolute -right-4 bottom-1/4 w-1 h-16 bg-black opacity-10"></div>
 
-            <h1 className="font-display font-black leading-[0.7] tracking-tighter mix-blend-darken select-none text-black relative w-full" style={{ fontSize: 'clamp(3rem, 14vw, 12rem)' }}>
+            <h1
+              ref={heroTitleRef}
+              className="hero-title font-display font-black leading-[0.75] tracking-tighter mix-blend-darken select-none text-black relative text-center"
+            >
               {t.hero.title}
               {/* Accent marks */}
               <span className="absolute -top-6 right-0 text-[2vw] opacity-30 sigil-text">✦</span>

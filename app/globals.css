@@ -26,6 +26,16 @@ body {
   cursor: crosshair;
 }
 
+/* Hero title — hidden until JS calculates exact font-size */
+.hero-title {
+  font-size: 1px;
+  white-space: nowrap;
+  visibility: hidden;
+}
+.hero-title.sized {
+  visibility: visible;
+}
+
 /* Font utilities */
 .font-display {
   font-family: 'Syne', sans-serif;
