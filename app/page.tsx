@@ -25,7 +25,7 @@ export default function HomePage() {
   const fitHeroTitle = useCallback(() => {
     const el = heroTitleRef.current
     if (!el || !el.parentElement) return
-    const containerWidth = el.parentElement.clientWidth - 4 // 4px buffer to prevent last letter clipping
+    const containerWidth = el.parentElement.clientWidth
     const maxSize = 500 // px max — will be clamped by binary search
     const minSize = 30  // px min
     // Binary search for the largest font-size that fits
@@ -621,8 +621,8 @@ export default function HomePage() {
 
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
-            <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tight leading-none pr-2">
-              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic">{t.contact.titleAccent}</span>
+            <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tight leading-none overflow-visible">
+              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic pr-4">{t.contact.titleAccent}</span>
             </h2>
           </div>
 
