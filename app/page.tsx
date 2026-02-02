@@ -25,7 +25,7 @@ export default function HomePage() {
   const fitHeroTitle = useCallback(() => {
     const el = heroTitleRef.current
     if (!el || !el.parentElement) return
-    const containerWidth = el.parentElement.clientWidth
+    const containerWidth = el.parentElement.clientWidth - 4 // 4px buffer to prevent last letter clipping
     const maxSize = 500 // px max — will be clamped by binary search
     const minSize = 30  // px min
     // Binary search for the largest font-size that fits
@@ -208,7 +208,7 @@ export default function HomePage() {
             </span>
           </div>
 
-          <div className="relative w-full md:w-[50vw] mx-auto">
+          <div className="relative w-full md:w-[50vw] mx-auto overflow-visible">
             <span className="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-400 whitespace-nowrap">
               ⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺
             </span>

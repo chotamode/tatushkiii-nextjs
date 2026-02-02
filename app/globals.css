@@ -31,7 +31,7 @@ body {
   font-size: 1px;
   white-space: nowrap;
   visibility: hidden;
-  padding-right: 0.05em; /* prevent last letter clipping from negative tracking */
+  overflow: visible;
 }
 .hero-title.sized {
   visibility: visible;
