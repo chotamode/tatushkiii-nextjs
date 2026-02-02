@@ -21,24 +21,22 @@ export default function HomePage() {
   const { t, locale, changeLocale } = useTranslation()
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
 
-  // Auto-fit hero title to container width
+  // Auto-fit hero title to fill its container width
   const fitHeroTitle = useCallback(() => {
     const el = heroTitleRef.current
     if (!el || !el.parentElement) return
-    const containerWidth = el.parentElement.clientWidth * 0.92 // 92% of container
-    const maxSize = 180 // px max
-    const minSize = 40  // px min
-    let size = maxSize
-    el.style.fontSize = `${size}px`
-    // Binary search for the right size
+    const containerWidth = el.parentElement.clientWidth
+    const maxSize = 500 // px max — will be clamped by binary search
+    const minSize = 30  // px min
+    // Binary search for the largest font-size that fits
     let lo = minSize, hi = maxSize
     while (hi - lo > 1) {
-      size = Math.floor((lo + hi) / 2)
-      el.style.fontSize = `${size}px`
+      const mid = Math.floor((lo + hi) / 2)
+      el.style.fontSize = `${mid}px`
       if (el.scrollWidth > containerWidth) {
-        hi = size
+        hi = mid
       } else {
-        lo = size
+        lo = mid
       }
     }
     el.style.fontSize = `${lo}px`
