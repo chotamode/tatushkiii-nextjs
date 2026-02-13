@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '../hooks/useTranslation'
-import BookingForm from '@/components/BookingForm'
+// Google Forms iframe URL — replace with your form's embed URL
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true'
 
 declare global {
   interface Window {
@@ -626,7 +627,18 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <BookingForm t={t} locale={locale} />
+          {/* Google Forms iframe — replace GOOGLE_FORM_URL with your embed link */}
+          <iframe
+            src={GOOGLE_FORM_URL}
+            width="100%"
+            height="1400"
+            frameBorder={0}
+            marginHeight={0}
+            marginWidth={0}
+            className="rounded-lg"
+          >
+            Loading…
+          </iframe>
 
           <div className="mt-24 flex flex-col items-center gap-4 text-center">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>
