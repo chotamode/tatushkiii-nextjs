@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '../hooks/useTranslation'
 // Google Forms iframe URL — replace with your form's embed URL
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true'
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeuAKpwRY9McwiJKII_qr52M_p11vYTadNrP97PI7_h-KBh_A/viewform?embedded=true'
 
 declare global {
   interface Window {
