@@ -3,7 +3,8 @@
     "portfolio": "Portfolio",
     "artist": "Artist",
     "process": "Process",
-    "book": "Book"
+    "book": "Book",
+    "bookNow": "Book Now"
   },
   "hero": {
     "location": "Prague // 2025",

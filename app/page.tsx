@@ -646,7 +646,7 @@ export default function HomePage() {
 
                 <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity">☠︎︎</div>
                 <div className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none mb-4">
-                  {t.nav.book} Now
+                  {t.nav.bookNow}
                 </div>
                 <div className="font-mono text-xs uppercase tracking-[0.4em] opacity-50 group-hover:opacity-80 transition-opacity flex items-center justify-center gap-3">
                   <span>↗</span>
