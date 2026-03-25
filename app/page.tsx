@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '../hooks/useTranslation'
-// Google Forms iframe URL — replace with your form's embed URL
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeuAKpwRY9McwiJKII_qr52M_p11vYTadNrP97PI7_h-KBh_A/viewform?embedded=true'
+const GOOGLE_FORM_URL = (process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ?? 'https://docs.google.com/forms/d/e/1FAIpQLSeuAKpwRY9McwiJKII_qr52M_p11vYTadNrP97PI7_h-KBh_A/viewform').replace('?embedded=true', '')
 
 declare global {
   interface Window {
@@ -59,12 +58,8 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const openCalPopup = () => {
-    if (window.Cal?.ns?.['book-session']) {
-      window.Cal.ns['book-session']('openModal', {
-        calLink: 'doompink/book-session',
-      })
-    }
+  const openBookingForm = () => {
+    window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -115,10 +110,13 @@ export default function HomePage() {
             </div>
 
             <button
-              onClick={openCalPopup}
-              className="border border-white/50 px-4 py-1 hover:bg-white hover:text-black transition-colors duration-300"
+              onClick={openBookingForm}
+              className="relative group border border-white px-5 py-1.5 hover:bg-white hover:text-black transition-colors duration-300 font-mono text-sm tracking-widest uppercase overflow-hidden"
             >
-              <span className="mr-2">★</span>{t.nav.book}
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="sigil-text animate-pulse">★</span>
+                {t.nav.book}
+              </span>
             </button>
           </div>
 
@@ -168,10 +166,12 @@ export default function HomePage() {
         </div>
 
         <button
-          onClick={() => { setMobileMenu(false); openCalPopup(); }}
-          className="font-mono text-xl border border-white px-8 py-3 mt-4"
+          onClick={() => { setMobileMenu(false); openBookingForm() }}
+          className="group relative font-mono text-xl border border-white px-10 py-4 mt-4 hover:bg-white hover:text-black transition-colors duration-300 tracking-widest uppercase"
         >
-          [ {t.nav.book.toUpperCase()} ]
+          <span className="sigil-text mr-2 opacity-60">★</span>
+          {t.nav.book.toUpperCase()}
+          <span className="sigil-text ml-2 opacity-60">★</span>
         </button>
         <div className="absolute bottom-10 w-full text-center opacity-30 sigil-text text-xl">
           ⫘⫘⫘⫘⫘⫘
@@ -240,15 +240,15 @@ export default function HomePage() {
             </p>
 
             <button
-              onClick={openCalPopup}
-              className="group relative inline-flex items-center gap-4 px-8 py-4 bg-transparent hover:bg-black hover:text-white transition-colors duration-500 border-x border-black"
+              onClick={openBookingForm}
+              className="group relative inline-flex items-center gap-5 px-10 py-5 bg-black text-white hover:bg-white hover:text-black transition-colors duration-500 border border-black"
             >
-              <span className="sigil-text">༺</span>
-              <span className="font-mono text-xs uppercase tracking-[0.2em]">{t.hero.cta}</span>
-              <span className="sigil-text">༻</span>
-              {/* Hover corner accents */}
-              <span className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-black opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              <span className="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-black opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="sigil-text opacity-70">༺</span>
+              <span className="font-mono text-sm uppercase tracking-[0.3em]">{t.hero.cta}</span>
+              <span className="sigil-text opacity-70">༻</span>
+              {/* Corner accents always visible */}
+              <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
+              <span className="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
             </button>
           </div>
         </div>
@@ -627,18 +627,39 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* Google Forms iframe — replace GOOGLE_FORM_URL with your embed link */}
-          <iframe
-            src={GOOGLE_FORM_URL}
-            width="100%"
-            height="1400"
-            frameBorder={0}
-            marginHeight={0}
-            marginWidth={0}
-            className="rounded-lg"
-          >
-            Loading…
-          </iframe>
+          {/* Booking CTA */}
+          <div className="flex flex-col items-center gap-10 py-8">
+            <div className="font-mono text-[10px] uppercase tracking-[0.5em] text-gray-400 flex items-center gap-4">
+              <span className="w-12 h-px bg-gray-300"></span>
+              {t.contact.available ?? 'available for booking'}
+              <span className="w-12 h-px bg-gray-300"></span>
+            </div>
+
+            <button
+              onClick={openBookingForm}
+              className="group relative w-full max-w-2xl"
+            >
+              <div className="relative border-2 border-black px-12 py-10 text-center overflow-hidden bg-white hover:bg-black hover:text-white transition-colors duration-500">
+                {/* Expanding corners */}
+                <span className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
+                <span className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
+
+                <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity">☠︎︎</div>
+                <div className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none mb-4">
+                  {t.nav.book} Now
+                </div>
+                <div className="font-mono text-xs uppercase tracking-[0.4em] opacity-50 group-hover:opacity-80 transition-opacity flex items-center justify-center gap-3">
+                  <span>↗</span>
+                  <span>{t.contact.formLink ?? 'open booking form'}</span>
+                  <span>↗</span>
+                </div>
+              </div>
+            </button>
+
+            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400 sigil-text animate-pulse">
+              ⫘⫘⫘
+            </div>
+          </div>
 
           <div className="mt-24 flex flex-col items-center gap-4 text-center">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>

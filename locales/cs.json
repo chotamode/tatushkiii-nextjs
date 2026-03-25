@@ -133,7 +133,9 @@
       "instagram": "Instagram",
       "telegram": "Telegram"
     },
-    "address": "Korunni 859/18, Praha, 120 00"
+    "address": "Korunni 859/18, Praha, 120 00",
+    "available": "k dispozici pro rezervaci",
+    "formLink": "otevřít formulář"
   },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Praha.",
