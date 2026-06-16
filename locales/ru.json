@@ -136,7 +136,8 @@
     },
     "address": "Korunni 859/18, Прага, 120 00",
     "available": "доступно для записи",
-    "formLink": "открыть форму"
+    "formLink": "открыть форму",
+    "formUnavailable": "Форма записи временно недоступна. Напишите, пожалуйста, в Instagram или Telegram."
   },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Прага.",

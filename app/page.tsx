@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '../hooks/useTranslation'
-const GOOGLE_FORM_URL = (process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ?? 'https://docs.google.com/forms/d/e/1FAIpQLSeuAKpwRY9McwiJKII_qr52M_p11vYTadNrP97PI7_h-KBh_A/viewform').replace('?embedded=true', '')
+import BookingModal from '../components/BookingModal'
 
 declare global {
   interface Window {
@@ -18,6 +18,7 @@ export default function HomePage() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [bookingOpen, setBookingOpen] = useState(false)
   const { t, locale, changeLocale } = useTranslation()
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
 
@@ -59,7 +60,7 @@ export default function HomePage() {
   }, [])
 
   const openBookingForm = () => {
-    window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer')
+    setBookingOpen(true)
   }
 
   return (
@@ -679,6 +680,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Booking Modal */}
+      <BookingModal open={bookingOpen} onOpenChange={setBookingOpen} />
 
       {/* Lightbox Modal */}
       {lightboxImage && (

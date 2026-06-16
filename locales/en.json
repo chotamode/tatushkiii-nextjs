@@ -136,7 +136,8 @@
     },
     "address": "Korunni 859/18, Praha, 120 00",
     "available": "available for booking",
-    "formLink": "open booking form"
+    "formLink": "open booking form",
+    "formUnavailable": "The booking form is temporarily unavailable. Please reach out via Instagram or Telegram."
   },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Prague.",
