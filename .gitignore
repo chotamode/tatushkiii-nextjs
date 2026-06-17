@@ -40,3 +40,4 @@ docs/
 # temporary files
 tmpclaude-*
 tmp*
+/AGENTS.md
