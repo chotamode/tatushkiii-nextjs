@@ -139,6 +139,9 @@
     "formLink": "open booking form",
     "formUnavailable": "The booking form is temporarily unavailable. Please reach out via Instagram or Telegram."
   },
+  "prices": {
+    "title": "Prices"
+  },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Prague.",
     "tagline": "Designed for the bold."

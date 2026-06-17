@@ -1,29 +1,15 @@
-import { useState, useEffect } from 'react';
-import en from '../locales/en.json';
-import cs from '../locales/cs.json';
-import ru from '../locales/ru.json';
+import { useContentContext } from '@/components/ContentProvider'
+import type { Locale } from '@/lib/directus'
 
-const translations = { en, cs, ru };
+export type { Locale }
 
-export type Locale = 'en' | 'cs' | 'ru';
-
+/**
+ * Returns the translation object for the active locale plus the locale state.
+ * Content now comes from Directus via <ContentProvider> (with the bundled
+ * locale JSON as fallback); the return shape is unchanged so existing
+ * `t.*` call sites keep working as-is.
+ */
 export function useTranslation() {
-  const [locale, setLocale] = useState<Locale>('en');
-
-  useEffect(() => {
-    // Get saved language from localStorage
-    const savedLocale = localStorage.getItem('locale') as Locale;
-    if (savedLocale && translations[savedLocale]) {
-      setLocale(savedLocale);
-    }
-  }, []);
-
-  const changeLocale = (newLocale: Locale) => {
-    setLocale(newLocale);
-    localStorage.setItem('locale', newLocale);
-  };
-
-  const t = translations[locale];
-
-  return { t, locale, changeLocale };
+  const { content, locale, changeLocale } = useContentContext()
+  return { t: content.translations[locale], locale, changeLocale }
 }
