@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { Locale, SiteContent } from '@/lib/directus'
+import type { Locale, SiteContent } from '@/lib/payload'
 
 interface ContentContextValue {
   content: SiteContent
@@ -14,7 +14,7 @@ const ContentContext = createContext<ContentContextValue | null>(null)
 const SUPPORTED: Locale[] = ['en', 'cs', 'ru']
 
 /**
- * Holds the content fetched from Directus (passed from the server component)
+ * Holds the content fetched from Payload (passed from the server component)
  * plus the active locale (persisted in localStorage, mirroring the previous
  * useTranslation behaviour). Wraps the whole page.
  */

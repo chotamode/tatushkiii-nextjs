@@ -1,15 +1,16 @@
 /**
- * Directus content layer.
+ * Payload CMS content layer.
  *
- * The site fetches all editable content from a self-hosted Directus instance
- * (server-side, with ISR via the `content` cache tag). Everything degrades
- * gracefully: if `DIRECTUS_URL` is unset or the request fails, we fall back to
- * the bundled `locales/*.json` so the site renders exactly as before and the
- * build never depends on a live CMS.
+ * The site fetches all editable content from a self-hosted, multi-tenant
+ * Payload instance (server-side, with ISR via the `content` cache tag).
+ * Everything degrades gracefully: if `PAYLOAD_URL` is unset or the request
+ * fails, we fall back to the bundled `locales/*.json` so the site renders
+ * exactly as before and the build never depends on a live CMS.
  *
  * Configured via env (set in Coolify):
- *   DIRECTUS_URL    e.g. https://cms.doomp.ink
- *   DIRECTUS_TOKEN  read-only static token (optional if collections are public)
+ *   PAYLOAD_URL     e.g. https://cms.tzhk.dev
+ *   PAYLOAD_TOKEN   users API-Key for read access (optional if collections are public)
+ *   PAYLOAD_TENANT  this site's tenant slug, e.g. "tatushka"
  */
 import en from '@/locales/en.json'
 import cs from '@/locales/cs.json'
@@ -126,22 +127,17 @@ export const fallbackContent: SiteContent = {
 }
 
 // ---------------------------------------------------------------------------
-// Directus fetch helpers
+// Payload REST helpers
 // ---------------------------------------------------------------------------
 
-interface TranslationRow {
-  languages_code?: string
-  [field: string]: unknown
-}
-
-/** Fold a Directus translations array into `{ en, cs, ru }`. */
-function fold(rows: TranslationRow[] | undefined, field: string): LocalizedString {
+/** Read a localized Payload field (returned as `{en,cs,ru}` when locale=all). */
+function loc(value: unknown): LocalizedString {
   const out: LocalizedString = { en: '', cs: '', ru: '' }
-  for (const row of rows ?? []) {
-    const code = String(row.languages_code ?? '').slice(0, 2) as Locale
-    if (code === 'en' || code === 'cs' || code === 'ru') {
-      out[code] = (row[field] as string) ?? ''
-    }
+  if (value && typeof value === 'object') {
+    const v = value as Record<string, unknown>
+    for (const code of LOCALES) if (typeof v[code] === 'string') out[code] = v[code] as string
+  } else if (typeof value === 'string') {
+    out.en = out.cs = out.ru = value
   }
   return out
 }
@@ -157,8 +153,8 @@ function setDeep(obj: Record<string, unknown>, dottedKey: string, value: string)
   cursor[parts[parts.length - 1]] = value
 }
 
-/** Rebuild the nested `{ en, cs, ru }` translation tree from flat key/value rows. */
-function buildTranslations(rows: Array<{ key?: string; translations?: TranslationRow[] }>): Record<Locale, Translations> {
+/** Rebuild the nested `{en,cs,ru}` translation tree from flat key/value rows. */
+function buildTranslations(rows: Array<{ key?: string; value?: unknown }>): Record<Locale, Translations> {
   const result: Record<Locale, Translations> = {
     en: deepClone(en) as Translations,
     cs: deepClone(cs) as Translations,
@@ -166,7 +162,7 @@ function buildTranslations(rows: Array<{ key?: string; translations?: Translatio
   }
   for (const row of rows ?? []) {
     if (!row?.key) continue
-    const values = fold(row.translations, 'value')
+    const values = loc(row.value)
     for (const locale of LOCALES) {
       if (values[locale]) setDeep(result[locale] as Record<string, unknown>, row.key, values[locale])
     }
@@ -174,86 +170,97 @@ function buildTranslations(rows: Array<{ key?: string; translations?: Translatio
   return result
 }
 
-function assetUrl(base: string, id: string | null | undefined): string {
-  return id ? `${base.replace(/\/+$/, '')}/assets/${id}` : ''
+/** Resolve a Payload media upload field to an absolute URL. */
+function mediaUrl(base: string, image: unknown): string {
+  if (!image || typeof image !== 'object') return ''
+  const url = (image as { url?: string }).url
+  if (!url) return ''
+  if (/^https?:\/\//.test(url)) return url
+  return `${base.replace(/\/+$/, '')}${url.startsWith('/') ? '' : '/'}${url}`
 }
 
-async function dGet(
-  base: string,
-  collection: string,
-  params: Record<string, string | number>,
-): Promise<unknown> {
-  const token = process.env.DIRECTUS_TOKEN
+interface PayloadList<T> {
+  docs: T[]
+}
+
+async function pGet(base: string, collection: string, params: Record<string, string | number>): Promise<unknown[]> {
+  const token = process.env.PAYLOAD_TOKEN
+  const tenant = process.env.PAYLOAD_TENANT
   const qs = new URLSearchParams()
+  qs.set('locale', 'all')
+  qs.set('depth', '1')
+  qs.set('limit', '200')
+  if (tenant) qs.set('where[tenant.slug][equals]', tenant)
   for (const [k, v] of Object.entries(params)) qs.set(k, String(v))
-  const res = await fetch(`${base.replace(/\/+$/, '')}/items/${collection}?${qs.toString()}`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+
+  const res = await fetch(`${base.replace(/\/+$/, '')}/api/${collection}?${qs.toString()}`, {
+    headers: token ? { Authorization: `users API-Key ${token}` } : {},
     // Never let an unreachable CMS hang a build/request — fall back instead.
     signal: AbortSignal.timeout(8000),
     // Cache + on-demand revalidation: the /api/revalidate webhook calls
-    // revalidateTag('content') whenever the client edits anything in Directus.
+    // revalidateTag('content') whenever the client edits anything in Payload.
     next: { tags: ['content'], revalidate: 60 },
   })
-  if (!res.ok) throw new Error(`Directus ${collection} responded ${res.status}`)
-  const json = (await res.json()) as { data: unknown }
-  return json.data
+  if (!res.ok) throw new Error(`Payload ${collection} responded ${res.status}`)
+  const json = (await res.json()) as PayloadList<unknown>
+  return json.docs ?? []
 }
 
-const PUBLISHED = JSON.stringify({ status: { _eq: 'published' } })
-
 /**
- * Fetch all site content from Directus, or return the bundled fallback when
- * Directus is not configured / unreachable.
+ * Fetch all site content from Payload, or return the bundled fallback when
+ * Payload is not configured / unreachable.
  */
 export async function getSiteContent(): Promise<SiteContent> {
-  const base = process.env.DIRECTUS_URL
+  const base = process.env.PAYLOAD_URL
   if (!base) return fallbackContent
 
   try {
     const [texts, portfolio, faqs, testimonials, services, settings] = await Promise.all([
-      dGet(base, 'site_texts', { fields: 'key,translations.languages_code,translations.value', limit: -1 }) as Promise<Array<{ key?: string; translations?: TranslationRow[] }>>,
-      dGet(base, 'portfolio_items', { fields: 'id,image,category,sort,translations.languages_code,translations.label', filter: PUBLISHED, sort: 'sort', limit: -1 }) as Promise<Array<Record<string, unknown>>>,
-      dGet(base, 'faqs', { fields: 'id,sort,translations.languages_code,translations.question,translations.answer', filter: PUBLISHED, sort: 'sort', limit: -1 }) as Promise<Array<Record<string, unknown>>>,
-      dGet(base, 'testimonials', { fields: 'id,author,sort,translations.languages_code,translations.text,translations.work', filter: PUBLISHED, sort: 'sort', limit: -1 }) as Promise<Array<Record<string, unknown>>>,
-      dGet(base, 'services', { fields: 'id,price,sort,translations.languages_code,translations.name,translations.description', filter: PUBLISHED, sort: 'sort', limit: -1 }) as Promise<Array<Record<string, unknown>>>,
-      dGet(base, 'site_settings', { fields: '*' }) as Promise<Record<string, unknown> | null>,
+      pGet(base, 'site_texts', { sort: 'key' }) as Promise<Array<{ key?: string; value?: unknown }>>,
+      pGet(base, 'portfolio', { sort: 'sort' }) as Promise<Array<Record<string, unknown>>>,
+      pGet(base, 'faqs', { sort: 'sort' }) as Promise<Array<Record<string, unknown>>>,
+      pGet(base, 'testimonials', { sort: 'sort' }) as Promise<Array<Record<string, unknown>>>,
+      pGet(base, 'services', { sort: 'sort' }) as Promise<Array<Record<string, unknown>>>,
+      pGet(base, 'site_settings', { limit: 1 }) as Promise<Array<Record<string, unknown>>>,
     ])
+
+    const s = settings[0]
 
     return {
       translations: buildTranslations(texts),
       portfolio: portfolio.map((r) => ({
         id: r.id as string | number,
-        image: assetUrl(base, r.image as string | null),
+        image: mediaUrl(base, r.image),
         category: (r.category as string | null) ?? null,
-        label: fold(r.translations as TranslationRow[] | undefined, 'label'),
+        label: loc(r.label),
       })),
       faqs: faqs.map((r) => ({
         id: r.id as string | number,
-        question: fold(r.translations as TranslationRow[] | undefined, 'question'),
-        answer: fold(r.translations as TranslationRow[] | undefined, 'answer'),
+        question: loc(r.question),
+        answer: loc(r.answer),
       })),
       testimonials: testimonials.map((r) => ({
         id: r.id as string | number,
         author: (r.author as string) ?? '',
-        text: fold(r.translations as TranslationRow[] | undefined, 'text'),
-        work: fold(r.translations as TranslationRow[] | undefined, 'work'),
+        text: loc(r.text),
+        work: loc(r.work),
       })),
       services: services.map((r) => ({
         id: r.id as string | number,
         price: (r.price as string) ?? '',
-        name: fold(r.translations as TranslationRow[] | undefined, 'name'),
-        description: fold(r.translations as TranslationRow[] | undefined, 'description'),
+        name: loc(r.name),
+        description: loc(r.description),
       })),
       settings: {
-        phone: (settings?.phone as string) ?? fallbackSettings.phone,
-        email: (settings?.email as string) ?? fallbackSettings.email,
-        instagram_url: (settings?.instagram_url as string) ?? fallbackSettings.instagram_url,
-        telegram_url: (settings?.telegram_url as string) ?? fallbackSettings.telegram_url,
-        archive_url: (settings?.archive_url as string) ?? fallbackSettings.archive_url,
+        phone: (s?.phone as string) ?? fallbackSettings.phone,
+        email: (s?.email as string) ?? fallbackSettings.email,
+        instagram_url: (s?.instagram_url as string) ?? fallbackSettings.instagram_url,
+        telegram_url: (s?.telegram_url as string) ?? fallbackSettings.telegram_url,
+        archive_url: (s?.archive_url as string) ?? fallbackSettings.archive_url,
       },
     }
   } catch (error) {
-    console.error('[directus] content fetch failed — using bundled fallback:', error)
+    console.error('[payload] content fetch failed — using bundled fallback:', error)
     return fallbackContent
   }
 }

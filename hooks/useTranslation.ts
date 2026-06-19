@@ -1,11 +1,11 @@
 import { useContentContext } from '@/components/ContentProvider'
-import type { Locale } from '@/lib/directus'
+import type { Locale } from '@/lib/payload'
 
 export type { Locale }
 
 /**
  * Returns the translation object for the active locale plus the locale state.
- * Content now comes from Directus via <ContentProvider> (with the bundled
+ * Content now comes from Payload via <ContentProvider> (with the bundled
  * locale JSON as fallback); the return shape is unchanged so existing
  * `t.*` call sites keep working as-is.
  */

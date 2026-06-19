@@ -1,9 +1,9 @@
-import { getSiteContent } from '@/lib/directus'
+import { getSiteContent } from '@/lib/payload'
 import { ContentProvider } from '@/components/ContentProvider'
 import PageClient from './PageClient'
 
 // Revalidate the static render periodically; the /api/revalidate webhook
-// (called by Directus on content change) refreshes it on demand via the
+// (called by Payload on content change) refreshes it on demand via the
 // 'content' cache tag.
 export const revalidate = 60
 

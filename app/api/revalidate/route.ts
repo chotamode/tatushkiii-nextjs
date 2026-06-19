@@ -2,10 +2,10 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { revalidateTag } from 'next/cache'
 
 /**
- * On-demand revalidation endpoint for Directus.
+ * On-demand revalidation endpoint for Payload.
  *
- * Configure a Directus Flow (trigger: items create/update/delete on the content
- * collections) with a "Webhook / Request URL" operation pointing at:
+ * Add a Payload afterChange/afterDelete hook (or webhook) on the content
+ * collections that sends:
  *   POST https://<site>/api/revalidate?secret=<REVALIDATE_SECRET>
  *
  * It clears the 'content' fetch cache tag so the homepage re-fetches the latest

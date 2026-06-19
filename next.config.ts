@@ -1,20 +1,21 @@
 import type { NextConfig } from 'next'
 
-// Allow next/image to optimize assets served by the Directus instance
-// (hostname derived from DIRECTUS_URL so nothing is hardcoded).
-const directusUrl = process.env.DIRECTUS_URL
+// Allow next/image to optimize assets served by the Payload instance
+// (hostname derived from PAYLOAD_URL so nothing is hardcoded).
+const payloadUrl = process.env.PAYLOAD_URL
 const remotePatterns: NonNullable<NextConfig['images']>['remotePatterns'] = []
-if (directusUrl) {
+if (payloadUrl) {
   try {
-    const { protocol, hostname, port } = new URL(directusUrl)
+    const { protocol, hostname, port } = new URL(payloadUrl)
     remotePatterns.push({
       protocol: protocol.replace(':', '') as 'http' | 'https',
       hostname,
       port: port || undefined,
-      pathname: '/assets/**',
+      // Payload serves uploaded media under /api/media/file/** (and /media/**).
+      pathname: '/**',
     })
   } catch {
-    // Invalid DIRECTUS_URL — skip remote images, local fallback still works.
+    // Invalid PAYLOAD_URL — skip remote images, local fallback still works.
   }
 }
 
