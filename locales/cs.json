@@ -139,6 +139,9 @@
     "formLink": "otevřít formulář",
     "formUnavailable": "Rezervační formulář je dočasně nedostupný. Napište prosím na Instagram nebo Telegram."
   },
+  "prices": {
+    "title": "Ceník"
+  },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Praha.",
     "tagline": "Navrženo pro odvážné."

@@ -139,6 +139,9 @@
     "formLink": "открыть форму",
     "formUnavailable": "Форма записи временно недоступна. Напишите, пожалуйста, в Instagram или Telegram."
   },
+  "prices": {
+    "title": "Цены"
+  },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Прага.",
     "tagline": "Создано для смелых."
