@@ -16,8 +16,10 @@ components / pages  ─►  @/lib/content  ─►  [ adapter: portfolio.ts ]  �
 | `types.ts` | App-owned domain types (`PortfolioItem`, `Locale`). The contract the UI depends on. |
 | `index.ts` | Public API — import from `@/lib/content`, never from the files below. |
 | `config.ts` | Reads server-only env (`CMS_URL`, tenant, revalidate). |
-| `portfolio.ts` | **The adapter.** Fetches Payload, maps its shape → `PortfolioItem`. Falls back to seed on any failure. |
+| `_payload.ts` | Shared Payload-only helpers (fetch, tenant resolution, URL absolutize). Internal. |
+| `portfolio.ts` | **Adapter.** Fetches Payload portfolio, maps → `PortfolioItem[]`. Falls back to seed on failure. |
 | `portfolio.seed.ts` | Local fallback data so the site renders with no CMS at all. |
+| `siteContent.ts` | **Adapter.** Fetches the per-tenant `siteContent` doc → `SiteContent` (texts/contacts/SEO). Returns `null` when no CMS, so the UI keeps its built-in locale copy. |
 
 ## How to use (from a Server Component)
 

@@ -5,4 +5,11 @@
  * adapter files directly. This keeps the surface small and the CMS swappable.
  */
 export { getPortfolio } from './portfolio'
-export type { Locale, PortfolioCategory, PortfolioItem } from './types'
+export { getSiteContent } from './siteContent'
+export type {
+  Locale,
+  PortfolioCategory,
+  PortfolioItem,
+  SiteContent,
+  SocialLink,
+} from './types'
