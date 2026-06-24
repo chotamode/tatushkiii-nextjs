@@ -21,12 +21,15 @@ type RawMedia = {
   height?: number | null
   sizes?: Record<string, RawMediaSize | undefined>
 }
-type RawPortfolioDoc = {
+// Portfolio now lives as an array on the single per-tenant `siteContent` doc
+// (display order = array order), not in a standalone collection.
+type RawPortfolioRow = {
   id: string | number
   label?: string | null
   category?: string | null
   image?: RawMedia | string | null
 }
+type RawSiteContentDoc = { portfolio?: RawPortfolioRow[] | null }
 type RawList<T> = { docs?: T[] }
 
 const pickImageUrls = (media: RawMedia): { imageUrl: string | null; thumbnailUrl: string | null } => {
@@ -37,7 +40,7 @@ const pickImageUrls = (media: RawMedia): { imageUrl: string | null; thumbnailUrl
   }
 }
 
-const mapDoc = (doc: RawPortfolioDoc): PortfolioItem | null => {
+const mapRow = (doc: RawPortfolioRow): PortfolioItem | null => {
   const media = typeof doc.image === 'object' && doc.image !== null ? doc.image : null
   const { imageUrl, thumbnailUrl } = media
     ? pickImageUrls(media)
@@ -66,12 +69,11 @@ export async function getPortfolio(locale: Locale): Promise<PortfolioItem[]> {
       'where[tenant][equals]': tenantId,
       locale,
       depth: '1',
-      sort: 'sort',
-      limit: '100',
+      limit: '1',
     })
-    const data = await cmsFetch<RawList<RawPortfolioDoc>>(`/api/portfolio?${params}`)
-    const items = (data.docs ?? [])
-      .map(mapDoc)
+    const data = await cmsFetch<RawList<RawSiteContentDoc>>(`/api/siteContent?${params}`)
+    const items = (data.docs?.[0]?.portfolio ?? [])
+      .map(mapRow)
       .filter((item): item is PortfolioItem => item !== null)
 
     return items.length ? items : portfolioSeed

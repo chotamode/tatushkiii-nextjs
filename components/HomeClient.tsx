@@ -4,11 +4,13 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '@/hooks/useTranslation'
 import BookingModal from '@/components/BookingModal'
 import PortfolioGallery from '@/components/PortfolioGallery'
-import type { PortfolioItem } from '@/lib/content'
+import type { PortfolioItem, SiteContent } from '@/lib/content'
 
 type HomeClientProps = {
   /** Portfolio per locale, fetched on the server. Empty arrays → built-in grid. */
   portfolioByLocale: Record<Locale, PortfolioItem[]>
+  /** Editable CMS texts per locale. null → built-in locale copy (non-breaking). */
+  siteContentByLocale: Record<Locale, SiteContent | null>
 }
 
 declare global {
@@ -21,7 +23,7 @@ declare global {
   }
 }
 
-export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
+export default function HomeClient({ portfolioByLocale, siteContentByLocale }: HomeClientProps) {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
@@ -32,6 +34,24 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
   // the section below falls back to the original built-in grid — so the live
   // site looks identical until the artist adds work in the CMS.
   const cmsPortfolio = portfolioByLocale[locale] ?? []
+
+  // Editable texts from the CMS for the active locale. Every field falls back to
+  // the built-in locale string, so the site is unchanged when the CMS is not
+  // configured/unreachable (`sc` is null) or a field is blank.
+  const sc = siteContentByLocale[locale] ?? null
+  const heroTitle = sc?.hero.title || t.hero.title
+  const heroSubtitle = sc?.hero.subtitle?.trim() || null
+  const ctaLabel = sc?.cta.label || t.hero.cta
+  const aboutHeading = sc?.about.heading || t.about.heading
+  const aboutParagraphs =
+    sc?.about.body?.trim() ? sc.about.body.split(/\n{2,}/).filter(Boolean) : null
+  const contactEmail = sc?.contacts.email || 'doompynooo@gmail.com'
+  const contactPhone = sc?.contacts.whatsapp || '+420 774 685 187'
+  const contactPhoneHref = `tel:${contactPhone.replace(/[^+\d]/g, '')}`
+  const socialUrl = (platform: string, fallback: string) =>
+    sc?.socials.find((s) => s.platform === platform)?.url || fallback
+  const instagramUrl = socialUrl('instagram', 'https://www.instagram.com/doompink')
+  const telegramUrl = socialUrl('telegram', 'https://t.me/doompink')
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
 
   // Auto-fit hero title to fill its container width
@@ -234,7 +254,7 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
               ref={heroTitleRef}
               className="hero-title font-display font-black leading-[0.75] tracking-tight mix-blend-darken select-none text-black relative text-center"
             >
-              {t.hero.title}
+              {heroTitle}
               {/* Accent marks */}
               <span className="absolute -top-6 right-0 text-[2vw] opacity-30 sigil-text">✦</span>
               <span className="absolute -bottom-4 left-0 text-[2vw] opacity-30 sigil-text">✧</span>
@@ -247,8 +267,14 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
           <div className="mt-24 flex flex-col items-center">
             <p className="max-w-md text-center font-mono text-xs md:text-sm leading-relaxed mb-8 relative">
               <span className="absolute -left-12 top-0 text-gray-300 hidden md:block">✱</span>
-              {t.hero.subtitle1}<br/>
-              <span className="opacity-50">{t.hero.subtitle2}</span>
+              {heroSubtitle ? (
+                heroSubtitle
+              ) : (
+                <>
+                  {t.hero.subtitle1}<br/>
+                  <span className="opacity-50">{t.hero.subtitle2}</span>
+                </>
+              )}
               <span className="absolute -right-12 bottom-0 text-gray-300 hidden md:block">✱</span>
             </p>
 
@@ -257,7 +283,7 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
               className="group relative inline-flex items-center gap-5 px-10 py-5 bg-black text-white hover:bg-white hover:text-black transition-colors duration-500 border border-black"
             >
               <span className="sigil-text opacity-70">༺</span>
-              <span className="font-mono text-sm uppercase tracking-[0.3em]">{t.hero.cta}</span>
+              <span className="font-mono text-sm uppercase tracking-[0.3em]">{ctaLabel}</span>
               <span className="sigil-text opacity-70">༻</span>
               {/* Corner accents always visible */}
               <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
@@ -458,7 +484,7 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
           {/* More Link */}
           <div className="mt-32 text-center relative">
             <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-24 bg-gradient-to-b from-transparent via-black/20 to-transparent"></div>
-            <a href="https://www.instagram.com/doompink" target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
               <span className="sigil-text text-2xl animate-bounce">⫘</span>
               <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-black transition-all pb-1">
                 {t.portfolio.fullArchive}
@@ -490,17 +516,23 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
                 <span className="sigil-text">⚔</span> {t.about.title}
               </div>
               <h2 className="font-display text-5xl md:text-8xl font-bold mb-12 leading-none">
-                {t.about.heading.split('\n').map((line, i) => (
+                {aboutHeading.split('\n').map((line, i) => (
                   <span key={i}>{line}<br/></span>
                 ))}
               </h2>
               <div className="space-y-8 font-mono text-sm md:text-base text-gray-300 font-light leading-relaxed max-w-lg">
-                <p className="first-letter:text-4xl first-letter:font-display first-letter:mr-2 first-letter:float-left">
-                  {t.about.paragraph1}
-                </p>
-                <p>
-                  {t.about.paragraph2}
-                </p>
+                {(aboutParagraphs ?? [t.about.paragraph1, t.about.paragraph2]).map((para, i) => (
+                  <p
+                    key={i}
+                    className={
+                      i === 0
+                        ? 'first-letter:text-4xl first-letter:font-display first-letter:mr-2 first-letter:float-left'
+                        : undefined
+                    }
+                  >
+                    {para}
+                  </p>
+                ))}
                 <div className="flex items-center gap-4 text-xs text-gray-500 pt-4 border-t border-white/10">
                   <span>{t.about.stats.base}</span>
                   <span>•</span>
@@ -681,14 +713,14 @@ export default function HomeClient({ portfolioByLocale }: HomeClientProps) {
           <div className="mt-24 flex flex-col items-center gap-4 text-center">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>
             <div className="font-mono text-xs uppercase tracking-widest">
-              <a href="https://www.instagram.com/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.instagram}</a>
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.instagram}</a>
               <span className="opacity-30">/</span>
-              <a href="https://t.me/doompink" target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.telegram}</a>
+              <a href={telegramUrl} target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.telegram}</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-2">
-              <a href="tel:+420774685187" className="hover:line-through">+420 774 685 187</a>
+              <a href={contactPhoneHref} className="hover:line-through">{contactPhone}</a>
               <span className="mx-2">•</span>
-              <a href="mailto:doompynooo@gmail.com" className="hover:line-through">doompynooo@gmail.com</a>
+              <a href={`mailto:${contactEmail}`} className="hover:line-through">{contactEmail}</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-1">
               {t.contact.address}
