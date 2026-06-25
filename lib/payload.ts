@@ -185,9 +185,20 @@ interface PayloadList<T> {
   docs: T[]
 }
 
+/**
+ * Read the CMS config from env, accepting both the canonical PAYLOAD_* names
+ * and the legacy CMS_* aliases (some deployments were set up with the latter).
+ */
+export function payloadEnv() {
+  return {
+    base: (process.env.PAYLOAD_URL || process.env.CMS_URL || '').replace(/\/+$/, ''),
+    token: process.env.PAYLOAD_TOKEN || process.env.CMS_TOKEN || '',
+    tenant: process.env.PAYLOAD_TENANT || process.env.CMS_TENANT_SLUG || '',
+  }
+}
+
 async function pGet(base: string, collection: string, params: Record<string, string | number>): Promise<unknown[]> {
-  const token = process.env.PAYLOAD_TOKEN
-  const tenant = process.env.PAYLOAD_TENANT
+  const { token, tenant } = payloadEnv()
   const qs = new URLSearchParams()
   qs.set('locale', 'all')
   qs.set('depth', '1')
@@ -213,7 +224,7 @@ async function pGet(base: string, collection: string, params: Record<string, str
  * Payload is not configured / unreachable.
  */
 export async function getSiteContent(): Promise<SiteContent> {
-  const base = process.env.PAYLOAD_URL
+  const { base } = payloadEnv()
   if (!base) return fallbackContent
 
   try {

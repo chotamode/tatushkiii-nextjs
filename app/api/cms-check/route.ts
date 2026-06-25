@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { payloadEnv } from '@/lib/payload'
 
 /**
  * Diagnostic endpoint — checks the Payload CMS connection step by step.
@@ -8,17 +9,15 @@ import { NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const base = process.env.PAYLOAD_URL?.replace(/\/+$/, '')
-  const token = process.env.PAYLOAD_TOKEN
-  const tenant = process.env.PAYLOAD_TENANT
+  const { base, token, tenant } = payloadEnv()
 
   const steps: Record<string, unknown> = {}
 
-  // 1. Env vars
+  // 1. Env vars (accepts PAYLOAD_* or legacy CMS_* aliases)
   steps.env = {
-    PAYLOAD_URL: base || '(not set)',
-    PAYLOAD_TOKEN: token ? `set (${token.slice(0, 6)}…)` : '(not set)',
-    PAYLOAD_TENANT: tenant || '(not set)',
+    url: base || '(not set)',
+    token: token ? `set (${token.slice(0, 6)}…)` : '(not set — collections must be public-readable)',
+    tenant: tenant || '(not set)',
   }
 
   if (!base) {
