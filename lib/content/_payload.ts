@@ -9,12 +9,7 @@ import { cmsConfig } from './config'
 
 // Typed explicitly so it does not rely on Next's ambient RequestInit augmentation.
 type NextFetchInit = RequestInit & { next?: { revalidate?: number; tags?: string[] } }
-// Time-based ISR + the 'content' cache tag, so the /api/revalidate webhook
-// (POST from Payload on content change → revalidateTag('content')) refreshes
-// the site on demand without waiting for the revalidate window.
-const fetchInit: NextFetchInit = {
-  next: { revalidate: cmsConfig.revalidateSeconds, tags: ['content'] },
-}
+const fetchInit: NextFetchInit = { next: { revalidate: cmsConfig.revalidateSeconds } }
 
 type RawList<T> = { docs?: T[] }
 
