@@ -24,36 +24,48 @@ export async function GET() {
     return NextResponse.json({ ok: false, error: 'PAYLOAD_URL is not set — site uses bundled fallback content', steps })
   }
 
-  // 2. Can we reach Payload at all?
   const headers: Record<string, string> = { 'Content-Type': 'application/json' }
   if (token) headers.Authorization = `users API-Key ${token}`
 
-  try {
-    const pingRes = await fetch(`${base}/api`, { headers, signal: AbortSignal.timeout(8000) })
-    steps.ping = { status: pingRes.status, ok: pingRes.ok }
-    if (!pingRes.ok) {
-      const body = await pingRes.text().catch(() => '')
-      return NextResponse.json({ ok: false, error: `Payload /api responded ${pingRes.status}`, body, steps })
-    }
-  } catch (err) {
-    steps.ping = { error: String(err) }
-    return NextResponse.json({ ok: false, error: `Cannot reach Payload at ${base}`, steps })
-  }
-
-  // 3. Can we fetch the tenant?
+  // 2. Hit a real collection endpoint (Payload has no bare /api route).
+  // This doubles as the connectivity + auth check.
   try {
     const tenantRes = await fetch(
-      `${base}/api/tenants?where[slug][equals]=${encodeURIComponent(tenant ?? '')}&limit=1`,
+      `${base}/api/tenants?where[slug][equals]=${encodeURIComponent(tenant ?? '')}&limit=1&depth=0`,
       { headers, signal: AbortSignal.timeout(8000) },
     )
-    const tenantJson = await tenantRes.json().catch(() => ({}))
-    steps.tenant = { status: tenantRes.status, docs: tenantJson?.docs?.length ?? 0, first: tenantJson?.docs?.[0]?.slug }
+    const contentType = tenantRes.headers.get('content-type') ?? ''
+    const isJson = contentType.includes('application/json')
+    const raw = await tenantRes.text()
+
+    if (!isJson) {
+      // Got HTML instead of JSON → this URL isn't serving Payload's REST API.
+      return NextResponse.json({
+        ok: false,
+        error: `${base}/api/tenants returned ${tenantRes.status} as ${contentType || 'unknown type'} (not JSON). This URL is probably not the Payload API, or the API base path differs.`,
+        steps: { ...steps, tenants: { status: tenantRes.status, contentType, bodyStart: raw.slice(0, 120) } },
+      })
+    }
+
+    const tenantJson = JSON.parse(raw)
+    steps.tenants = {
+      status: tenantRes.status,
+      docs: tenantJson?.docs?.length ?? 0,
+      first: tenantJson?.docs?.[0]?.slug,
+    }
+    if (tenantRes.status === 403) {
+      return NextResponse.json({
+        ok: false,
+        error: 'Payload returned 403 — tenants collection is not public-readable. Set a CMS_TOKEN (API key) in Coolify.',
+        steps,
+      })
+    }
     if (!tenantJson?.docs?.length) {
-      return NextResponse.json({ ok: false, error: `Tenant "${tenant}" not found in Payload`, steps })
+      return NextResponse.json({ ok: false, error: `Tenant "${tenant}" not found in Payload (check the slug)`, steps })
     }
   } catch (err) {
-    steps.tenant = { error: String(err) }
-    return NextResponse.json({ ok: false, error: 'Failed to query tenants collection', steps })
+    steps.tenants = { error: String(err) }
+    return NextResponse.json({ ok: false, error: `Cannot reach Payload API at ${base}/api/tenants`, steps })
   }
 
   // 4. Can we fetch content (site_texts sample)?
