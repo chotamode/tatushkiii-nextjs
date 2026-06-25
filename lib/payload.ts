@@ -59,6 +59,7 @@ export interface Settings {
   instagram_url: string
   telegram_url: string
   archive_url: string
+  portfolio_url: string
 }
 
 export interface SiteContent {
@@ -115,6 +116,7 @@ const fallbackSettings: Settings = {
   instagram_url: 'https://www.instagram.com/doompink',
   telegram_url: 'https://t.me/doompink',
   archive_url: 'https://www.instagram.com/doompink',
+  portfolio_url: '',
 }
 
 export const fallbackContent: SiteContent = {
@@ -257,6 +259,7 @@ export async function getSiteContent(): Promise<SiteContent> {
         instagram_url: (s?.instagram_url as string) ?? fallbackSettings.instagram_url,
         telegram_url: (s?.telegram_url as string) ?? fallbackSettings.telegram_url,
         archive_url: (s?.archive_url as string) ?? fallbackSettings.archive_url,
+        portfolio_url: (s?.portfolio_url as string) ?? fallbackSettings.portfolio_url,
       },
     }
   } catch (error) {

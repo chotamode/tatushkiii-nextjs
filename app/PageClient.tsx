@@ -661,21 +661,128 @@ export default function PageClient() {
       )}
 
       {/* Footer */}
-      <footer className="bg-white text-black py-12 border-t border-black">
-        <div className="container mx-auto px-4 text-center overflow-hidden">
-          {/* Complex Unicode Signature */}
-          <div className="mb-8 font-mono text-sm tracking-[1em] opacity-80 whitespace-nowrap overflow-hidden">
-            <a href="/" className="hover:opacity-60 transition-opacity">doomp.ink</a>
+      <footer className="bg-black text-white border-t border-white/10">
+        {/* Top accent line */}
+        <div className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+        <div className="container mx-auto px-6 py-16">
+          {/* Main grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+
+            {/* Col 1 — Brand */}
+            <div className="flex flex-col gap-6">
+              <div>
+                <a
+                  href="/"
+                  className="font-mono text-2xl tracking-[0.3em] uppercase text-white hover:text-white/70 transition-colors"
+                >
+                  doomp.ink
+                </a>
+                <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                  Prague // Czech Republic
+                </div>
+              </div>
+              <p className="font-mono text-[11px] uppercase tracking-widest text-white/50 leading-relaxed max-w-[220px]">
+                {t.footer.tagline}
+              </p>
+              {/* Corner brackets decoration */}
+              <div className="relative w-8 h-8 opacity-30">
+                <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white" />
+                <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white" />
+              </div>
+            </div>
+
+            {/* Col 2 — Contact & Follow */}
+            <div className="flex flex-col gap-8">
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mb-4 flex items-center gap-3">
+                  <span>{t.footer.contact}</span>
+                  <div className="flex-1 h-px bg-white/10" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href={`mailto:${settings.email}`}
+                    className="font-mono text-[11px] text-white/60 hover:text-white transition-colors tracking-wide"
+                  >
+                    {settings.email}
+                  </a>
+                  <a
+                    href={`tel:${settings.phone}`}
+                    className="font-mono text-[11px] text-white/60 hover:text-white transition-colors tracking-wide"
+                  >
+                    {settings.phone}
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mb-4 flex items-center gap-3">
+                  <span>{t.footer.follow}</span>
+                  <div className="flex-1 h-px bg-white/10" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href={settings.instagram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-[11px] text-white/60 hover:text-white transition-colors tracking-wide flex items-center gap-2 group"
+                  >
+                    <span>Instagram</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px]">↗</span>
+                  </a>
+                  <a
+                    href={settings.telegram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-[11px] text-white/60 hover:text-white transition-colors tracking-wide flex items-center gap-2 group"
+                  >
+                    <span>Telegram</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-[9px]">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Col 3 — Developer credit */}
+            <div className="flex flex-col justify-between gap-8">
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/30 mb-4 flex items-center gap-3">
+                  <span>{t.footer.madeBy}</span>
+                  <div className="flex-1 h-px bg-white/10" />
+                </div>
+                {settings.portfolio_url ? (
+                  <a
+                    href={settings.portfolio_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-start gap-3 font-mono text-white hover:text-white/70 transition-colors"
+                  >
+                    <div className="flex flex-col gap-1">
+                      <span className="text-sm tracking-[0.2em] uppercase">
+                        {settings.portfolio_url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                      </span>
+                      <span className="text-[9px] tracking-widest text-white/30 uppercase">
+                        Web Developer
+                      </span>
+                    </div>
+                    <span className="text-lg leading-none mt-0.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                  </a>
+                ) : null}
+              </div>
+
+              {/* Sigil */}
+              <div className="font-mono text-right text-white/10 text-xs tracking-[1.5em] select-none">
+                ⫘⫘⫘⫘
+              </div>
+            </div>
           </div>
 
-          <div className="flex flex-col items-center gap-2 font-mono text-[10px] uppercase text-gray-500 tracking-widest">
-            <span>{t.footer.copyright}</span>
-            <span className="sigil-text text-lg">⫘</span>
-            <span>{t.footer.tagline}</span>
-          </div>
-
-          <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]">
-            ⫘⫘⫘⫘⫘
+          {/* Bottom bar */}
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/30">
+              {t.footer.copyright} {t.footer.rights}
+            </span>
+            <div className="sigil-text text-white/20 text-base tracking-[1em]">⫘⫘⫘</div>
           </div>
         </div>
       </footer>
