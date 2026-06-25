@@ -8,7 +8,7 @@
  * NOTE: server-only (uses ISR `fetch`). Call from a Server Component and pass
  * the result to client components as props.
  */
-import { absolutize, cmsFetch, resolveTenantId } from './_payload'
+import { absolutize, cmsFetch, firstBlock, resolveTenantId } from './_payload'
 import { isCmsConfigured } from './config'
 import { portfolioSeed } from './portfolio.seed'
 import type { Locale, PortfolioItem } from './types'
@@ -21,15 +21,16 @@ type RawMedia = {
   height?: number | null
   sizes?: Record<string, RawMediaSize | undefined>
 }
-// Portfolio now lives as an array on the single per-tenant `siteContent` doc
-// (display order = array order), not in a standalone collection.
+// Portfolio is the `items` of the first `gallery` block in the page's `layout`
+// (display order = array order). `tag` is the block's free-form label (it
+// replaced the old fixed `category` select).
 type RawPortfolioRow = {
-  id: string | number
+  id?: string | number
   label?: string | null
-  category?: string | null
+  tag?: string | null
   image?: RawMedia | string | null
 }
-type RawSiteContentDoc = { portfolio?: RawPortfolioRow[] | null }
+type RawSiteContentDoc = { layout?: unknown }
 type RawList<T> = { docs?: T[] }
 
 const pickImageUrls = (media: RawMedia): { imageUrl: string | null; thumbnailUrl: string | null } => {
@@ -40,7 +41,7 @@ const pickImageUrls = (media: RawMedia): { imageUrl: string | null; thumbnailUrl
   }
 }
 
-const mapRow = (doc: RawPortfolioRow): PortfolioItem | null => {
+const mapRow = (doc: RawPortfolioRow, index: number): PortfolioItem | null => {
   const media = typeof doc.image === 'object' && doc.image !== null ? doc.image : null
   const { imageUrl, thumbnailUrl } = media
     ? pickImageUrls(media)
@@ -48,9 +49,9 @@ const mapRow = (doc: RawPortfolioRow): PortfolioItem | null => {
   // An item without a usable image is not renderable — drop it rather than ship a broken card.
   if (!imageUrl) return null
   return {
-    id: String(doc.id),
+    id: doc.id != null ? String(doc.id) : `item-${index}`,
     label: doc.label ?? '',
-    category: (doc.category as PortfolioItem['category']) ?? null,
+    category: (doc.tag as PortfolioItem['category']) ?? null,
     imageUrl,
     thumbnailUrl: thumbnailUrl ?? undefined,
     width: media?.width ?? undefined,
@@ -72,7 +73,9 @@ export async function getPortfolio(locale: Locale): Promise<PortfolioItem[]> {
       limit: '1',
     })
     const data = await cmsFetch<RawList<RawSiteContentDoc>>(`/api/siteContent?${params}`)
-    const items = (data.docs?.[0]?.portfolio ?? [])
+    const gallery = firstBlock(data.docs?.[0]?.layout, 'gallery')
+    const rawItems = Array.isArray(gallery?.items) ? (gallery.items as RawPortfolioRow[]) : []
+    const items = rawItems
       .map(mapRow)
       .filter((item): item is PortfolioItem => item !== null)
 

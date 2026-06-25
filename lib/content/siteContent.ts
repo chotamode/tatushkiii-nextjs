@@ -6,18 +6,16 @@
  *
  * NOTE: server-only (ISR fetch). Call from a Server Component.
  */
-import { absolutize, cmsFetch, resolveTenantId } from './_payload'
+import { absolutize, cmsFetch, firstBlock, resolveTenantId } from './_payload'
 import { isCmsConfigured } from './config'
 import type { Locale, SiteContent, SocialLink } from './types'
 
 // --- Minimal local view of the Payload `siteContent` doc ----------------------
-type RawText = { title?: string | null; subtitle?: string | null }
-type RawAbout = { heading?: string | null; body?: unknown }
+// hero/about/cta now come from the `hero` and `about` blocks in `layout`;
+// contacts/socials/SEO are site-level fixed fields.
 type RawMedia = { url?: string | null; sizes?: Record<string, { url?: string | null } | undefined> }
 type RawSiteContentDoc = {
-  hero?: RawText | null
-  about?: RawAbout | null
-  cta?: { label?: string | null } | null
+  layout?: unknown
   contacts?: { telegram?: string | null; whatsapp?: string | null; email?: string | null } | null
   socials?: Array<{ platform?: string | null; url?: string | null }> | null
   seo?: {
@@ -51,12 +49,14 @@ function lexicalToText(value: unknown): string {
 }
 
 const mapDoc = (doc: RawSiteContentDoc): SiteContent => {
+  const hero = firstBlock(doc.layout, 'hero')
+  const about = firstBlock(doc.layout, 'about')
   const ogImage = doc.seo?.ogImage
   const ogMedia = typeof ogImage === 'object' && ogImage !== null ? ogImage : null
   return {
-    hero: { title: doc.hero?.title ?? '', subtitle: doc.hero?.subtitle ?? '' },
-    about: { heading: doc.about?.heading ?? '', body: lexicalToText(doc.about?.body) },
-    cta: { label: doc.cta?.label ?? '' },
+    hero: { title: (hero?.title as string) ?? '', subtitle: (hero?.subtitle as string) ?? '' },
+    about: { heading: (about?.heading as string) ?? '', body: lexicalToText(about?.body) },
+    cta: { label: (hero?.ctaLabel as string) ?? '' },
     contacts: {
       telegram: doc.contacts?.telegram ?? null,
       whatsapp: doc.contacts?.whatsapp ?? null,

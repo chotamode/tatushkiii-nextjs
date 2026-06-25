@@ -32,6 +32,15 @@ export const absolutize = (url: string | null | undefined): string | null => {
   return `${cmsConfig.baseUrl}${url.startsWith('/') ? '' : '/'}${url}`
 }
 
+// The page is a block builder: `siteContent.layout` is an ordered array of
+// blocks, each tagged with `blockType`. The adapters pull the block types a
+// given route needs out of that array.
+export type RawBlock = { blockType?: string; [key: string]: unknown }
+
+/** First block of the given type in a layout array, or undefined. */
+export const firstBlock = (layout: unknown, type: string): RawBlock | undefined =>
+  (Array.isArray(layout) ? (layout as RawBlock[]) : []).find((b) => b?.blockType === type)
+
 /** The tenant id to scope queries by — from CMS_TENANT_ID, or resolved from the slug. */
 export async function resolveTenantId(): Promise<string | null> {
   if (cmsConfig.tenantId) return cmsConfig.tenantId
