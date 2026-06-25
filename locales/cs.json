@@ -144,6 +144,10 @@
   },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Praha.",
-    "tagline": "Navrženo pro odvážné."
+    "tagline": "Navrženo pro odvážné.",
+    "contact": "Kontakt",
+    "follow": "Sledovat",
+    "madeBy": "Vytvořil",
+    "rights": "Všechna práva vyhrazena."
   }
 }

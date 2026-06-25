@@ -144,6 +144,10 @@
   },
   "footer": {
     "copyright": "© 2025 Sandu Ink. Prague.",
-    "tagline": "Designed for the bold."
+    "tagline": "Designed for the bold.",
+    "contact": "Contact",
+    "follow": "Follow",
+    "madeBy": "Built by",
+    "rights": "All rights reserved."
   }
 }

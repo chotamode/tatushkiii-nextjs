@@ -172,6 +172,7 @@ async function seedSettings(): Promise<void> {
       instagram_url: 'https://www.instagram.com/doompink',
       telegram_url: 'https://t.me/doompink',
       archive_url: 'https://www.instagram.com/doompink',
+      portfolio_url: '',
     }),
   })
   console.log('✓ site_settings seeded')
