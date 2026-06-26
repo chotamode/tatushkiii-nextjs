@@ -16,6 +16,9 @@ export type PortfolioCategory =
   | 'whipShading'
   | 'freehand'
 
+/** A tag the gallery can filter by. `slug` is stable; `label` is localized. */
+export type TagRef = { slug: string; label: string }
+
 export type PortfolioItem = {
   id: string
   label: string
@@ -26,6 +29,8 @@ export type PortfolioItem = {
   thumbnailUrl?: string
   width?: number
   height?: number
+  /** Tags on the image, used to build the gallery's filter bar. */
+  tags: TagRef[]
 }
 
 export type SocialLink = { platform: string; url: string }
