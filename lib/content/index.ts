@@ -12,4 +12,5 @@ export type {
   PortfolioItem,
   SiteContent,
   SocialLink,
+  TagRef,
 } from './types'

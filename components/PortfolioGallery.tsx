@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import type { PortfolioItem } from '@/lib/content'
 
 // Decorative sigil overlays, rotated by index to keep the hand-made flavour of
@@ -16,18 +17,53 @@ type Props = {
   viewLabel: string
   /** Opens the lightbox with the given image URL (state lives in the parent). */
   onOpen: (url: string) => void
+  /** Localized "all" label for the filter bar (defaults to "ALL"). */
+  allLabel?: string
 }
 
 /**
  * Data-driven portfolio grid. Mirrors the styling of the original hardcoded
  * grid (corner accents, grayscale, hover overlay, staggered offset) but renders
- * whatever the CMS returns. Used only when there are CMS items; otherwise the
- * page keeps its original built-in grid.
+ * whatever the CMS returns. A tag filter bar appears when the items carry tags.
+ * Used only when there are CMS items; otherwise the page keeps its built-in grid.
  */
-export default function PortfolioGallery({ items, viewLabel, onOpen }: Props) {
+export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 'ALL' }: Props) {
+  const [active, setActive] = useState<string | null>(null)
+
+  const tags = useMemo(() => {
+    const bySlug = new Map<string, string>()
+    items.forEach((item) => item.tags.forEach((t) => bySlug.set(t.slug, t.label)))
+    return Array.from(bySlug, ([slug, label]) => ({ slug, label }))
+  }, [items])
+
+  const filtered = active ? items.filter((item) => item.tags.some((t) => t.slug === active)) : items
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
-      {items.map((item, index) => (
+    <div>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-3 mb-16" role="group" aria-label="Filter by tag">
+          {[{ slug: null as string | null, label: allLabel }, ...tags].map((tag) => {
+            const isActive = active === tag.slug
+            return (
+              <button
+                key={tag.slug ?? '__all'}
+                type="button"
+                onClick={() => setActive(tag.slug)}
+                aria-pressed={isActive}
+                className={`font-mono text-xs uppercase tracking-widest px-4 py-2 border transition-colors ${
+                  isActive
+                    ? 'bg-acid text-black border-acid'
+                    : 'border-black/20 text-zinc-500 hover:text-black hover:border-black'
+                }`}
+              >
+                {tag.label}
+              </button>
+            )
+          })}
+        </div>
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
+        {filtered.map((item, index) => (
         <div
           key={item.id}
           className={`group cursor-pointer relative ${index % 2 === 1 ? 'md:translate-y-12' : ''}`}
@@ -70,7 +106,8 @@ export default function PortfolioGallery({ items, viewLabel, onOpen }: Props) {
             <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
           </div>
         </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }
