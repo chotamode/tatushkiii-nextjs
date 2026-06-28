@@ -790,6 +790,16 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <span>{t.footer.tagline}</span>
           </div>
 
+          <a
+            href="https://iteros.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-gray-500 transition-colors hover:text-black"
+          >
+            Site by <span className="text-black">iteros.dev</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+
           <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]">
             ⫘⫘⫘⫘⫘
           </div>
