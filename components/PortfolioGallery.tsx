@@ -51,10 +51,17 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
                 onClick={() => setActive(tag.slug)}
                 aria-pressed={isActive}
                 className={`font-mono text-xs uppercase tracking-widest px-4 py-2 border transition-colors ${
-                  isActive
-                    ? 'bg-acid text-black border-acid'
-                    : 'border-black/20 text-zinc-500 hover:text-black hover:border-black'
+                  isActive ? '' : 'border-black/20 text-zinc-500 hover:text-black hover:border-black'
                 }`}
+                style={
+                  isActive
+                    ? {
+                        color: 'var(--color-ink-red)',
+                        borderColor: 'var(--color-ink-red)',
+                        backgroundColor: 'color-mix(in srgb, var(--color-ink-red) 8%, white)',
+                      }
+                    : undefined
+                }
               >
                 {tag.label}
               </button>

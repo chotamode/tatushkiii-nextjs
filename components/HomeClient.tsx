@@ -211,9 +211,9 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           onClick={() => { setMobileMenu(false); openBookingForm() }}
           className="group relative font-mono text-xl border border-white px-10 py-4 mt-4 hover:bg-white hover:text-black transition-colors duration-300 tracking-widest uppercase"
         >
-          <span className="sigil-text mr-2 opacity-60">★</span>
+          <span className="sigil-text mr-2 opacity-90" style={{ color: 'var(--color-ink-red-on-dark)' }}>★</span>
           {t.nav.book.toUpperCase()}
-          <span className="sigil-text ml-2 opacity-60">★</span>
+          <span className="sigil-text ml-2 opacity-90" style={{ color: 'var(--color-ink-red-on-dark)' }}>★</span>
         </button>
         <div className="absolute bottom-10 w-full text-center opacity-30 sigil-text text-xl">
           ⫘⫘⫘⫘⫘⫘
@@ -238,16 +238,24 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
         <div className="relative z-10 text-center w-full max-w-7xl mx-auto">
 
-          {/* Top Deco */}
-          <div className="flex justify-between items-center w-full mb-12 opacity-50 font-mono text-[10px] uppercase tracking-widest hidden md:flex">
-            <span className="flex items-center gap-2">
-              <span className="w-8 h-[1px] bg-black"></span>
-              {t.hero.location}
-            </span>
-            <span className="sigil-text text-lg">☠︎︎</span>
-            <span className="flex items-center gap-2">
-              {t.hero.tagline}
-              <span className="w-8 h-[1px] bg-black"></span>
+          {/* Top Deco — the skull sits outside the muted row so its red stays
+              a true red, not diluted toward pink by the row's own opacity. */}
+          <div className="relative mb-12 hidden md:block">
+            <div className="flex justify-between items-center w-full opacity-50 font-mono text-[10px] uppercase tracking-widest">
+              <span className="flex items-center gap-2">
+                <span className="w-8 h-[1px] bg-black"></span>
+                {t.hero.location}
+              </span>
+              <span className="flex items-center gap-2">
+                {t.hero.tagline}
+                <span className="w-8 h-[1px] bg-black"></span>
+              </span>
+            </div>
+            <span
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 sigil-text text-2xl"
+              style={{ color: 'var(--color-ink-red)' }}
+            >
+              ☠︎︎
             </span>
           </div>
 
@@ -291,9 +299,9 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               onClick={openBookingForm}
               className="group relative inline-flex items-center gap-5 px-10 py-5 bg-black text-white hover:bg-white hover:text-black transition-colors duration-500 border border-black"
             >
-              <span className="sigil-text opacity-70">༺</span>
+              <span className="sigil-text opacity-80" style={{ color: 'var(--color-ink-red)' }}>༺</span>
               <span className="font-mono text-sm uppercase tracking-[0.3em]">{ctaLabel}</span>
-              <span className="sigil-text opacity-70">༻</span>
+              <span className="sigil-text opacity-80" style={{ color: 'var(--color-ink-red)' }}>༻</span>
               {/* Corner accents always visible */}
               <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
               <span className="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
@@ -420,7 +428,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.spine}</span>
                 <span className="font-mono text-[10px] opacity-50">001</span>
                 {/* Small accent */}
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="absolute -top-2 left-1/2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--color-ink-red)' }}></span>
               </div>
             </div>
 
@@ -452,7 +460,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.arm}</span>
                 <span className="font-mono text-[10px] opacity-50">002</span>
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="absolute -top-2 left-1/2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--color-ink-red)' }}></span>
               </div>
             </div>
 
@@ -483,7 +491,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.back}</span>
                 <span className="font-mono text-[10px] opacity-50">003</span>
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="absolute -top-2 left-1/2 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--color-ink-red)' }}></span>
               </div>
             </div>
 
@@ -702,7 +710,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 <span className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
                 <span className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
 
-                <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity">☠︎︎</div>
+                <div className="sigil-text text-3xl mb-4" style={{ color: 'var(--color-ink-red)' }}>☠︎︎</div>
                 <div className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none mb-4">
                   {t.nav.bookNow}
                 </div>

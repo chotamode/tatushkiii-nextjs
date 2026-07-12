@@ -9,6 +9,12 @@
   --color-black: #0a0a0a;
   --color-white: #ffffff;
   --color-paper: #f8f8f8;
+
+  /* Ink-red accent — the artist's own red-ink detailing, used as sparse
+     flecks (a glyph, a dot, a bracket), never as a button's own color.
+     Two lightness steps so the same hue stays legible on paper and on black. */
+  --color-ink-red: oklch(48% 0.19 21);
+  --color-ink-red-on-dark: oklch(64% 0.2 21);
 }
 
 /* Smooth scrolling + prevent horizontal overflow on mobile */
