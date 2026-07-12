@@ -258,16 +258,19 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
         <div className="relative z-10 text-center w-full max-w-7xl mx-auto">
 
-          {/* Top Deco */}
-          <div className="flex justify-between items-center w-full mb-12 opacity-50 font-mono text-[10px] uppercase tracking-widest hidden md:flex">
-            <span className="flex items-center gap-2">
-              <span className="w-8 h-[1px] bg-black"></span>
+          {/* Top Deco — text at text-black/70 (≈4.7:1 on the paper background)
+              instead of the old opacity-50 (≈3.66:1, failed WCAG AA); the
+              divider lines and skull are pure decoration and keep their own
+              lighter opacity since that exemption doesn't apply to them. */}
+          <div className="flex justify-between items-center w-full mb-12 font-mono text-[10px] uppercase tracking-widest hidden md:flex">
+            <span className="flex items-center gap-2 text-black/70">
+              <span className="w-8 h-[1px] bg-black opacity-50"></span>
               {t.hero.location}
             </span>
-            <span className="sigil-text text-lg">☠︎︎</span>
-            <span className="flex items-center gap-2">
+            <span className="sigil-text text-lg opacity-50" aria-hidden="true">☠︎︎</span>
+            <span className="flex items-center gap-2 text-black/70">
               {t.hero.tagline}
-              <span className="w-8 h-[1px] bg-black"></span>
+              <span className="w-8 h-[1px] bg-black opacity-50"></span>
             </span>
           </div>
 
@@ -447,7 +450,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.spine}</span>
-                <span className="font-mono text-[10px] opacity-50">001</span>
+                <span className="font-mono text-[10px] text-black/70">001</span>
                 {/* Small accent */}
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
               </div>
@@ -489,7 +492,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.arm}</span>
-                <span className="font-mono text-[10px] opacity-50">002</span>
+                <span className="font-mono text-[10px] text-black/70">002</span>
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
               </div>
             </div>
@@ -529,7 +532,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               </div>
               <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.back}</span>
-                <span className="font-mono text-[10px] opacity-50">003</span>
+                <span className="font-mono text-[10px] text-black/70">003</span>
                 <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
               </div>
             </div>
@@ -631,10 +634,10 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       {/* Process Section (FAQ) */}
       <section id="process" className="py-32 px-4 bg-paper">
         <div className="container mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-24 opacity-50">
-            <span className="sigil-text">⫘⫘⫘</span>
-            <h2 className="font-mono text-sm uppercase tracking-[0.5em]">{t.faq.title}</h2>
-            <span className="sigil-text">⫘⫘⫘</span>
+          <div className="flex items-center justify-center gap-4 mb-24">
+            <span className="sigil-text opacity-50" aria-hidden="true">⫘⫘⫘</span>
+            <h2 className="font-mono text-sm uppercase tracking-[0.5em] text-black/70">{t.faq.title}</h2>
+            <span className="sigil-text opacity-50" aria-hidden="true">⫘⫘⫘</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -755,14 +758,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 <span className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
                 <span className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
 
-                <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity">☠︎︎</div>
+                <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity" aria-hidden="true">☠︎︎</div>
                 <div className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none mb-4">
                   {t.nav.bookNow}
                 </div>
-                <div className="font-mono text-xs uppercase tracking-[0.4em] opacity-50 group-hover:opacity-80 transition-opacity flex items-center justify-center gap-3">
-                  <span>↗</span>
-                  <span>{t.contact.formLink ?? 'open booking form'}</span>
-                  <span>↗</span>
+                <div className="font-mono text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-3">
+                  <span className="opacity-50 group-hover:opacity-80 transition-opacity" aria-hidden="true">↗</span>
+                  <span className="text-black/70 group-hover:text-white transition-colors">{t.contact.formLink ?? 'open booking form'}</span>
+                  <span className="opacity-50 group-hover:opacity-80 transition-opacity" aria-hidden="true">↗</span>
                 </div>
               </div>
             </button>
