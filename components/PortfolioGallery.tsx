@@ -1,7 +1,16 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import type { PortfolioItem } from '@/lib/content'
+import Image from 'next/image'
+import type { LightboxImage, PortfolioItem } from '@/lib/content'
+
+// Fallback aspect ratio for the rare CMS media doc missing width/height —
+// matches the grid's own aspect-[3/4] so a wrong guess still looks correct
+// while it's still inside the aspect-locked card; only the lightbox (where
+// it's used to size the full unconstrained view) would ever show a mismatch,
+// and only for that edge case.
+const FALLBACK_WIDTH = 1200
+const FALLBACK_HEIGHT = 1600
 
 // Decorative sigil overlays, rotated by index to keep the hand-made flavour of
 // the original hardcoded grid without bespoke markup per item.
@@ -15,8 +24,8 @@ type Props = {
   items: PortfolioItem[]
   /** Localized "view" label shown on hover. */
   viewLabel: string
-  /** Opens the lightbox with the given image URL (state lives in the parent). */
-  onOpen: (url: string) => void
+  /** Opens the lightbox with the given image (state lives in the parent). */
+  onOpen: (image: LightboxImage) => void
   /** Localized "all" label for the filter bar (defaults to "ALL"). */
   allLabel?: string
 }
@@ -63,18 +72,24 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
-        {filtered.map((item, index) => (
+        {filtered.map((item, index) => {
+          const lightboxImage: LightboxImage = {
+            url: item.imageUrl,
+            width: item.width ?? FALLBACK_WIDTH,
+            height: item.height ?? FALLBACK_HEIGHT,
+          }
+          return (
         <div
           key={item.id}
           className={`group cursor-pointer relative ${index % 2 === 1 ? 'md:translate-y-12' : ''}`}
           role="button"
           tabIndex={0}
           aria-label={`${viewLabel} ${item.label}`}
-          onClick={() => onOpen(item.imageUrl)}
+          onClick={() => onOpen(lightboxImage)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
-              onOpen(item.imageUrl)
+              onOpen(lightboxImage)
             }
           }}
         >
@@ -83,10 +98,12 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
           <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
           <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
-            <img
+            <Image
               src={item.thumbnailUrl ?? item.imageUrl}
               alt={item.label}
-              className="w-full h-full object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-opacity">
               <svg className="w-full h-full p-12" viewBox="0 0 100 100">
@@ -115,7 +132,8 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
             <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
           </div>
         </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

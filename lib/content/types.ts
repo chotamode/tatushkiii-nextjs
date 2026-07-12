@@ -33,6 +33,11 @@ export type PortfolioItem = {
   tags: TagRef[]
 }
 
+/** What the lightbox needs to render a full-size view via next/image — real
+ *  dimensions, not just a URL, so the image is properly sized instead of a
+ *  plain <img>. */
+export type LightboxImage = { url: string; width: number; height: number }
+
 export type SocialLink = { platform: string; url: string }
 
 /**

@@ -1,12 +1,14 @@
 import type { NextConfig } from 'next'
 
-// Allow next/image to optimize assets served by the Payload instance
-// (hostname derived from PAYLOAD_URL so nothing is hardcoded).
-const payloadUrl = process.env.PAYLOAD_URL
+// Allow next/image to optimize media served by the CMS (hostname derived from
+// CMS_URL — the same env var lib/content/config.ts uses to build absolute
+// media URLs, so this can't drift out of sync with what the app actually
+// fetches from).
+const cmsUrl = process.env.CMS_URL
 const remotePatterns: NonNullable<NextConfig['images']>['remotePatterns'] = []
-if (payloadUrl) {
+if (cmsUrl) {
   try {
-    const { protocol, hostname, port } = new URL(payloadUrl)
+    const { protocol, hostname, port } = new URL(cmsUrl)
     remotePatterns.push({
       protocol: protocol.replace(':', '') as 'http' | 'https',
       hostname,
@@ -15,7 +17,7 @@ if (payloadUrl) {
       pathname: '/**',
     })
   } catch {
-    // Invalid PAYLOAD_URL — skip remote images, local fallback still works.
+    // Invalid CMS_URL — skip remote images, local fallback still works.
   }
 }
 

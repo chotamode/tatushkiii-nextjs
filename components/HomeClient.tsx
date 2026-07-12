@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { useTranslation, type Locale } from '@/hooks/useTranslation'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
 import BookingModal from '@/components/BookingModal'
 import PortfolioGallery from '@/components/PortfolioGallery'
-import type { PortfolioItem, SiteContent } from '@/lib/content'
+import type { LightboxImage, PortfolioItem, SiteContent } from '@/lib/content'
 
 type HomeClientProps = {
   /** Portfolio per locale, fetched on the server. Empty arrays → built-in grid. */
@@ -27,7 +28,10 @@ declare global {
 export default function HomeClient({ portfolioByLocale, siteContentByLocale }: HomeClientProps) {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  // Carries width/height alongside the URL so the lightbox can use next/image
+  // (which needs real dimensions to size the placeholder correctly) instead
+  // of a plain <img>.
+  const [lightboxImage, setLightboxImage] = useState<LightboxImage | null>(null)
   const [bookingOpen, setBookingOpen] = useState(false)
   const { t, locale, changeLocale } = useTranslation()
 
@@ -111,11 +115,11 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
   // Portfolio cards open the lightbox on click; these make the same action
   // reachable from the keyboard (Enter/Space) since the cards are <div>s,
   // not <button>s, for the freeform corner-accent styling.
-  const openLightbox = (url: string) => setLightboxImage(url)
-  const lightboxKeyHandler = (url: string) => (e: React.KeyboardEvent) => {
+  const openLightbox = (image: LightboxImage) => setLightboxImage(image)
+  const lightboxKeyHandler = (image: LightboxImage) => (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      openLightbox(url)
+      openLightbox(image)
     }
   }
 
@@ -411,18 +415,20 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               role="button"
               tabIndex={0}
               aria-label={`${t.portfolio.view} ${t.portfolio.items.spine}`}
-              onClick={() => openLightbox('/images/spine-tattoo.webp')}
-              onKeyDown={lightboxKeyHandler('/images/spine-tattoo.webp')}
+              onClick={() => openLightbox({ url: '/images/spine-tattoo.webp', width: 1440, height: 1800 })}
+              onKeyDown={lightboxKeyHandler({ url: '/images/spine-tattoo.webp', width: 1440, height: 1800 })}
             >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
-                <img
+                <Image
                   src="/images/spine-tattoo.webp"
                   alt="Spine Tattoo"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-opacity">
                   <svg className="w-full h-full p-12" viewBox="0 0 100 100">
@@ -453,18 +459,20 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               role="button"
               tabIndex={0}
               aria-label={`${t.portfolio.view} ${t.portfolio.items.arm}`}
-              onClick={() => openLightbox('/images/arm-tattoo.webp')}
-              onKeyDown={lightboxKeyHandler('/images/arm-tattoo.webp')}
+              onClick={() => openLightbox({ url: '/images/arm-tattoo.webp', width: 1440, height: 1800 })}
+              onKeyDown={lightboxKeyHandler({ url: '/images/arm-tattoo.webp', width: 1440, height: 1800 })}
             >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
-                <img
+                <Image
                   src="/images/arm-tattoo.webp"
                   alt="Arm Tattoo"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-opacity">
                   <svg className="w-full h-full p-12" viewBox="0 0 100 100">
@@ -492,18 +500,20 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               role="button"
               tabIndex={0}
               aria-label={`${t.portfolio.view} ${t.portfolio.items.back}`}
-              onClick={() => openLightbox('/images/back-tattoo.webp')}
-              onKeyDown={lightboxKeyHandler('/images/back-tattoo.webp')}
+              onClick={() => openLightbox({ url: '/images/back-tattoo.webp', width: 721, height: 909 })}
+              onKeyDown={lightboxKeyHandler({ url: '/images/back-tattoo.webp', width: 721, height: 909 })}
             >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
-                <img
+                <Image
                   src="/images/back-tattoo.webp"
                   alt="Back Tattoo"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-30 transition-opacity">
                   <svg className="w-full h-full p-12" viewBox="0 0 100 100">
@@ -599,7 +609,13 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 <div className="absolute -bottom-3 -right-3 text-white text-2xl sigil-text">⌟</div>
 
                 <div className="w-full h-full bg-neutral-900 relative overflow-hidden grayscale contrast-150">
-                  <img src="/images/sandu.jpg" alt="Sandu - Tattoo Artist" className="object-cover w-full h-full"/>
+                  <Image
+                    src="/images/sandu.jpg"
+                    alt="Sandu - Tattoo Artist"
+                    fill
+                    sizes="(max-width: 768px) 90vw, 45vw"
+                    className="object-cover"
+                  />
                 </div>
 
                 {/* Floating Text */}
@@ -807,9 +823,11 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             className="relative h-[90vh] w-auto mx-4 animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={lightboxImage}
+            <Image
+              src={lightboxImage.url}
               alt="Tattoo Detail"
+              width={lightboxImage.width}
+              height={lightboxImage.height}
               className="h-full w-auto max-w-[90vw] object-contain mx-auto"
             />
 
