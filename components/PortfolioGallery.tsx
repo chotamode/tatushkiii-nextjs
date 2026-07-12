@@ -126,7 +126,7 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
           </div>
           <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
             <span className="font-display font-bold text-xl uppercase">{item.label}</span>
-            <span className="font-mono text-[10px] opacity-50">
+            <span className="font-mono text-[10px] text-black/70">
               {String(index + 1).padStart(3, '0')}
             </span>
             <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
