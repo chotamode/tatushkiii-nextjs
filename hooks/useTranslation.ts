@@ -18,6 +18,13 @@ export function useTranslation() {
     }
   }, []);
 
+  // <html lang> is server-rendered as "en" and otherwise never updates —
+  // switching to cs/ru left screen readers announcing Russian/Czech text as
+  // English. All three locale codes (en/cs/ru) are already valid BCP-47.
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   const changeLocale = (newLocale: Locale) => {
     setLocale(newLocale);
     localStorage.setItem('locale', newLocale);

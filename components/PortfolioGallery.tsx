@@ -67,7 +67,16 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
         <div
           key={item.id}
           className={`group cursor-pointer relative ${index % 2 === 1 ? 'md:translate-y-12' : ''}`}
+          role="button"
+          tabIndex={0}
+          aria-label={`${viewLabel} ${item.label}`}
           onClick={() => onOpen(item.imageUrl)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              onOpen(item.imageUrl)
+            }
+          }}
         >
           {/* Corner accents */}
           <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
