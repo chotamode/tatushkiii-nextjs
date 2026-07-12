@@ -28,24 +28,38 @@ type Props = {
   onOpen: (image: LightboxImage) => void
   /** Localized "all" label for the filter bar (defaults to "ALL"). */
   allLabel?: string
+  /** Caps how many items render (used for the homepage teaser). Unset = all. */
+  limit?: number
+  /** Show the tag filter bar. Off for the homepage teaser, on for the full gallery. */
+  filterable?: boolean
 }
 
 /**
  * Data-driven portfolio grid. Mirrors the styling of the original hardcoded
  * grid (corner accents, grayscale, hover overlay, staggered offset) but renders
- * whatever the CMS returns. A tag filter bar appears when the items carry tags.
- * Used only when there are CMS items; otherwise the page keeps its built-in grid.
+ * whatever the CMS returns. A tag filter bar appears when the items carry tags
+ * and `filterable` is on. Used only when there are CMS items; otherwise the
+ * page keeps its built-in grid.
  */
-export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 'ALL' }: Props) {
+export default function PortfolioGallery({
+  items,
+  viewLabel,
+  onOpen,
+  allLabel = 'ALL',
+  limit,
+  filterable = true,
+}: Props) {
   const [active, setActive] = useState<string | null>(null)
 
   const tags = useMemo(() => {
+    if (!filterable) return []
     const bySlug = new Map<string, string>()
     items.forEach((item) => item.tags.forEach((t) => bySlug.set(t.slug, t.label)))
     return Array.from(bySlug, ([slug, label]) => ({ slug, label }))
-  }, [items])
+  }, [items, filterable])
 
-  const filtered = active ? items.filter((item) => item.tags.some((t) => t.slug === active)) : items
+  const tagged = active ? items.filter((item) => item.tags.some((t) => t.slug === active)) : items
+  const filtered = limit ? tagged.slice(0, limit) : tagged
 
   return (
     <div>
