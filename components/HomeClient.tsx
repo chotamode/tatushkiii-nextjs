@@ -169,21 +169,21 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <div className="flex gap-2 items-center">
               <button
                 onClick={() => changeLocale('en')}
-                className={`px-2 py-1 transition-all ${locale === 'en' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+                className={`px-3 py-2 transition-all ${locale === 'en' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 EN
               </button>
               <span className="opacity-30">/</span>
               <button
                 onClick={() => changeLocale('cs')}
-                className={`px-2 py-1 transition-all ${locale === 'cs' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+                className={`px-3 py-2 transition-all ${locale === 'cs' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 CS
               </button>
               <span className="opacity-30">/</span>
               <button
                 onClick={() => changeLocale('ru')}
-                className={`px-2 py-1 transition-all ${locale === 'ru' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
+                className={`px-3 py-2 transition-all ${locale === 'ru' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 RU
               </button>
@@ -559,7 +559,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           <div className="mt-32 text-center relative">
             <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-24 bg-gradient-to-b from-transparent via-ink/20 to-transparent"></div>
             <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
-              <span className="sigil-text text-2xl animate-bounce">⫘</span>
+              <span className="sigil-text text-2xl animate-float">⫘</span>
               <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-ink transition-all pb-1">
                 {t.portfolio.fullArchive}
               </span>
@@ -752,7 +752,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
             <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tight leading-none overflow-visible">
-              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-ink to-gray-400 italic pr-4">{t.contact.titleAccent}</span>
+              {t.contact.title}<br/><span className="text-ink/70 italic pr-4">{t.contact.titleAccent}</span>
             </h2>
           </div>
 
