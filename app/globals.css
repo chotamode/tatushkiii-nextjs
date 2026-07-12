@@ -26,15 +26,16 @@ body {
   cursor: crosshair;
 }
 
-/* Hero title — hidden until JS calculates exact font-size */
+/* Hero title — CSS clamp() paints a correctly-sized title immediately (no
+ * hidden-until-JS gate blocking LCP). Tuned conservative enough that even the
+ * longest supported-locale word (Czech "TETOVÁNÍ") fits at the clamp max
+ * without JS. fitHeroTitle() in HomeClient.tsx then grows it to exactly fill
+ * the container for whatever text actually rendered — a progressive
+ * enhancement, not a prerequisite for the title being visible/correctly sized. */
 .hero-title {
-  font-size: 1px;
+  font-size: clamp(2.5rem, 7vw, 5rem);
   white-space: nowrap;
-  visibility: hidden;
   overflow: visible;
-}
-.hero-title.sized {
-  visibility: visible;
 }
 
 /* Font utilities */
