@@ -137,7 +137,9 @@
     "address": "Korunni 859/18, Praha, 120 00",
     "available": "available for booking",
     "formLink": "open booking form",
-    "formUnavailable": "The booking form is temporarily unavailable. Please reach out via Instagram or Telegram."
+    "formUnavailable": "The booking form is temporarily unavailable. Please reach out via Instagram or Telegram.",
+    "formLoading": "Loading the form…",
+    "formSlow": "Taking too long? DM me on Instagram or Telegram — I reply just as fast."
   },
   "prices": {
     "title": "Prices"
