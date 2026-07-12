@@ -7,6 +7,7 @@
 export { getPortfolio } from './portfolio'
 export { getSiteContent } from './siteContent'
 export type {
+  LightboxImage,
   Locale,
   PortfolioCategory,
   PortfolioItem,
