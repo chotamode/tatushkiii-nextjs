@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useTranslation } from '../hooks/useTranslation'
+import { useFocusTrap } from '../hooks/useFocusTrap'
 import { getOpnFormUrl } from '../lib/opnform'
 
 interface BookingModalProps {
@@ -32,35 +33,35 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
     return () => window.clearTimeout(id)
   }, [open, loaded])
 
-  // Close on Escape and lock body scroll while open
+  // Lock body scroll while open. Escape-to-close and keyboard focus trapping
+  // are handled by useFocusTrap below.
   useEffect(() => {
     if (!open) return
-
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onOpenChange(false)
-    }
-    window.addEventListener('keydown', handleKey)
-
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-
     return () => {
-      window.removeEventListener('keydown', handleKey)
       document.body.style.overflow = previousOverflow
     }
-  }, [open, onOpenChange])
+  }, [open])
+
+  const closeModal = () => onOpenChange(false)
+  const dialogRef = useFocusTrap<HTMLDivElement>(open, closeModal)
 
   if (!open) return null
 
   return (
     <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t.nav.book}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn p-4"
-      onClick={() => onOpenChange(false)}
+      onClick={closeModal}
     >
       {/* Close Button */}
       <button
         className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-10 group"
-        onClick={() => onOpenChange(false)}
+        onClick={closeModal}
       >
         <div className="relative">
           <span className="text-5xl font-thin leading-none block group-hover:rotate-90 transition-transform duration-300">×</span>

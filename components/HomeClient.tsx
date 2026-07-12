@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation, type Locale } from '@/hooks/useTranslation'
+import { useFocusTrap } from '@/hooks/useFocusTrap'
 import BookingModal from '@/components/BookingModal'
 import PortfolioGallery from '@/components/PortfolioGallery'
 import type { PortfolioItem, SiteContent } from '@/lib/content'
@@ -102,6 +103,20 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
   const openBookingForm = () => {
     setBookingOpen(true)
+  }
+
+  const closeLightbox = () => setLightboxImage(null)
+  const lightboxRef = useFocusTrap<HTMLDivElement>(lightboxImage !== null, closeLightbox)
+
+  // Portfolio cards open the lightbox on click; these make the same action
+  // reachable from the keyboard (Enter/Space) since the cards are <div>s,
+  // not <button>s, for the freeform corner-accent styling.
+  const openLightbox = (url: string) => setLightboxImage(url)
+  const lightboxKeyHandler = (url: string) => (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      openLightbox(url)
+    }
   }
 
   return (
@@ -220,6 +235,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
         </div>
       </div>
 
+      <main>
       {/* Hero Section */}
       <header className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden pt-20">
 
@@ -233,8 +249,8 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
         {/* Floating decorative elements */}
         <div className="absolute top-1/4 left-[10%] sigil-text text-6xl opacity-[0.08] animate-float">◬</div>
         <div className="absolute bottom-1/4 right-[15%] sigil-text text-5xl opacity-[0.06] animate-float" style={{ animationDelay: '2s' }}>⬡</div>
-        <div className="absolute top-1/3 right-[20%] font-mono text-xs opacity-[0.05] rotate-90">EST.2021</div>
-        <div className="absolute bottom-1/3 left-[15%] font-mono text-xs opacity-[0.05] -rotate-90">PRAGUE</div>
+        <div className="absolute top-1/3 right-[20%] font-mono text-xs opacity-[0.05] rotate-90" aria-hidden="true">EST.2021</div>
+        <div className="absolute bottom-1/3 left-[15%] font-mono text-xs opacity-[0.05] -rotate-90" aria-hidden="true">PRAGUE</div>
 
         <div className="relative z-10 text-center w-full max-w-7xl mx-auto">
 
@@ -390,7 +406,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
 
             {/* Item 1 */}
-            <div className="group cursor-pointer relative" onClick={() => setLightboxImage('/images/spine-tattoo.webp')}>
+            <div
+              className="group cursor-pointer relative"
+              role="button"
+              tabIndex={0}
+              aria-label={`${t.portfolio.view} ${t.portfolio.items.spine}`}
+              onClick={() => openLightbox('/images/spine-tattoo.webp')}
+              onKeyDown={lightboxKeyHandler('/images/spine-tattoo.webp')}
+            >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
@@ -425,7 +448,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* Item 2 */}
-            <div className="group cursor-pointer relative md:translate-y-12" onClick={() => setLightboxImage('/images/arm-tattoo.webp')}>
+            <div
+              className="group cursor-pointer relative md:translate-y-12"
+              role="button"
+              tabIndex={0}
+              aria-label={`${t.portfolio.view} ${t.portfolio.items.arm}`}
+              onClick={() => openLightbox('/images/arm-tattoo.webp')}
+              onKeyDown={lightboxKeyHandler('/images/arm-tattoo.webp')}
+            >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
@@ -457,7 +487,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* Item 3 */}
-            <div className="group cursor-pointer relative" onClick={() => setLightboxImage('/images/back-tattoo.webp')}>
+            <div
+              className="group cursor-pointer relative"
+              role="button"
+              tabIndex={0}
+              aria-label={`${t.portfolio.view} ${t.portfolio.items.back}`}
+              onClick={() => openLightbox('/images/back-tattoo.webp')}
+              onKeyDown={lightboxKeyHandler('/images/back-tattoo.webp')}
+            >
               {/* Corner accents */}
               <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
               <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
@@ -640,7 +677,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center md:text-left">
             {/* 1 */}
             <div className="flex flex-col gap-4">
-              <div className="sigil-text text-2xl opacity-50">❝</div>
+              <div className="sigil-text text-2xl opacity-50" aria-hidden="true">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight">
                 {t.testimonials.t1.text}
               </p>
@@ -651,7 +688,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
             {/* 2 */}
             <div className="flex flex-col gap-4">
-              <div className="sigil-text text-2xl opacity-50">❝</div>
+              <div className="sigil-text text-2xl opacity-50" aria-hidden="true">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight text-gray-300">
                 {t.testimonials.t2.text}
               </p>
@@ -662,7 +699,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
             {/* 3 */}
             <div className="flex flex-col gap-4">
-              <div className="sigil-text text-2xl opacity-50">❝</div>
+              <div className="sigil-text text-2xl opacity-50" aria-hidden="true">❝</div>
               <p className="font-display text-xl md:text-2xl leading-tight">
                 {t.testimonials.t3.text}
               </p>
@@ -737,6 +774,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           </div>
         </div>
       </section>
+      </main>
 
       {/* Booking Modal */}
       <BookingModal open={bookingOpen} onOpenChange={setBookingOpen} />
@@ -744,13 +782,17 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       {/* Lightbox Modal */}
       {lightboxImage && (
         <div
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.portfolio.title}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn"
-          onClick={() => setLightboxImage(null)}
+          onClick={closeLightbox}
         >
           {/* Close Button */}
           <button
             className="absolute top-8 right-8 text-white hover:text-gray-300 transition-colors z-10 group"
-            onClick={() => setLightboxImage(null)}
+            onClick={closeLightbox}
           >
             <div className="relative">
               <span className="text-5xl font-thin leading-none block group-hover:rotate-90 transition-transform duration-300">×</span>
@@ -809,7 +851,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <span aria-hidden="true">↗</span>
           </a>
 
-          <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]">
+          <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]" aria-hidden="true">
             ⫘⫘⫘⫘⫘
           </div>
         </div>
