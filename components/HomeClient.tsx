@@ -84,7 +84,19 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
   useEffect(() => {
     fitHeroTitle()
     window.addEventListener('resize', fitHeroTitle)
-    return () => window.removeEventListener('resize', fitHeroTitle)
+
+    // Syne (the display font) loads async over the network; the very first
+    // fit runs against the fallback font's metrics. Refit once Syne is
+    // actually ready so the title doesn't overflow after the font swaps in.
+    let cancelled = false
+    document.fonts?.ready.then(() => {
+      if (!cancelled) fitHeroTitle()
+    })
+
+    return () => {
+      cancelled = true
+      window.removeEventListener('resize', fitHeroTitle)
+    }
   }, [fitHeroTitle, locale])
 
   useEffect(() => {
@@ -284,7 +296,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
             <h1
               ref={heroTitleRef}
-              className="hero-title font-display font-black leading-[0.75] tracking-tight mix-blend-darken select-none text-ink relative text-center"
+              className="hero-title font-display font-extrabold leading-[0.75] tracking-tight mix-blend-darken select-none text-ink relative text-center"
             >
               {heroTitle}
               {/* Accent marks */}
