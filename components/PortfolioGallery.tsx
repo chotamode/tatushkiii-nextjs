@@ -61,8 +61,8 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
                 aria-pressed={isActive}
                 className={`font-mono text-xs uppercase tracking-widest px-4 py-2 border transition-colors ${
                   isActive
-                    ? 'bg-acid text-black border-acid'
-                    : 'border-black/20 text-zinc-500 hover:text-black hover:border-black'
+                    ? 'bg-acid text-ink border-acid'
+                    : 'border-ink/20 text-zinc-500 hover:text-ink hover:border-ink'
                 }`}
               >
                 {tag.label}
@@ -94,8 +94,8 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
           }}
         >
           {/* Corner accents */}
-          <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
-          <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
+          <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-ink/10 z-10"></div>
+          <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-ink/10 z-10"></div>
 
           <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
             <Image
@@ -119,17 +119,17 @@ export default function PortfolioGallery({ items, viewLabel, onOpen, allLabel = 
 
             {/* Hover Overlay */}
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
-              <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
+              <div className="bg-ink text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
                 {viewLabel} <span className="sigil-text ml-2">→</span>
               </div>
             </div>
           </div>
-          <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
+          <div className="mt-4 flex justify-between items-start border-t border-ink pt-2 relative">
             <span className="font-display font-bold text-xl uppercase">{item.label}</span>
-            <span className="font-mono text-[10px] text-black/70">
+            <span className="font-mono text-[10px] text-ink/70">
               {String(index + 1).padStart(3, '0')}
             </span>
-            <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+            <span className="absolute -top-2 left-1/2 w-1 h-1 bg-ink rounded-full opacity-20"></span>
           </div>
         </div>
           )

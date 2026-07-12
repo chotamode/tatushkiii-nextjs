@@ -55,7 +55,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
       role="dialog"
       aria-modal="true"
       aria-label={t.nav.book}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 backdrop-blur-sm animate-fadeIn p-4"
       onClick={closeModal}
     >
       {/* Close Button */}
@@ -87,7 +87,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
             {!loaded && (
               <div
                 role="status"
-                className="absolute inset-0 flex flex-col items-center justify-center gap-6 rounded border border-white/20 bg-black text-white"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-6 rounded border border-white/20 bg-ink text-white"
               >
                 <span className="sigil-text animate-spin text-4xl [animation-duration:2.5s]" aria-hidden="true">✦</span>
                 <span className="font-mono text-xs uppercase tracking-[0.3em]">{t.contact.formLoading}</span>
@@ -101,7 +101,7 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
             )}
           </div>
         ) : (
-          <div className="bg-white text-black p-10 text-center font-mono text-sm uppercase tracking-widest rounded">
+          <div className="bg-white text-ink p-10 text-center font-mono text-sm uppercase tracking-widest rounded">
             {t.contact.formUnavailable}
           </div>
         )}
