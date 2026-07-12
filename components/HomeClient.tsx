@@ -401,33 +401,29 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
           </div>
 
-          {/* Categories Minimal */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest">
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
-              {t.portfolio.categories.ornamental}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
-            </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
-              {t.portfolio.categories.lineWork}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
-            </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
-              {t.portfolio.categories.abstract}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
-            </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
-              {t.portfolio.categories.whipShading}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
-            </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
-              {t.portfolio.categories.freehand}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
-            </button>
+          {/* Categories Minimal — decorative flavour text, not a filter (the
+              real filter lives on the full portfolio gallery). Plain spans on
+              purpose: no hover/cursor affordance that would suggest they're
+              clickable. */}
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest text-gray-400">
+            <span>{t.portfolio.categories.ornamental}</span>
+            <span>{t.portfolio.categories.lineWork}</span>
+            <span>{t.portfolio.categories.abstract}</span>
+            <span>{t.portfolio.categories.whipShading}</span>
+            <span>{t.portfolio.categories.freehand}</span>
           </div>
 
-          {/* Grid (Deconstructed) — CMS items when available, else the built-in grid */}
+          {/* Grid (Deconstructed) — CMS items when available, else the built-in grid.
+              Homepage teaser: 3 photos, no filter bar (that lives on the full
+              gallery page). */}
           {cmsPortfolio.length > 0 ? (
-            <PortfolioGallery items={cmsPortfolio} viewLabel={t.portfolio.view} onOpen={setLightboxImage} />
+            <PortfolioGallery
+              items={cmsPortfolio}
+              viewLabel={t.portfolio.view}
+              onOpen={setLightboxImage}
+              limit={3}
+              filterable={false}
+            />
           ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-24">
 
