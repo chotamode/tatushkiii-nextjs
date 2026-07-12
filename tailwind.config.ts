@@ -9,10 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        green: '#10B981',
-        red: '#EF4444',
-        blue: '#3B82F6',
-        gray: '#6B7280',
+        // The brand's off-black — wired to the same CSS var globals.css uses
+        // for body text, so bg-ink/text-ink/border-ink (and their /NN opacity
+        // variants) always match instead of drifting from Tailwind's pure
+        // #000000 `black`. (`white`/`paper` need no equivalent: `white` is
+        // already identical to --color-white, and --color-paper already has
+        // its own hand-written .bg-paper utility in globals.css.)
+        ink: 'var(--color-black)',
       },
       borderWidth: {
         '3': '3px',

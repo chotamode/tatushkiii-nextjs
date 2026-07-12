@@ -124,7 +124,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
   }
 
   return (
-    <div className="antialiased overflow-x-hidden selection:bg-black selection:text-white">
+    <div className="antialiased overflow-x-hidden selection:bg-ink selection:text-white">
       {/* Grain Texture Overlay */}
       <div className="grain-overlay"></div>
 
@@ -172,7 +172,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
             <button
               onClick={openBookingForm}
-              className="relative group border border-white px-5 py-1.5 hover:bg-white hover:text-black transition-colors duration-300 font-mono text-sm tracking-widest uppercase overflow-hidden"
+              className="relative group border border-white px-5 py-1.5 hover:bg-white hover:text-ink transition-colors duration-300 font-mono text-sm tracking-widest uppercase overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
                 <span className="sigil-text animate-pulse">★</span>
@@ -193,7 +193,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black text-white z-30 flex flex-col justify-center items-center gap-12 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed inset-0 bg-ink text-white z-30 flex flex-col justify-center items-center gap-12 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           mobileMenu ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -208,19 +208,19 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
         <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-widest">
           <button
             onClick={() => changeLocale('en')}
-            className={`px-3 py-2 transition-all ${locale === 'en' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+            className={`px-3 py-2 transition-all ${locale === 'en' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             EN
           </button>
           <button
             onClick={() => changeLocale('cs')}
-            className={`px-3 py-2 transition-all ${locale === 'cs' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+            className={`px-3 py-2 transition-all ${locale === 'cs' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             CS
           </button>
           <button
             onClick={() => changeLocale('ru')}
-            className={`px-3 py-2 transition-all ${locale === 'ru' ? 'bg-white text-black' : 'border border-white hover:bg-white hover:text-black'}`}
+            className={`px-3 py-2 transition-all ${locale === 'ru' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             RU
           </button>
@@ -228,7 +228,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
         <button
           onClick={() => { setMobileMenu(false); openBookingForm() }}
-          className="group relative font-mono text-xl border border-white px-10 py-4 mt-4 hover:bg-white hover:text-black transition-colors duration-300 tracking-widest uppercase"
+          className="group relative font-mono text-xl border border-white px-10 py-4 mt-4 hover:bg-white hover:text-ink transition-colors duration-300 tracking-widest uppercase"
         >
           <span className="sigil-text mr-2 opacity-60">★</span>
           {t.nav.book.toUpperCase()}
@@ -258,19 +258,19 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
         <div className="relative z-10 text-center w-full max-w-7xl mx-auto">
 
-          {/* Top Deco — text at text-black/70 (≈4.7:1 on the paper background)
+          {/* Top Deco — text at text-ink/70 (≈4.7:1 on the paper background)
               instead of the old opacity-50 (≈3.66:1, failed WCAG AA); the
               divider lines and skull are pure decoration and keep their own
               lighter opacity since that exemption doesn't apply to them. */}
           <div className="flex justify-between items-center w-full mb-12 font-mono text-[10px] uppercase tracking-widest hidden md:flex">
-            <span className="flex items-center gap-2 text-black/70">
-              <span className="w-8 h-[1px] bg-black opacity-50"></span>
+            <span className="flex items-center gap-2 text-ink/70">
+              <span className="w-8 h-[1px] bg-ink opacity-50"></span>
               {t.hero.location}
             </span>
             <span className="sigil-text text-lg opacity-50" aria-hidden="true">☠︎︎</span>
-            <span className="flex items-center gap-2 text-black/70">
+            <span className="flex items-center gap-2 text-ink/70">
               {t.hero.tagline}
-              <span className="w-8 h-[1px] bg-black opacity-50"></span>
+              <span className="w-8 h-[1px] bg-ink opacity-50"></span>
             </span>
           </div>
 
@@ -279,12 +279,12 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               ⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺
             </span>
             {/* Glitch lines */}
-            <div className="absolute -left-4 top-1/4 w-1 h-12 bg-black opacity-10"></div>
-            <div className="absolute -right-4 bottom-1/4 w-1 h-16 bg-black opacity-10"></div>
+            <div className="absolute -left-4 top-1/4 w-1 h-12 bg-ink opacity-10"></div>
+            <div className="absolute -right-4 bottom-1/4 w-1 h-16 bg-ink opacity-10"></div>
 
             <h1
               ref={heroTitleRef}
-              className="hero-title font-display font-black leading-[0.75] tracking-tight mix-blend-darken select-none text-black relative text-center"
+              className="hero-title font-display font-black leading-[0.75] tracking-tight mix-blend-darken select-none text-ink relative text-center"
             >
               {heroTitle}
               {/* Accent marks */}
@@ -312,21 +312,21 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
             <button
               onClick={openBookingForm}
-              className="group relative inline-flex items-center gap-5 px-10 py-5 bg-black text-white hover:bg-white hover:text-black transition-colors duration-500 border border-black"
+              className="group relative inline-flex items-center gap-5 px-10 py-5 bg-ink text-white hover:bg-white hover:text-ink transition-colors duration-500 border border-ink"
             >
               <span className="sigil-text opacity-70">༺</span>
               <span className="font-mono text-sm uppercase tracking-[0.3em]">{ctaLabel}</span>
               <span className="sigil-text opacity-70">༻</span>
               {/* Corner accents always visible */}
-              <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
-              <span className="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-black transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
+              <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-ink transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
+              <span className="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-ink transition-all duration-300 group-hover:w-7 group-hover:h-7"></span>
             </button>
           </div>
         </div>
       </header>
 
       {/* Infinite Marquee Separator */}
-      <div className="w-full bg-black text-white py-3 overflow-hidden border-y border-white/20">
+      <div className="w-full bg-ink text-white py-3 overflow-hidden border-y border-white/20">
         <div className="flex">
           <div className="flex whitespace-nowrap animate-marquee">
             <span className="mx-4 font-mono text-xs tracking-widest uppercase flex items-center gap-4">
@@ -362,8 +362,8 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       {/* Portfolio Section */}
       <section id="portfolio" className="py-32 px-4 relative">
         {/* Geometric Background Elements */}
-        <div className="absolute top-20 right-10 w-32 h-32 border border-black/5 rotate-45 hidden lg:block"></div>
-        <div className="absolute bottom-40 left-10 w-24 h-24 border border-black/5 hidden lg:block"></div>
+        <div className="absolute top-20 right-10 w-32 h-32 border border-ink/5 rotate-45 hidden lg:block"></div>
+        <div className="absolute bottom-40 left-10 w-24 h-24 border border-ink/5 hidden lg:block"></div>
 
         <div className="container mx-auto">
           {/* Section Header */}
@@ -372,37 +372,37 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <h2 className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tighter mb-4 relative">
               {t.portfolio.title}
               {/* Decorative lines */}
-              <span className="absolute -left-16 top-1/2 w-8 h-[1px] bg-black/20 hidden lg:block"></span>
-              <span className="absolute -right-16 top-1/2 w-8 h-[1px] bg-black/20 hidden lg:block"></span>
+              <span className="absolute -left-16 top-1/2 w-8 h-[1px] bg-ink/20 hidden lg:block"></span>
+              <span className="absolute -right-16 top-1/2 w-8 h-[1px] bg-ink/20 hidden lg:block"></span>
             </h2>
             <div className="font-mono text-[10px] tracking-[0.5em] uppercase opacity-60 flex items-center gap-4">
-              <span className="w-2 h-2 border border-black/30 rotate-45"></span>
+              <span className="w-2 h-2 border border-ink/30 rotate-45"></span>
               {t.portfolio.subtitle}
-              <span className="w-2 h-2 border border-black/30 rotate-45"></span>
+              <span className="w-2 h-2 border border-ink/30 rotate-45"></span>
             </div>
           </div>
 
           {/* Categories Minimal */}
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest">
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
+            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
               {t.portfolio.categories.ornamental}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
+            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
               {t.portfolio.categories.lineWork}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
+            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
               {t.portfolio.categories.abstract}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
+            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
               {t.portfolio.categories.whipShading}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
             </button>
-            <button className="hover:line-through decoration-1 text-gray-400 hover:text-black transition-colors relative group">
+            <button className="hover:line-through decoration-1 text-gray-400 hover:text-ink transition-colors relative group">
               {t.portfolio.categories.freehand}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black group-hover:w-full transition-all duration-300"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-ink group-hover:w-full transition-all duration-300"></span>
             </button>
           </div>
 
@@ -422,8 +422,8 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               onKeyDown={lightboxKeyHandler({ url: '/images/spine-tattoo.webp', width: 1440, height: 1800 })}
             >
               {/* Corner accents */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
-              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
+              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-ink/10 z-10"></div>
+              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-ink/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <Image
@@ -443,16 +443,16 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
-                  <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest rotate-90 md:rotate-0">
+                  <div className="bg-ink text-white px-4 py-2 font-mono text-xs uppercase tracking-widest rotate-90 md:rotate-0">
                     {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
+              <div className="mt-4 flex justify-between items-start border-t border-ink pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.spine}</span>
-                <span className="font-mono text-[10px] text-black/70">001</span>
+                <span className="font-mono text-[10px] text-ink/70">001</span>
                 {/* Small accent */}
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-ink rounded-full opacity-20"></span>
               </div>
             </div>
 
@@ -466,8 +466,8 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               onKeyDown={lightboxKeyHandler({ url: '/images/arm-tattoo.webp', width: 1440, height: 1800 })}
             >
               {/* Corner accents */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
-              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
+              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-ink/10 z-10"></div>
+              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-ink/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <Image
@@ -485,15 +485,15 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 </div>
                 <div className="absolute inset-0 bg-noise opacity-50 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
-                  <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
+                  <div className="bg-ink text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
                     {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
+              <div className="mt-4 flex justify-between items-start border-t border-ink pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.arm}</span>
-                <span className="font-mono text-[10px] text-black/70">002</span>
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="font-mono text-[10px] text-ink/70">002</span>
+                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-ink rounded-full opacity-20"></span>
               </div>
             </div>
 
@@ -507,8 +507,8 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               onKeyDown={lightboxKeyHandler({ url: '/images/back-tattoo.webp', width: 721, height: 909 })}
             >
               {/* Corner accents */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-black/10 z-10"></div>
-              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-black/10 z-10"></div>
+              <div className="absolute -top-4 -left-4 w-8 h-8 border-t border-l border-ink/10 z-10"></div>
+              <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b border-r border-ink/10 z-10"></div>
 
               <div className="aspect-[3/4] bg-white relative overflow-hidden grayscale contrast-125 transition-all duration-700 ease-out group-hover:scale-[1.02]">
                 <Image
@@ -525,15 +525,15 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 </div>
                 <div className="absolute inset-0 bg-noise opacity-50 mix-blend-multiply"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[1px]">
-                  <div className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
+                  <div className="bg-ink text-white px-4 py-2 font-mono text-xs uppercase tracking-widest">
                     {t.portfolio.view} <span className="sigil-text ml-2">→</span>
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex justify-between items-start border-t border-black pt-2 relative">
+              <div className="mt-4 flex justify-between items-start border-t border-ink pt-2 relative">
                 <span className="font-display font-bold text-xl uppercase">{t.portfolio.items.back}</span>
-                <span className="font-mono text-[10px] text-black/70">003</span>
-                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-black rounded-full opacity-20"></span>
+                <span className="font-mono text-[10px] text-ink/70">003</span>
+                <span className="absolute -top-2 left-1/2 w-1 h-1 bg-ink rounded-full opacity-20"></span>
               </div>
             </div>
 
@@ -542,17 +542,17 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
           {/* More Link */}
           <div className="mt-32 text-center relative">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-24 bg-gradient-to-b from-transparent via-black/20 to-transparent"></div>
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-24 bg-gradient-to-b from-transparent via-ink/20 to-transparent"></div>
             <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
               <span className="sigil-text text-2xl animate-bounce">⫘</span>
-              <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-black transition-all pb-1">
+              <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-ink transition-all pb-1">
                 {t.portfolio.fullArchive}
               </span>
               {/* Decorative dots */}
               <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="w-1 h-1 bg-black rounded-full"></span>
-                <span className="w-1 h-1 bg-black rounded-full"></span>
-                <span className="w-1 h-1 bg-black rounded-full"></span>
+                <span className="w-1 h-1 bg-ink rounded-full"></span>
+                <span className="w-1 h-1 bg-ink rounded-full"></span>
+                <span className="w-1 h-1 bg-ink rounded-full"></span>
               </div>
             </a>
           </div>
@@ -560,7 +560,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       </section>
 
       {/* About Section */}
-      <section id="about" className="bg-black text-white py-32 px-4 relative overflow-hidden">
+      <section id="about" className="bg-ink text-white py-32 px-4 relative overflow-hidden">
 
         {/* Background Glyphs */}
         <div className="absolute top-10 left-10 sigil-text text-4xl text-white/10 select-none">⫘</div>
@@ -636,13 +636,13 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
         <div className="container mx-auto">
           <div className="flex items-center justify-center gap-4 mb-24">
             <span className="sigil-text opacity-50" aria-hidden="true">⫘⫘⫘</span>
-            <h2 className="font-mono text-sm uppercase tracking-[0.5em] text-black/70">{t.faq.title}</h2>
+            <h2 className="font-mono text-sm uppercase tracking-[0.5em] text-ink/70">{t.faq.title}</h2>
             <span className="sigil-text opacity-50" aria-hidden="true">⫘⫘⫘</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* FAQ 1 */}
-            <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
+            <div className="group relative pt-6 border-t border-ink/20 hover:border-ink transition-colors duration-500">
               <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q1.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
                 {t.faq.q1.answer}
@@ -650,7 +650,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* FAQ 2 */}
-            <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
+            <div className="group relative pt-6 border-t border-ink/20 hover:border-ink transition-colors duration-500">
               <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q2.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
                 {t.faq.q2.answer}
@@ -658,7 +658,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* FAQ 3 */}
-            <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
+            <div className="group relative pt-6 border-t border-ink/20 hover:border-ink transition-colors duration-500">
               <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q3.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
                 {t.faq.q3.answer}
@@ -666,7 +666,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* FAQ 4 */}
-            <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500">
+            <div className="group relative pt-6 border-t border-ink/20 hover:border-ink transition-colors duration-500">
               <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q4.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
                 {t.faq.q4.answer}
@@ -674,7 +674,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             </div>
 
             {/* FAQ 5 */}
-            <div className="group relative pt-6 border-t border-black/20 hover:border-black transition-colors duration-500 md:col-span-2">
+            <div className="group relative pt-6 border-t border-ink/20 hover:border-ink transition-colors duration-500 md:col-span-2">
               <h3 className="font-display text-xl uppercase mb-4 group-hover:italic transition-all">{t.faq.q5.question}</h3>
               <p className="font-mono text-xs leading-relaxed text-gray-500">
                 {t.faq.q5.answer}
@@ -685,7 +685,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       </section>
 
       {/* Testimonials (Raw Text) */}
-      <section className="py-32 px-4 overflow-hidden bg-black text-white relative">
+      <section className="py-32 px-4 overflow-hidden bg-ink text-white relative">
         {/* Floating Glyphs Background */}
         <div className="absolute inset-0 pointer-events-none opacity-20">
           <div className="absolute top-1/4 left-1/4 sigil-text text-6xl animate-float">♰</div>
@@ -731,13 +731,13 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="min-h-screen py-24 px-4 relative flex items-center bg-white text-black">
+      <section id="contact" className="min-h-screen py-24 px-4 relative flex items-center bg-white text-ink">
         <div className="container mx-auto max-w-4xl">
 
           <div className="text-center mb-16">
             <div className="sigil-text text-2xl mb-4">⫘</div>
             <h2 className="font-display text-5xl md:text-9xl font-bold uppercase tracking-tight leading-none overflow-visible">
-              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-black to-gray-400 italic pr-4">{t.contact.titleAccent}</span>
+              {t.contact.title}<br/><span className="text-transparent bg-clip-text bg-gradient-to-t from-ink to-gray-400 italic pr-4">{t.contact.titleAccent}</span>
             </h2>
           </div>
 
@@ -753,10 +753,10 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               onClick={openBookingForm}
               className="group relative w-full max-w-2xl"
             >
-              <div className="relative border-2 border-black px-12 py-10 text-center overflow-hidden bg-white hover:bg-black hover:text-white transition-colors duration-500">
+              <div className="relative border-2 border-ink px-12 py-10 text-center overflow-hidden bg-white hover:bg-ink hover:text-white transition-colors duration-500">
                 {/* Expanding corners */}
-                <span className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
-                <span className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-black group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
+                <span className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-ink group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
+                <span className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-ink group-hover:border-white transition-colors duration-500 group-hover:w-10 group-hover:h-10 transition-all duration-300"></span>
 
                 <div className="sigil-text text-3xl opacity-30 mb-4 group-hover:opacity-60 transition-opacity" aria-hidden="true">☠︎︎</div>
                 <div className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none mb-4">
@@ -764,7 +764,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                 </div>
                 <div className="font-mono text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-3">
                   <span className="opacity-50 group-hover:opacity-80 transition-opacity" aria-hidden="true">↗</span>
-                  <span className="text-black/70 group-hover:text-white transition-colors">{t.contact.formLink ?? 'open booking form'}</span>
+                  <span className="text-ink/70 group-hover:text-white transition-colors">{t.contact.formLink ?? 'open booking form'}</span>
                   <span className="opacity-50 group-hover:opacity-80 transition-opacity" aria-hidden="true">↗</span>
                 </div>
               </div>
@@ -805,7 +805,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           role="dialog"
           aria-modal="true"
           aria-label={t.portfolio.title}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 backdrop-blur-sm animate-fadeIn"
           onClick={closeLightbox}
         >
           {/* Close Button */}
@@ -849,7 +849,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       )}
 
       {/* Footer */}
-      <footer className="bg-white text-black py-12 border-t border-black">
+      <footer className="bg-white text-ink py-12 border-t border-ink">
         <div className="container mx-auto px-4 text-center overflow-hidden">
           {/* Complex Unicode Signature */}
           <div className="mb-8 font-mono text-sm tracking-[1em] opacity-80 whitespace-nowrap overflow-hidden">
@@ -866,9 +866,9 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             href="https://iteros.dev/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-gray-500 transition-colors hover:text-black"
+            className="mt-6 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-gray-500 transition-colors hover:text-ink"
           >
-            Site by <span className="text-black">iteros.dev</span>
+            Site by <span className="text-ink">iteros.dev</span>
             <span aria-hidden="true">↗</span>
           </a>
 
