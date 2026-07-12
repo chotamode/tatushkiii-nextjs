@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import { useTranslation, type Locale } from '@/hooks/useTranslation'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
@@ -59,7 +59,10 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
   const telegramUrl = socialUrl('telegram', 'https://t.me/doompink')
   const heroTitleRef = useRef<HTMLHeadingElement>(null)
 
-  // Auto-fit hero title to fill its container width
+  // Grows/shrinks the title to exactly fill its container width. The CSS
+  // clamp() on .hero-title already renders a correctly-sized, visible title
+  // before this ever runs — this only refines it, so it's not on the
+  // critical path to LCP the way a hidden-until-measured element would be.
   const fitHeroTitle = useCallback(() => {
     const el = heroTitleRef.current
     if (!el || !el.parentElement) return
@@ -81,7 +84,11 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
     el.classList.add('sized')
   }, [])
 
-  useEffect(() => {
+  // useLayoutEffect, not useEffect: runs before the browser paints, so short
+  // titles (e.g. "ТАТУ") that the CSS clamp() sized conservatively grow to
+  // their final fill-width size in the same frame instead of visibly
+  // snapping afterward.
+  useLayoutEffect(() => {
     fitHeroTitle()
     window.addEventListener('resize', fitHeroTitle)
 
