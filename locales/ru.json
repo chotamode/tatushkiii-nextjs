@@ -137,7 +137,9 @@
     "address": "Korunni 859/18, Прага, 120 00",
     "available": "доступно для записи",
     "formLink": "открыть форму",
-    "formUnavailable": "Форма записи временно недоступна. Напишите, пожалуйста, в Instagram или Telegram."
+    "formUnavailable": "Форма записи временно недоступна. Напишите, пожалуйста, в Instagram или Telegram.",
+    "formLoading": "Загружаем форму…",
+    "formSlow": "Долго грузится? Напишите напрямую в Instagram или Telegram — отвечу так же быстро."
   },
   "prices": {
     "title": "Цены"

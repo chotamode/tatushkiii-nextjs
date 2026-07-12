@@ -91,6 +91,15 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Ad/deep link: /?book=1 or /#book (and the /book redirect) opens the
+  // booking form right away, no scrolling or hunting for the button.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.has('book') || window.location.hash === '#book') {
+      setBookingOpen(true)
+    }
+  }, [])
+
   const openBookingForm = () => {
     setBookingOpen(true)
   }

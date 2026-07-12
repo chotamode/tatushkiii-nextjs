@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from '../hooks/useTranslation'
 import { getOpnFormUrl } from '../lib/opnform'
 
@@ -9,9 +9,28 @@ interface BookingModalProps {
   onOpenChange: (open: boolean) => void
 }
 
+// After this long without the iframe loading, suggest DM as a fallback.
+const SLOW_LOAD_MS = 8000
+
 export default function BookingModal({ open, onOpenChange }: BookingModalProps) {
   const { t } = useTranslation()
   const formUrl = getOpnFormUrl()
+  const [loaded, setLoaded] = useState(false)
+  const [slow, setSlow] = useState(false)
+
+  // The component stays mounted while closed, so reset the loading state on
+  // close — reopening remounts the iframe and it loads from scratch again.
+  useEffect(() => {
+    if (open) return
+    setLoaded(false)
+    setSlow(false)
+  }, [open])
+
+  useEffect(() => {
+    if (!open || loaded) return
+    const id = window.setTimeout(() => setSlow(true), SLOW_LOAD_MS)
+    return () => window.clearTimeout(id)
+  }, [open, loaded])
 
   // Close on Escape and lock body scroll while open
   useEffect(() => {
@@ -57,11 +76,29 @@ export default function BookingModal({ open, onOpenChange }: BookingModalProps) 
         onClick={(e) => e.stopPropagation()}
       >
         {formUrl ? (
-          <iframe
-            src={formUrl}
-            title="Booking form"
-            className="w-full h-[80vh] border-0 rounded bg-white"
-          />
+          <div className="relative">
+            <iframe
+              src={formUrl}
+              title="Booking form"
+              onLoad={() => setLoaded(true)}
+              className={`w-full h-[80vh] border-0 rounded bg-white transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            />
+            {!loaded && (
+              <div
+                role="status"
+                className="absolute inset-0 flex flex-col items-center justify-center gap-6 rounded border border-white/20 bg-black text-white"
+              >
+                <span className="sigil-text animate-spin text-4xl [animation-duration:2.5s]" aria-hidden="true">✦</span>
+                <span className="font-mono text-xs uppercase tracking-[0.3em]">{t.contact.formLoading}</span>
+                <span
+                  className={`max-w-xs px-6 text-center font-mono text-[10px] uppercase tracking-widest text-gray-400 transition-opacity duration-500 ${slow ? 'opacity-100' : 'opacity-0'}`}
+                  aria-hidden={!slow}
+                >
+                  {t.contact.formSlow}
+                </span>
+              </div>
+            )}
+          </div>
         ) : (
           <div className="bg-white text-black p-10 text-center font-mono text-sm uppercase tracking-widest rounded">
             {t.contact.formUnavailable}
