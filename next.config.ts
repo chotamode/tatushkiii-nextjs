@@ -1,23 +1,24 @@
 import type { NextConfig } from 'next'
 
 // Allow next/image to optimize media served by the CMS (hostname derived from
-// CMS_URL — the same env var lib/content/config.ts uses to build absolute
-// media URLs, so this can't drift out of sync with what the app actually
-// fetches from).
-const cmsUrl = process.env.CMS_URL
+// CMS_URL) and by the CMS's media storage (hostname derived from CMS_MEDIA_URL
+// — Payload's S3/R2 adapter returns already-absolute URLs on that host, not
+// under CMS_URL, so both need whitelisting independently).
 const remotePatterns: NonNullable<NextConfig['images']>['remotePatterns'] = []
-if (cmsUrl) {
+for (const url of [process.env.CMS_URL, process.env.CMS_MEDIA_URL]) {
+  if (!url) continue
   try {
-    const { protocol, hostname, port } = new URL(cmsUrl)
+    const { protocol, hostname, port } = new URL(url)
     remotePatterns.push({
       protocol: protocol.replace(':', '') as 'http' | 'https',
       hostname,
       port: port || undefined,
-      // Payload serves uploaded media under /api/media/file/** (and /media/**).
+      // Payload serves uploaded media under /api/media/file/** (and /media/**);
+      // the R2 bucket serves it at the object key root.
       pathname: '/**',
     })
   } catch {
-    // Invalid CMS_URL — skip remote images, local fallback still works.
+    // Invalid URL — skip, local fallback / other pattern still works.
   }
 }
 
