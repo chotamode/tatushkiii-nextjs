@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'http://128.140.45.14'
+  const baseUrl = 'https://doomp.ink'
 
   return [
     {

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/_next/'],
       },
     ],
-    sitemap: 'http://128.140.45.14/sitemap.xml',
+    sitemap: 'https://doomp.ink/sitemap.xml',
   }
 }
