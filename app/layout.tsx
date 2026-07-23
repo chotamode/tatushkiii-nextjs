@@ -95,11 +95,9 @@ export const metadata: Metadata = {
     },
   },
 
-  // Verification for search engines
-  verification: {
-    google: 'your-google-site-verification',
-    yandex: 'your-yandex-verification',
-  },
+  // Search engine verification: add real codes here once the domain is
+  // verified in Google Search Console / Yandex Webmaster (removed the
+  // placeholder values — a fake code is worse than no tag).
 }
 
 export default function RootLayout({
