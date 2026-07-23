@@ -872,7 +872,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           </div>
 
           <div className="flex flex-col items-center gap-2 font-mono text-[10px] uppercase text-gray-500 tracking-widest">
-            <span>{t.footer.copyright}</span>
+            <span>{t.footer.copyright.replace('2025', String(new Date().getFullYear()))}</span>
             <span className="sigil-text text-lg">⫘</span>
             <span>{t.footer.tagline}</span>
           </div>
