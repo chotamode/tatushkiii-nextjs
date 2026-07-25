@@ -10,7 +10,7 @@
     "location": "Praha // 2025",
     "tagline": "Ornamentální.Umění",
     "title": "TETOVÁNÍ",
-    "subtitle1": "VLASTNÍ NÁVRHY. SUROVÁ ESTETIKA.",
+    "subtitle1": "VLASTNÍ NÁVRHY. DRSNÁ ESTETIKA.",
     "subtitle2": "PŘESNÉ. STERILNÍ. ÉTERICKÉ.",
     "cta": "Rezervovat termín"
   },
@@ -22,7 +22,7 @@
   },
   "portfolio": {
     "title": "Vybraná díla",
-    "subtitle": "Křivky které drží / Inkoust který teče",
+    "subtitle": "Křivky, které drží tvar / Inkoust, který teče",
     "categories": {
       "ornamental": "[Ornamentální]",
       "lineWork": "[Linky]",
@@ -43,8 +43,8 @@
   "about": {
     "title": "O umělci",
     "heading": "AHOJ! JSEM SANDU",
-    "paragraph1": "Jsem tetovací umělkyně se 4 lety zkušeností a obrovskou láskou k tetování.",
-    "paragraph2": "Specializuji se na linky, ornamentální vzory a černočervené tóny. Jsem ale flexibilní umělkyně, takže se neboj, vytvoříme něco stylovýho, co ti bude sedět.",
+    "paragraph1": "Jsem tatérka se 4 lety zkušeností a obrovskou láskou k tetování.",
+    "paragraph2": "Specializuji se na linky, ornamentální vzory a černočervené tóny. Zvládám ale i jiné styly, takže se neboj, vymyslíme něco stylovýho, co ti bude sedět.",
     "stats": {
       "base": "SÍDLO PRAHA",
       "exp": "4 ROKY ZKUŠENOSTÍ",
