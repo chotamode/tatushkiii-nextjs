@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Crimson_Text, Space_Mono } from 'next/font/google'
+import { Bebas_Neue, Crimson_Text, Space_Mono, Noto_Sans_Symbols_2 } from 'next/font/google'
 import { Toaster } from 'sonner'
 import Script from 'next/script'
 import './globals.css'
@@ -23,6 +23,16 @@ const spaceMono = Space_Mono({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-space',
+  display: 'swap',
+})
+
+// Decorative sigil glyphs (★⫘♰☠︎︎ etc. via .sigil-text) — previously loaded
+// from fonts.googleapis.com via a render-blocking @import, which also sends
+// EU visitors' IP addresses to Google without consent. Self-hosted instead.
+const notoSansSymbols2 = Noto_Sans_Symbols_2({
+  weight: '400',
+  subsets: ['symbols'],
+  variable: '--font-symbols',
   display: 'swap',
 })
 
@@ -106,7 +116,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${crimsonText.variable} ${spaceMono.variable}`}>
+    <html lang="en" className={`${bebasNeue.variable} ${crimsonText.variable} ${spaceMono.variable} ${notoSansSymbols2.variable}`}>
       <head>
         {/* Schema.org markup for Google Rich Snippets */}
         <script
