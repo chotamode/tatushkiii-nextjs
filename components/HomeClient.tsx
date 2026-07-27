@@ -887,6 +887,13 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <span aria-hidden="true">↗</span>
           </a>
 
+          <a
+            href="/privacy"
+            className="mt-3 block font-mono text-[10px] uppercase tracking-widest text-gray-400 transition-colors hover:text-ink"
+          >
+            Privacy Policy
+          </a>
+
           <div className="mt-8 opacity-20 sigil-text text-xs tracking-[2em]" aria-hidden="true">
             ⫘⫘⫘⫘⫘
           </div>

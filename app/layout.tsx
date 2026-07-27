@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Bebas_Neue, Crimson_Text, Space_Mono, Noto_Sans_Symbols_2 } from 'next/font/google'
 import { Toaster } from 'sonner'
 import Script from 'next/script'
+import CookieNotice from '@/components/CookieNotice'
 import './globals.css'
 
 // Font configuration
@@ -160,6 +161,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <Toaster position="bottom-right" richColors />
+        <CookieNotice />
         <Script
           src="https://umami-rbei0p6e70gv9f6i2iopxc9f.tzhk.dev/script.js"
           data-website-id="92425852-a08c-4d62-bfa0-0f7a459e33aa"
