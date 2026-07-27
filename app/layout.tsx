@@ -122,35 +122,87 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'TattooParlor',
-              name: 'SANDU Tattoo',
-              description: 'Custom tattoo designs in Prague. Ornamental, linework, abstract styles.',
-              url: 'https://doomp.ink',
-              telephone: '+420774685187',
-              email: 'doompynooo@gmail.com',
-              priceRange: '$$',
-              address: {
-                '@type': 'PostalAddress',
-                streetAddress: 'Korunni 859/18',
-                addressLocality: 'Prague',
-                postalCode: '120 00',
-                addressCountry: 'CZ',
-              },
-              openingHoursSpecification: {
-                '@type': 'OpeningHoursSpecification',
-                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                opens: '10:00',
-                closes: '20:00',
-              },
-              sameAs: [
-                'https://t.me/doompink',
-                'https://www.instagram.com/doompink',
+              '@graph': [
+                {
+                  '@type': 'TattooParlor',
+                  name: 'SANDU Tattoo',
+                  description: 'Custom tattoo designs in Prague. Ornamental, linework, abstract styles.',
+                  url: 'https://doomp.ink',
+                  telephone: '+420774685187',
+                  email: 'doompynooo@gmail.com',
+                  // Real price floor from the site's own FAQ, not a "$$"
+                  // placeholder that says nothing to a searcher.
+                  priceRange: 'from 2000 CZK',
+                  address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'Korunni 859/18',
+                    addressLocality: 'Prague',
+                    postalCode: '120 00',
+                    addressCountry: 'CZ',
+                  },
+                  openingHoursSpecification: {
+                    '@type': 'OpeningHoursSpecification',
+                    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                    opens: '10:00',
+                    closes: '20:00',
+                  },
+                  sameAs: [
+                    'https://t.me/doompink',
+                    'https://www.instagram.com/doompink',
+                  ],
+                  // No aggregateRating here — there is no real review source
+                  // backing a rating (the 3 testimonials on the page are
+                  // unattributed first names, and "300" was borrowed from a
+                  // "300+ clients" stat, not review count). A fabricated
+                  // rating risks a Google manual action and contradicts the
+                  // guideline's own "only real ratings" rule.
+                },
+                {
+                  '@type': 'FAQPage',
+                  mainEntity: [
+                    {
+                      '@type': 'Question',
+                      name: 'Does it hurt to get a tattoo?',
+                      acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: "It depends on the placement! But I work gently and always take breaks. Many clients say it was much easier than they expected. Don't worry, I also have numbing cream if needed.",
+                      },
+                    },
+                    {
+                      '@type': 'Question',
+                      name: 'How much does a tattoo cost?',
+                      acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: "Prices start from 2,000 CZK and depend on the size and complexity. Message me with your idea and I'll calculate the price for free!",
+                      },
+                    },
+                    {
+                      '@type': 'Question',
+                      name: 'How do I take care of it after the session?',
+                      acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: "I'll give you detailed aftercare instructions and stay in touch. In short: after the session I apply a healing film for free, you'll need to remove it after 3–5 days (I'll tell you exactly when). After that, just use the cream and don't scratch it!",
+                      },
+                    },
+                    {
+                      '@type': 'Question',
+                      name: 'Can I come with my own design?',
+                      acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: "Of course! Bring a reference and we'll adapt it, or I can draw something similar in my style.",
+                      },
+                    },
+                    {
+                      '@type': 'Question',
+                      name: 'What if I change my mind at the last minute?',
+                      acceptedAnswer: {
+                        '@type': 'Answer',
+                        text: 'No worries! We can reschedule, just please let me know at least 12 hours in advance.',
+                      },
+                    },
+                  ],
+                },
               ],
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '5',
-                reviewCount: '300',
-              },
             }),
           }}
         />
