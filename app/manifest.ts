@@ -2,13 +2,13 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Тату Мастер | Графический Дизайнер для Твоей Кожи',
-    short_name: 'Тату Мастер',
-    description: 'Профессиональные татуировки в уютной атмосфере',
+    name: 'SANDU | Tattoo Artist Prague',
+    short_name: 'SANDU Tattoo',
+    description: 'Custom tattoo designs in Prague. Ornamental, linework, abstract and cybersigilism styles.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
-    theme_color: '#4169E1',
+    background_color: '#f8f8f8',
+    theme_color: '#0a0a0a',
     icons: [
       {
         src: '/icon-192.png',

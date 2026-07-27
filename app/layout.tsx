@@ -86,12 +86,9 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'],
   },
 
-  // Icons and manifest
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
-  manifest: '/site.webmanifest',
+  // Icons and manifest — icon.tsx/apple-icon.tsx (app/) generate the actual
+  // favicon/apple-touch-icon at build time, no manual metadata.icons needed.
+  manifest: '/manifest.webmanifest',
 
   // Robot settings
   robots: {
