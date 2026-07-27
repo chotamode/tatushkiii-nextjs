@@ -39,7 +39,11 @@ type RawList<T> = { docs?: T[] }
 const pickImageUrls = (media: RawMedia): { imageUrl: string | null; thumbnailUrl: string | null } => {
   const sizes = media.sizes ?? {}
   return {
-    imageUrl: absolutize(sizes.card?.url ?? sizes.full?.url ?? media.url),
+    // imageUrl feeds the full-screen lightbox (PortfolioGallery.tsx) — needs
+    // the largest available render, not the grid-card derivative. Was
+    // preferring `card` first, so the lightbox showed the same ~400x500
+    // image the grid thumbnail uses, upscaled to fill the viewport.
+    imageUrl: absolutize(sizes.full?.url ?? media.url ?? sizes.card?.url),
     thumbnailUrl: absolutize(sizes.thumbnail?.url ?? sizes.card?.url ?? media.url),
   }
 }
