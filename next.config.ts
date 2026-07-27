@@ -1,4 +1,9 @@
+import { withSentryConfig } from '@sentry/nextjs'
 import type { NextConfig } from 'next'
+
+const UMAMI_HOST = 'https://umami-rbei0p6e70gv9f6i2iopxc9f.tzhk.dev'
+const GLITCHTIP_HOST = 'https://glitchtip-de4z03xi1roztp0sxzniv68o.tzhk.dev'
+const OPNFORM_HOST = 'https://opnform.tzhk.dev'
 
 // Allow next/image to optimize media served by the CMS (hostname derived from
 // CMS_URL) and by the CMS's media storage (hostname derived from CMS_MEDIA_URL
@@ -48,6 +53,23 @@ const nextConfig: NextConfig = {
   output: 'standalone',
 
   async headers() {
+    // img-src mirrors the same CMS/media hostnames whitelisted for next/image
+    // above, so a CMS host change only needs updating in one place.
+    const imgHosts = remotePatterns.map((p) => `${p.protocol}://${p.hostname}`).join(' ')
+
+    const csp = [
+      `default-src 'self'`,
+      `script-src 'self' 'unsafe-inline' ${UMAMI_HOST}`,
+      `style-src 'self' 'unsafe-inline'`,
+      `img-src 'self' data: ${imgHosts}`.trim(),
+      `font-src 'self' data:`,
+      `connect-src 'self' ${UMAMI_HOST} ${GLITCHTIP_HOST}`,
+      `frame-src ${OPNFORM_HOST}`,
+      `object-src 'none'`,
+      `base-uri 'self'`,
+      `frame-ancestors 'self'`,
+    ].join('; ')
+
     return [
       {
         source: '/(.*)',
@@ -57,10 +79,21 @@ const nextConfig: NextConfig = {
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Content-Security-Policy', value: csp },
         ],
       },
     ]
   },
 }
 
-export default nextConfig
+export default withSentryConfig(nextConfig, {
+  silent: true,
+  telemetry: false,
+  sourcemaps: { disable: true },
+  bundleSizeOptimizations: {
+    excludeDebugStatements: true,
+    excludeReplayShadowDom: true,
+    excludeReplayIframe: true,
+    excludeReplayWorker: true,
+  },
+})
