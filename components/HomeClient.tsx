@@ -22,6 +22,9 @@ declare global {
         [key: string]: (action: string, options?: Record<string, unknown>) => void
       }
     }
+    umami?: {
+      track: (eventName: string) => void
+    }
   }
 }
 
@@ -126,6 +129,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
   const openBookingForm = () => {
     setBookingOpen(true)
+    window.umami?.track('booking-form-open')
   }
 
   const closeLightbox = () => setLightboxImage(null)
@@ -558,7 +562,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           {/* More Link */}
           <div className="mt-32 text-center relative">
             <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[1px] h-24 bg-gradient-to-b from-transparent via-ink/20 to-transparent"></div>
-            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="group inline-flex flex-col items-center gap-2 relative">
+            <a href={instagramUrl} target="_blank" rel="noopener noreferrer" data-umami-event="social-instagram-click" className="group inline-flex flex-col items-center gap-2 relative">
               <span className="sigil-text text-2xl animate-float">⫘</span>
               <span className="font-mono text-xs uppercase tracking-[0.3em] border-b border-transparent group-hover:border-ink transition-all pb-1">
                 {t.portfolio.fullArchive}
@@ -793,14 +797,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           <div className="mt-24 flex flex-col items-center gap-4 text-center">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>
             <div className="font-mono text-xs uppercase tracking-widest">
-              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.instagram}</a>
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" data-umami-event="social-instagram-click" className="hover:line-through px-2">{t.contact.social.instagram}</a>
               <span className="opacity-30">/</span>
-              <a href={telegramUrl} target="_blank" rel="noopener noreferrer" className="hover:line-through px-2">{t.contact.social.telegram}</a>
+              <a href={telegramUrl} target="_blank" rel="noopener noreferrer" data-umami-event="social-telegram-click" className="hover:line-through px-2">{t.contact.social.telegram}</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-2">
-              <a href={contactPhoneHref} className="hover:line-through">{contactPhone}</a>
+              <a href={contactPhoneHref} data-umami-event="contact-phone-click" className="hover:line-through">{contactPhone}</a>
               <span className="mx-2">•</span>
-              <a href={`mailto:${contactEmail}`} className="hover:line-through">{contactEmail}</a>
+              <a href={`mailto:${contactEmail}`} data-umami-event="contact-email-click" className="hover:line-through">{contactEmail}</a>
             </div>
             <div className="font-mono text-xs text-gray-400 mt-1">
               {t.contact.address}
