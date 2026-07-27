@@ -27,7 +27,7 @@ export default function CookieNotice() {
   return (
     <div
       role="status"
-      className="fixed bottom-0 inset-x-0 z-40 bg-ink text-white px-4 py-3 font-mono text-xs md:text-sm"
+      className="fixed bottom-10 inset-x-0 z-40 bg-ink text-white px-4 py-3 font-mono text-xs md:text-sm border-t border-white/10"
     >
       <div className="container mx-auto flex flex-col md:flex-row items-center gap-3 md:gap-6">
         <p className="flex-1 text-center md:text-left opacity-90">
