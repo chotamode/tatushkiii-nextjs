@@ -4,7 +4,9 @@
     "artist": "Artist",
     "process": "Process",
     "book": "Book",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "menu": "Open menu",
+    "close": "Close menu"
   },
   "hero": {
     "location": "Prague // 2025",
@@ -145,7 +147,7 @@
     "title": "Prices"
   },
   "footer": {
-    "copyright": "© 2025 Sandu Ink. Prague.",
+    "copyright": "© {year} Sandu Ink. Prague.",
     "tagline": "Designed for the bold.",
     "contact": "Contact",
     "follow": "Follow",

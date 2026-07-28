@@ -207,15 +207,23 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenu(!mobileMenu)}
+            aria-expanded={mobileMenu}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenu ? t.nav.close : t.nav.menu}
             className="md:hidden z-50 relative focus:outline-none font-mono text-2xl"
           >
-            <span>{mobileMenu ? '✕' : '☰'}</span>
+            <span aria-hidden="true">{mobileMenu ? '✕' : '☰'}</span>
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay — translate-y-full only moves it off-screen
+          visually; without inert/aria-hidden its links stayed fully
+          keyboard/screen-reader reachable while "closed". */}
       <div
+        id="mobile-menu"
+        aria-hidden={!mobileMenu}
+        {...(!mobileMenu ? { inert: true } : {})}
         className={`fixed inset-0 bg-ink text-white z-30 flex flex-col justify-center items-center gap-12 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           mobileMenu ? 'translate-y-0' : '-translate-y-full'
         }`}
@@ -298,7 +306,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           </div>
 
           <div className="relative w-full md:w-[50vw] mx-auto overflow-visible">
-            <span className="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-400 whitespace-nowrap">
+            <span aria-hidden="true" className="absolute -top-8 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-600 whitespace-nowrap">
               ⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺
             </span>
             {/* Glitch lines */}
@@ -314,14 +322,14 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               <span className="absolute -top-6 right-0 text-[2vw] opacity-30 sigil-text">✦</span>
               <span className="absolute -bottom-4 left-0 text-[2vw] opacity-30 sigil-text">✧</span>
             </h1>
-            <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-400 whitespace-nowrap sigil-text">
+            <span aria-hidden="true" className="absolute -bottom-10 left-1/2 -translate-x-1/2 font-mono text-xs tracking-[0.5em] text-gray-600 whitespace-nowrap sigil-text">
               ⫘⫘⫘⫘⫘
             </span>
           </div>
 
           <div className="mt-24 flex flex-col items-center">
             <p className="max-w-md text-center font-mono text-xs md:text-sm leading-relaxed mb-8 relative">
-              <span className="absolute -left-12 top-0 text-gray-300 hidden md:block">✱</span>
+              <span aria-hidden="true" className="absolute -left-12 top-0 text-gray-600 hidden md:block">✱</span>
               {heroSubtitle ? (
                 heroSubtitle
               ) : (
@@ -330,7 +338,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
                   <span className="opacity-50">{t.hero.subtitle2}</span>
                 </>
               )}
-              <span className="absolute -right-12 bottom-0 text-gray-300 hidden md:block">✱</span>
+              <span aria-hidden="true" className="absolute -right-12 bottom-0 text-gray-600 hidden md:block">✱</span>
             </p>
 
             <button
@@ -409,7 +417,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               real filter lives on the full portfolio gallery). Plain spans on
               purpose: no hover/cursor affordance that would suggest they're
               clickable. */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest text-gray-400">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-20 font-mono text-[10px] uppercase tracking-widest text-gray-600">
             <span>{t.portfolio.categories.ornamental}</span>
             <span>{t.portfolio.categories.lineWork}</span>
             <span>{t.portfolio.categories.abstract}</span>
@@ -762,7 +770,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
           {/* Booking CTA */}
           <div className="flex flex-col items-center gap-10 py-8">
-            <div className="font-mono text-[10px] uppercase tracking-[0.5em] text-gray-400 flex items-center gap-4">
+            <div className="font-mono text-[10px] uppercase tracking-[0.5em] text-gray-600 flex items-center gap-4">
               <span className="w-12 h-px bg-gray-300"></span>
               {t.contact.available ?? 'available for booking'}
               <span className="w-12 h-px bg-gray-300"></span>
@@ -789,27 +797,30 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
               </div>
             </button>
 
-            <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-400 sigil-text animate-pulse">
+            <div aria-hidden="true" className="font-mono text-[10px] uppercase tracking-[0.3em] text-gray-600 sigil-text animate-pulse">
               ⫘⫘⫘
             </div>
           </div>
 
-          <div className="mt-24 flex flex-col items-center gap-4 text-center">
+          {/* <address>, not <div>: this is exactly what the element is
+              for — the contact info (socials, phone, email, physical
+              address) for the business this page represents. */}
+          <address className="mt-24 flex flex-col items-center gap-4 text-center not-italic">
             <div className="sigil-text text-xl animate-pulse">☠︎︎</div>
             <div className="font-mono text-xs uppercase tracking-widest">
               <a href={instagramUrl} target="_blank" rel="noopener noreferrer" data-umami-event="social-instagram-click" className="hover:line-through px-2">{t.contact.social.instagram}</a>
               <span className="opacity-30">/</span>
               <a href={telegramUrl} target="_blank" rel="noopener noreferrer" data-umami-event="social-telegram-click" className="hover:line-through px-2">{t.contact.social.telegram}</a>
             </div>
-            <div className="font-mono text-xs text-gray-400 mt-2">
+            <div className="font-mono text-xs text-gray-600 mt-2">
               <a href={contactPhoneHref} data-umami-event="contact-phone-click" className="hover:line-through">{contactPhone}</a>
               <span className="mx-2">•</span>
               <a href={`mailto:${contactEmail}`} data-umami-event="contact-email-click" className="hover:line-through">{contactEmail}</a>
             </div>
-            <div className="font-mono text-xs text-gray-400 mt-1">
+            <div className="font-mono text-xs text-gray-600 mt-1">
               {t.contact.address}
             </div>
-          </div>
+          </address>
         </div>
       </section>
       </main>
@@ -876,7 +887,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
           </div>
 
           <div className="flex flex-col items-center gap-2 font-mono text-[10px] uppercase text-gray-500 tracking-widest">
-            <span>{t.footer.copyright.replace('2025', String(new Date().getFullYear()))}</span>
+            <span>{t.footer.copyright.replace('{year}', String(new Date().getFullYear()))}</span>
             <span className="sigil-text text-lg">⫘</span>
             <span>{t.footer.tagline}</span>
           </div>
@@ -893,7 +904,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
           <a
             href="/privacy"
-            className="mt-3 block font-mono text-[10px] uppercase tracking-widest text-gray-400 transition-colors hover:text-ink"
+            className="mt-3 block font-mono text-[10px] uppercase tracking-widest text-gray-600 transition-colors hover:text-ink"
           >
             Privacy Policy
           </a>

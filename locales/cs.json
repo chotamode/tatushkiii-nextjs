@@ -4,7 +4,9 @@
     "artist": "Umělec",
     "process": "Proces",
     "book": "Rezervovat",
-    "bookNow": "Rezervovat"
+    "bookNow": "Rezervovat",
+    "menu": "Otevřít menu",
+    "close": "Zavřít menu"
   },
   "hero": {
     "location": "Praha // 2025",
@@ -145,7 +147,7 @@
     "title": "Ceník"
   },
   "footer": {
-    "copyright": "© 2025 Sandu Ink. Praha.",
+    "copyright": "© {year} Sandu Ink. Praha.",
     "tagline": "Navrženo pro odvážné.",
     "contact": "Kontakt",
     "follow": "Sledovat",

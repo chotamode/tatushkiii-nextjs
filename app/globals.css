@@ -123,6 +123,18 @@ body {
   animation: scaleIn 0.4s ease-out;
 }
 
+/* float/marquee/pulse ran unconditionally — no prefers-reduced-motion
+   guard anywhere in the page. `animate-pulse` here overrides Tailwind's
+   own utility of the same name (same specificity, this rule comes later
+   in the cascade since @tailwind utilities is injected above). */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-marquee,
+  .animate-pulse {
+    animation: none;
+  }
+}
+
 /* Paper background color */
 .bg-paper {
   background-color: var(--color-paper);

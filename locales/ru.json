@@ -4,7 +4,9 @@
     "artist": "Художник",
     "process": "Процесс",
     "book": "Записаться",
-    "bookNow": "Записаться"
+    "bookNow": "Записаться",
+    "menu": "Открыть меню",
+    "close": "Закрыть меню"
   },
   "hero": {
     "location": "Прага // 2025",
@@ -145,7 +147,7 @@
     "title": "Цены"
   },
   "footer": {
-    "copyright": "© 2025 Sandu Ink. Прага.",
+    "copyright": "© {year} Sandu Ink. Прага.",
     "tagline": "Создано для смелых.",
     "contact": "Контакты",
     "follow": "Соцсети",
