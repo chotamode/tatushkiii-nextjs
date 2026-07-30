@@ -3,14 +3,8 @@ import HomeClient from '@/components/HomeClient'
 import { getPortfolio, getSiteContent } from '@/lib/content'
 import { LOCALE_META, localeAlternates, localeUrl } from '@/lib/locale-meta'
 
-const LOCALE = 'en' as const
+const LOCALE = 'cs' as const
 
-// This is the default (unprefixed) locale — /cs and /ru are sibling routes
-// (app/cs/page.tsx, app/ru/page.tsx) with the same shape. Each route's own
-// generateMetadata fully overrides the shared root layout's static English
-// metadata (Next doesn't deep-merge nested objects like openGraph/twitter
-// across the layout/page boundary), so /cs and /ru don't leak English
-// title/description.
 export async function generateMetadata(): Promise<Metadata> {
   const meta = LOCALE_META[LOCALE]
   const sc = await getSiteContent(LOCALE)

@@ -52,11 +52,16 @@ export const metadata: Metadata = {
   creator: 'Sandu',
   publisher: 'Sandu Ink',
 
-  // Language settings
+  // Language settings — this is the shared root layout's static fallback;
+  // every real route (/, /cs, /ru) overrides this fully via its own
+  // generateMetadata (see lib/locale-meta.ts for the one source of truth).
   alternates: {
     canonical: 'https://doomp.ink',
     languages: {
       'en': 'https://doomp.ink',
+      'cs': 'https://doomp.ink/cs',
+      'ru': 'https://doomp.ink/ru',
+      'x-default': 'https://doomp.ink',
     },
   },
 

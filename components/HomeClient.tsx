@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTranslation, type Locale } from '@/hooks/useTranslation'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
 import BookingModal from '@/components/BookingModal'
@@ -9,10 +10,13 @@ import PortfolioGallery from '@/components/PortfolioGallery'
 import type { LightboxImage, PortfolioItem, SiteContent } from '@/lib/content'
 
 type HomeClientProps = {
-  /** Portfolio per locale, fetched on the server. Empty arrays → built-in grid. */
-  portfolioByLocale: Record<Locale, PortfolioItem[]>
-  /** Editable CMS texts per locale. null → built-in locale copy (non-breaking). */
-  siteContentByLocale: Record<Locale, SiteContent | null>
+  /** The locale this page was rendered for — determined by the route
+   * (`/`, `/cs`, `/ru`), not client-side state. */
+  locale: Locale
+  /** Portfolio for this locale, fetched on the server. Empty → built-in grid. */
+  portfolio: PortfolioItem[]
+  /** Editable CMS texts for this locale. null → built-in locale copy (non-breaking). */
+  siteContent: SiteContent | null
 }
 
 declare global {
@@ -28,7 +32,7 @@ declare global {
   }
 }
 
-export default function HomeClient({ portfolioByLocale, siteContentByLocale }: HomeClientProps) {
+export default function HomeClient({ locale, portfolio, siteContent }: HomeClientProps) {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   // Carries width/height alongside the URL so the lightbox can use next/image
@@ -36,17 +40,17 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
   // of a plain <img>.
   const [lightboxImage, setLightboxImage] = useState<LightboxImage | null>(null)
   const [bookingOpen, setBookingOpen] = useState(false)
-  const { t, locale, changeLocale } = useTranslation()
+  const { t } = useTranslation(locale)
 
-  // Portfolio from the CMS for the active locale. When empty (no CMS items yet),
-  // the section below falls back to the original built-in grid — so the live
-  // site looks identical until the artist adds work in the CMS.
-  const cmsPortfolio = portfolioByLocale[locale] ?? []
+  // Portfolio from the CMS. Empty (no CMS items yet) → the section below
+  // falls back to the original built-in grid, so the live site looks
+  // identical until the artist adds work in the CMS.
+  const cmsPortfolio = portfolio
 
-  // Editable texts from the CMS for the active locale. Every field falls back to
+  // Editable texts from the CMS for this locale. Every field falls back to
   // the built-in locale string, so the site is unchanged when the CMS is not
   // configured/unreachable (`sc` is null) or a field is blank.
-  const sc = siteContentByLocale[locale] ?? null
+  const sc = siteContent
   const heroTitle = sc?.hero.title || t.hero.title
   const heroSubtitle = sc?.hero.subtitle?.trim() || null
   const ctaLabel = sc?.cta.label || t.hero.cta
@@ -169,28 +173,32 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
             <a href="#about" className="hover:line-through decoration-1 underline-offset-4 transition-all">{t.nav.artist}</a>
             <a href="#process" className="hover:line-through decoration-1 underline-offset-4 transition-all">{t.nav.process}</a>
 
-            {/* Language Switcher */}
+            {/* Language Switcher — real links to /, /cs, /ru so no-JS,
+                middle-click, and search-engine crawling all work. */}
             <div className="flex gap-2 items-center">
-              <button
-                onClick={() => changeLocale('en')}
+              <Link
+                href="/"
+                aria-current={locale === 'en' ? 'page' : undefined}
                 className={`px-3 py-2 transition-all ${locale === 'en' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 EN
-              </button>
+              </Link>
               <span className="opacity-30">/</span>
-              <button
-                onClick={() => changeLocale('cs')}
+              <Link
+                href="/cs"
+                aria-current={locale === 'cs' ? 'page' : undefined}
                 className={`px-3 py-2 transition-all ${locale === 'cs' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 CS
-              </button>
+              </Link>
               <span className="opacity-30">/</span>
-              <button
-                onClick={() => changeLocale('ru')}
+              <Link
+                href="/ru"
+                aria-current={locale === 'ru' ? 'page' : undefined}
                 className={`px-3 py-2 transition-all ${locale === 'ru' ? 'underline' : 'opacity-50 hover:opacity-100'}`}
               >
                 RU
-              </button>
+              </Link>
             </div>
 
             <button
@@ -237,24 +245,30 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
 
         {/* Mobile Language Switcher */}
         <div className="flex gap-4 items-center font-mono text-sm uppercase tracking-widest">
-          <button
-            onClick={() => changeLocale('en')}
+          <Link
+            href="/"
+            onClick={() => setMobileMenu(false)}
+            aria-current={locale === 'en' ? 'page' : undefined}
             className={`px-3 py-2 transition-all ${locale === 'en' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             EN
-          </button>
-          <button
-            onClick={() => changeLocale('cs')}
+          </Link>
+          <Link
+            href="/cs"
+            onClick={() => setMobileMenu(false)}
+            aria-current={locale === 'cs' ? 'page' : undefined}
             className={`px-3 py-2 transition-all ${locale === 'cs' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             CS
-          </button>
-          <button
-            onClick={() => changeLocale('ru')}
+          </Link>
+          <Link
+            href="/ru"
+            onClick={() => setMobileMenu(false)}
+            aria-current={locale === 'ru' ? 'page' : undefined}
             className={`px-3 py-2 transition-all ${locale === 'ru' ? 'bg-white text-ink' : 'border border-white hover:bg-white hover:text-ink'}`}
           >
             RU
-          </button>
+          </Link>
         </div>
 
         <button
@@ -826,7 +840,7 @@ export default function HomeClient({ portfolioByLocale, siteContentByLocale }: H
       </main>
 
       {/* Booking Modal */}
-      <BookingModal open={bookingOpen} onOpenChange={setBookingOpen} />
+      <BookingModal open={bookingOpen} onOpenChange={setBookingOpen} locale={locale} />
 
       {/* Lightbox Modal */}
       {lightboxImage && (

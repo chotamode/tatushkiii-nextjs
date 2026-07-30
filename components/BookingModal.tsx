@@ -1,20 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useTranslation } from '../hooks/useTranslation'
+import { useTranslation, type Locale } from '../hooks/useTranslation'
 import { useFocusTrap } from '../hooks/useFocusTrap'
 import { getOpnFormUrl } from '../lib/opnform'
 
 interface BookingModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  locale: Locale
 }
 
 // After this long without the iframe loading, suggest DM as a fallback.
 const SLOW_LOAD_MS = 8000
 
-export default function BookingModal({ open, onOpenChange }: BookingModalProps) {
-  const { t } = useTranslation()
+export default function BookingModal({ open, onOpenChange, locale }: BookingModalProps) {
+  const { t } = useTranslation(locale)
   const formUrl = getOpnFormUrl()
   const [loaded, setLoaded] = useState(false)
   const [slow, setSlow] = useState(false)

@@ -1,14 +1,15 @@
 import { MetadataRoute } from 'next'
+import { localeAlternates, localeUrl } from '@/lib/locale-meta'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://doomp.ink'
+  const lastModified = new Date()
+  const languages = localeAlternates()
 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-  ]
+  return (['en', 'cs', 'ru'] as const).map((locale) => ({
+    url: localeUrl(locale),
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: locale === 'en' ? 1 : 0.8,
+    alternates: { languages },
+  }))
 }
